@@ -1,27 +1,266 @@
-#container {
-  text-align: center;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/* Fundo e espaçamento geral da tela */
+.inicio {
+  --background: #FAFCF7;
+  color: #243D24;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 20px 32px;
 }
 
-#container p {
+/* Cabeçalho */
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #243D24;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.icone-marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #B7D957;
+  color: #243D24;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.botao-perfil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: #EFF8D8;
+  color: #243D24;
+  font-size: 28px;
+}
+
+/* Boas-vindas */
+.boas-vindas {
+  margin-bottom: 28px;
+}
+
+.saudacao {
+  margin-bottom: 8px;
+  color: #526B37;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.boas-vindas h1 {
+  margin: 0 0 8px;
+  color: #243D24;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.descricao {
+  margin: 0;
+  color: #555F50;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Cartão de destaque */
+.cartao-destaque {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  margin-bottom: 32px;
+  border: 1px solid #E2EDCD;
+  border-radius: 20px;
+  background: #EFF8D8;
+}
+
+.destaque-icone,
+.resumo-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background: #FFFFFF;
+  color: #526B37;
+  font-size: 27px;
+}
+
+.destaque-texto h2,
+.resumo-texto h3 {
+  margin: 0 0 8px;
+  color: #243D24;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.destaque-texto p,
+.resumo-texto p {
+  margin: 0;
+  color: #526052;
   font-size: 16px;
-  line-height: 22px;
+  line-height: 1.6;
+}
 
-  color: #8c8c8c;
+/* Seções */
+.secao {
+  margin-bottom: 32px;
+}
 
+.titulo-secao {
+  margin-bottom: 16px;
+}
+
+.secao h2,
+.titulo-secao h2 {
+  margin: 0;
+  color: #243D24;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+/* Cartões de medicamentos */
+.cartao-vazio,
+.cartao-resumo {
+  padding: 22px;
+  border: 1px solid #E6EAE0;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+.cartao-vazio {
+  text-align: center;
+}
+
+.cartao-vazio .resumo-icone {
+  margin: 0 auto 14px;
+  background: #EFF8D8;
+}
+
+.cartao-vazio h3 {
+  margin: 0 0 10px;
+  color: #243D24;
+  font-size: 20px;
+}
+
+.cartao-vazio p {
+  margin: 0;
+  color: #596254;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cartao-resumo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cartao-resumo .resumo-icone {
+  background: #EFF8D8;
+}
+
+/* Atalhos */
+.acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.acao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 68px;
+  padding: 12px 16px;
+  border: 1px solid #E6EAE0;
+  border-radius: 16px;
+  background: #FFFFFF;
+  color: #243D24;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.acao-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 23px;
+}
+
+.verde {
+  background: #EFF8D8;
+  color: #526B37;
+}
+
+.amarelo {
+  background: #FFF2D5;
+  color: #85652A;
+}
+
+.seta {
+  margin-left: auto;
+  color: #75816D;
+  font-size: 20px;
+}
+
+/* Rodapé */
+.rodape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0;
+  color: #68745E;
+  font-size: 15px;
+}
+
+.rodape ion-icon {
+  color: #72963B;
+  font-size: 20px;
+}
+
+.rodape p {
   margin: 0;
 }
 
-#container a {
-  text-decoration: none;
+/* Ajustes para celulares pequenos */
+@media (max-width: 360px) {
+  .conteudo {
+    padding: 20px 14px 28px;
+  }
+
+  .cartao-destaque,
+  .cartao-vazio,
+  .cartao-resumo {
+    padding: 16px;
+  }
 }
