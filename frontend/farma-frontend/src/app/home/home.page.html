@@ -1,0 +1,92 @@
+ <ion-content [fullscreen]="true" class="inicio">
+  <main class="conteudo">
+
+    <header class="cabecalho">
+      <div class="marca">
+        <div class="icone-marca">+</div>
+        <span>FarmaLembra</span>
+      </div>
+
+      <button class="botao-perfil" aria-label="Abrir perfil">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </button>
+    </header>
+
+    <section class="boas-vindas">
+      <p class="saudacao">CUIDAR DE VOCÊ É IMPORTANTE</p>
+      <h1>Olá! 👋</h1>
+      <p class="descricao">
+        Vamos cuidar da sua saúde hoje?
+      </p>
+    </section>
+
+    <section class="cartao-destaque">
+      <div class="destaque-icone">
+        <ion-icon name="heart-outline"></ion-icon>
+      </div>
+
+      <div class="destaque-texto">
+        <h2>Sua saúde em primeiro lugar</h2>
+        <p>
+          Organize seus medicamentos e acompanhe seus horários em um só lugar.
+        </p>
+      </div>
+    </section>
+
+    <section class="secao">
+      <div class="titulo-secao">
+        <h2>Seu dia</h2>
+        <span class="etiqueta">Hoje</span>
+      </div>
+
+      <div class="cartao-resumo">
+        <div class="resumo-icone">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+
+        <div class="resumo-texto">
+          <h3>Seus medicamentos</h3>
+          <p>Consulte seus remédios e horários cadastrados.</p>
+        </div>
+
+        <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+      </div>
+    </section>
+
+    <section class="secao">
+      <h2>O que você deseja fazer?</h2>
+
+      <div class="acoes">
+        <button class="acao" (click)="abrirRemedios()">
+          <span class="acao-icone verde">
+            <ion-icon name="medkit-outline"></ion-icon>
+          </span>
+          <span>Meus remédios</span>
+          <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+        </button>
+
+        <button class="acao" (click)="abrirHistorico()">
+          <span class="acao-icone amarelo">
+            <ion-icon name="time-outline"></ion-icon>
+          </span>
+          <span>Histórico</span>
+          <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+        </button>
+
+        <button class="acao" (click)="abrirPerfil()">
+          <span class="acao-icone verde">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+          <span>Meu perfil</span>
+          <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+        </button>
+      </div>
+    </section>
+
+    <footer class="rodape">
+      <ion-icon name="leaf-outline"></ion-icon>
+      <p>Pequenos cuidados fazem a diferença.</p>
+    </footer>
+
+  </main>
+</ion-content>
