@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 app = FastAPI(
     title="FarmaLembra API",
-    description="API para gerenciamento de medicamentos e lembretes.",
+    description="API de gerenciamento de medicamentos",
     version="0.1.0",
 )
 
@@ -16,7 +16,5 @@ def inicio():
 
 
 @app.get("/health")
-def verificar_saude():
-    return {
-        "status": "ok"
-    }
+def health():
+    return {"status": "ok"}
