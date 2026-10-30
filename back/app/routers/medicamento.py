@@ -1,85 +1,92 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.medicamento import Medicamento
 from app.schemas.medicamento import (
     MedicamentoCreate,
+    MedicamentoResponse,
     MedicamentoUpdate,
-    MedicamentoResponse
 )
-
 
 router = APIRouter(
     prefix="/medicamentos",
-    tags=["Medicamentos"]
+    tags=["Medicamentos"],
 )
 
 
-@router.post("/", response_model=MedicamentoResponse, status_code=201)
+@router.post(
+    "/",
+    response_model=MedicamentoResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 def criar_medicamento(
-    medicamento: MedicamentoCreate,
-    db: Session = Depends(get_db)
+    dados: MedicamentoCreate,
+    db: Session = Depends(get_db),
 ):
-    novo_medicamento = Medicamento(**medicamento.model_dump())
+    medicamento = Medicamento(**dados.model_dump())
 
-    db.add(novo_medicamento)
+    db.add(medicamento)
     db.commit()
-    db.refresh(novo_medicamento)
+    db.refresh(medicamento)
 
-    return novo_medicamento
+    return medicamento
 
 
-@router.get("/", response_model=list[MedicamentoResponse])
+@router.get(
+    "/",
+    response_model=list[MedicamentoResponse],
+)
 def listar_medicamentos(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    medicamentos = db.query(Medicamento).all()
+    medicamentos = db.scalars(
+        select(Medicamento).order_by(Medicamento.nome)
+    ).all()
 
     return medicamentos
 
 
-@router.get("/{medicamento_id}", response_model=MedicamentoResponse)
+@router.get(
+    "/{medicamento_id}",
+    response_model=MedicamentoResponse,
+)
 def buscar_medicamento(
     medicamento_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    medicamento = (
-        db.query(Medicamento)
-        .filter(Medicamento.id == medicamento_id)
-        .first()
-    )
+    medicamento = db.get(Medicamento, medicamento_id)
 
-    if not medicamento:
+    if medicamento is None:
         raise HTTPException(
-            status_code=404,
-            detail="Medicamento não encontrado"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Medicamento não encontrado",
         )
 
     return medicamento
 
 
-@router.put("/{medicamento_id}", response_model=MedicamentoResponse)
+@router.put(
+    "/{medicamento_id}",
+    response_model=MedicamentoResponse,
+)
 def atualizar_medicamento(
     medicamento_id: int,
     dados: MedicamentoUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    medicamento = (
-        db.query(Medicamento)
-        .filter(Medicamento.id == medicamento_id)
-        .first()
-    )
+    medicamento = db.get(Medicamento, medicamento_id)
 
-    if not medicamento:
+    if medicamento is None:
         raise HTTPException(
-            status_code=404,
-            detail="Medicamento não encontrado"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Medicamento não encontrado",
         )
 
-    dados_atualizacao = dados.model_dump(exclude_unset=True)
+    dados_atualizados = dados.model_dump(exclude_unset=True)
 
-    for campo, valor in dados_atualizacao.items():
+    for campo, valor in dados_atualizados.items():
         setattr(medicamento, campo, valor)
 
     db.commit()
@@ -88,26 +95,21 @@ def atualizar_medicamento(
     return medicamento
 
 
-@router.delete("/{medicamento_id}")
+@router.delete(
+    "/{medicamento_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
 def excluir_medicamento(
     medicamento_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    medicamento = (
-        db.query(Medicamento)
-        .filter(Medicamento.id == medicamento_id)
-        .first()
-    )
+    medicamento = db.get(Medicamento, medicamento_id)
 
-    if not medicamento:
+    if medicamento is None:
         raise HTTPException(
-            status_code=404,
-            detail="Medicamento não encontrado"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Medicamento não encontrado",
         )
 
     db.delete(medicamento)
     db.commit()
-
-    return {
-        "mensagem": "Medicamento excluído com sucesso"
-    }

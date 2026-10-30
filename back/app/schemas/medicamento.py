@@ -1,28 +1,25 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, ConfigDict
 
 
-class MedicamentoBase(BaseModel):
+class MedicamentoCreate(BaseModel):
     nome: str
     dosagem: str
     forma_farmaceutica: str
-    descricao: Optional[str] = None
-
-
-class MedicamentoCreate(MedicamentoBase):
-    pass
+    descricao: str | None = None
 
 
 class MedicamentoUpdate(BaseModel):
-    nome: Optional[str] = None
-    dosagem: Optional[str] = None
-    forma_farmaceutica: Optional[str] = None
-    descricao: Optional[str] = None
+    nome: str | None = None
+    dosagem: str | None = None
+    forma_farmaceutica: str | None = None
+    descricao: str | None = None
 
 
-class MedicamentoResponse(MedicamentoBase):
+class MedicamentoResponse(BaseModel):
     id: int
+    nome: str
+    dosagem: str
+    forma_farmaceutica: str
+    descricao: str | None = None
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)
