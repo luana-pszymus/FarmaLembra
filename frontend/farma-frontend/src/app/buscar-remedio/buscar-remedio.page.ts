@@ -1,4 +1,3 @@
-
 // ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -56,10 +55,11 @@ export class BuscarRemedioPage {
       return;
     }
 
-    // ===== ENVIA O NOME PARA O CADASTRO =====
+    // ===== ENVIA O NOME E A ORIGEM PARA O CADASTRO =====
     this.router.navigate(['/tabs/remedios/novo/dados'], {
       queryParams: {
         nome: this.nomeRemedio.trim(),
+        origem: 'pesquisa',
       },
     });
   }
