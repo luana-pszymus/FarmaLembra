@@ -1,14 +1,21 @@
-
+// ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+
+// ===== ÍCONES DO PERFIL =====
 import {
-  medkitOutline,
-  timeOutline,
   personOutline,
+  notificationsOutline,
+  accessibilityOutline,
+  peopleOutline,
+  shieldCheckmarkOutline,
+  informationCircleOutline,
+  logOutOutline,
+  chevronForwardOutline,
 } from 'ionicons/icons';
 
+// ===== COMPONENTE DO PERFIL =====
 @Component({
   selector: 'app-pagina-placeholder',
   templateUrl: './pagina-placeholder.page.html',
@@ -16,22 +23,18 @@ import {
   imports: [IonContent, IonIcon],
 })
 export class PaginaPlaceholderPage {
-  titulo = '';
-  descricao = '';
-  icone = '';
 
-  constructor(private rota: ActivatedRoute) {
-    const dados = this.rota.snapshot.data;
-
-    this.titulo = dados['titulo'];
-    this.descricao = dados['descricao'];
-    this.icone = dados['icone'];
-
+  // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
-      medkitOutline,
-      timeOutline,
       personOutline,
+      notificationsOutline,
+      accessibilityOutline,
+      peopleOutline,
+      shieldCheckmarkOutline,
+      informationCircleOutline,
+      logOutOutline,
+      chevronForwardOutline,
     });
   }
 }
-

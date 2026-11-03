@@ -1,30 +1,139 @@
-
 <ion-content [fullscreen]="true" class="pagina">
   <main class="conteudo">
 
+    <!-- ===== MARCA ===== -->
     <header class="marca">
       <span class="marca-icone">+</span>
       <span>FarmaLembra</span>
     </header>
 
+    <!-- ===== CABEÇALHO ===== -->
     <section class="cabecalho">
-      <p class="etiqueta">SUA ROTINA DE CUIDADOS</p>
-      <h1>{{ titulo }}</h1>
-      <p>{{ descricao }}</p>
-    </section>
-
-    <section class="cartao-vazio">
-      <div class="icone">
-        <ion-icon [name]="icone"></ion-icon>
-      </div>
-
-      <h2>Este espaço está sendo preparado</h2>
-
+      <p class="etiqueta">SUA CONTA E PREFERÊNCIAS</p>
+      <h1>Meu perfil</h1>
       <p>
-        Em breve você poderá utilizar todas as funcionalidades
-        desta área do FarmaLembra.
+        Consulte suas informações e conheça as opções
+        de personalização do aplicativo.
       </p>
     </section>
+
+    <!-- ===== DADOS PESSOAIS ===== -->
+    <section class="grupo">
+      <h2>Dados pessoais</h2>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Informações da conta</h3>
+          <p>
+            Seus dados pessoais serão exibidos aqui
+            depois que o acesso à conta for implementado.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PREFERÊNCIAS ===== -->
+    <section class="grupo">
+      <h2>Preferências</h2>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Notificações</h3>
+          <p>
+            Configurações dos lembretes e avisos
+            dos medicamentos.
+          </p>
+          <span class="estado">Disponível em uma próxima etapa</span>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="accessibility-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Acessibilidade</h3>
+          <p>
+            Opções de leitura, tamanho de texto
+            e facilidade de uso.
+          </p>
+          <span class="estado">Disponível em uma próxima etapa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAMÍLIA E SEGURANÇA ===== -->
+    <section class="grupo">
+      <h2>Família e segurança</h2>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Cuidador ou familiar</h3>
+          <p>
+            Compartilhamento de informações
+            com pessoas de confiança.
+          </p>
+          <span class="estado">Disponível em uma próxima etapa</span>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Privacidade e segurança</h3>
+          <p>
+            Informações sobre proteção e uso
+            dos seus dados.
+          </p>
+          <span class="estado">Disponível em uma próxima etapa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOBRE O APLICATIVO ===== -->
+    <section class="grupo">
+      <h2>Sobre o aplicativo</h2>
+
+      <div class="cartao">
+        <div class="opcao-icone">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>FarmaLembra</h3>
+          <p>
+            Seu aplicativo de organização e lembretes
+            de medicamentos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AVISO SOBRE A CONTA ===== -->
+    <div class="aviso">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>
+        As configurações da conta serão habilitadas
+        após a implementação do login e da integração
+        com o sistema.
+      </p>
+    </div>
 
   </main>
 </ion-content>

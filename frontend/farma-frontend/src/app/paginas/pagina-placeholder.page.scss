@@ -1,15 +1,17 @@
-
+/* ===== FUNDO DA PÁGINA ===== */
 .pagina {
   --background: #FAFCF7;
   color: #101810;
 }
 
+/* ===== CONTEÚDO PRINCIPAL ===== */
 .conteudo {
   max-width: 600px;
   margin: 0 auto;
-  padding: 28px 22px;
+  padding: 28px 22px 40px;
 }
 
+/* ===== MARCA ===== */
 .marca {
   display: flex;
   align-items: center;
@@ -17,7 +19,7 @@
   color: #243D24;
   font-size: 21px;
   font-weight: 700;
-  margin-bottom: 52px;
+  margin-bottom: 42px;
 }
 
 .marca-icone {
@@ -31,6 +33,7 @@
   font-size: 27px;
 }
 
+/* ===== CABEÇALHO ===== */
 .cabecalho {
   margin-bottom: 30px;
 }
@@ -55,35 +58,92 @@
   line-height: 1.6;
 }
 
-.cartao-vazio {
-  padding: 30px 22px;
-  border: 1px solid #E3E9DA;
-  border-radius: 22px;
-  background: #FFFFFF;
-  text-align: center;
+/* ===== GRUPOS DE OPÇÕES ===== */
+.grupo {
+  margin-bottom: 28px;
 }
 
-.icone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 66px;
-  height: 66px;
-  margin: 0 auto 20px;
-  border-radius: 20px;
-  background: #EFF8D8;
-  color: #526B37;
-  font-size: 32px;
-}
-
-.cartao-vazio h2 {
+.grupo h2 {
+  margin: 0 0 14px;
   color: #243D24;
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
 }
 
-.cartao-vazio p {
+/* ===== CARTÕES ===== */
+.cartao {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid #E3E9DA;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+/* ===== ÍCONES ===== */
+.opcao-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 24px;
+}
+
+/* ===== CONTEÚDO DAS OPÇÕES ===== */
+.opcao-conteudo {
+  flex: 1;
+}
+
+.opcao-conteudo h3 {
+  margin: 2px 0 7px;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.opcao-conteudo p {
+  margin: 0;
   color: #626B5C;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ===== ESTADO DAS FUNCIONALIDADES ===== */
+.estado {
+  display: inline-block;
+  margin-top: 9px;
+  color: #71883D;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== AVISO ===== */
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 15px;
+  background: #EFF8D8;
+  color: #52604A;
+}
+
+.aviso ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #526B37;
+  font-size: 21px;
+}
+
+.aviso p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
 }
