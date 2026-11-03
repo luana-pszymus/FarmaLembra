@@ -1,0 +1,205 @@
+
+/* ===== PÁGINA ===== */
+.pagina-prescricao {
+  --background: #FAFCF7;
+  color: #101810;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 22px 40px;
+}
+
+/* ===== VOLTAR ===== */
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.voltar ion-icon {
+  font-size: 22px;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.etiqueta {
+  color: #71883D;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 8px 0;
+  color: #243D24;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.cabecalho p:last-child {
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* ===== CARTÃO DA FOTO ===== */
+.cartao-foto {
+  padding: 22px;
+  border: 1px solid #E3E9DA;
+  border-radius: 22px;
+  background: #FFFFFF;
+}
+
+/* ===== ÁREA VAZIA ===== */
+.area-vazia {
+  padding: 24px 8px;
+  text-align: center;
+}
+
+.icone-camera {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  border-radius: 24px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 38px;
+}
+
+.area-vazia h2 {
+  color: #243D24;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.area-vazia p {
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ===== FOTO SELECIONADA ===== */
+.visualizacao {
+  text-align: center;
+}
+
+.visualizacao img {
+  display: block;
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #F4F6F0;
+}
+
+.botao-remover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #FBEAEA;
+  color: #9B3838;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== ESCOLHA DA IMAGEM ===== */
+.campo-arquivo {
+  display: none;
+}
+
+.botao-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  margin-top: 18px;
+  padding: 12px;
+  border: 2px solid #243D24;
+  border-radius: 15px;
+  background: #FFFFFF;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.botao-foto ion-icon {
+  font-size: 23px;
+}
+
+/* ===== ORIENTAÇÃO ===== */
+.orientacao {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 22px 2px;
+  color: #626B5C;
+}
+
+.orientacao ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #71883D;
+  font-size: 22px;
+}
+
+.orientacao p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ===== MENSAGEM ===== */
+.mensagem {
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: #EFF8D8;
+  color: #243D24;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ===== BOTÃO CONTINUAR ===== */
+.botao-continuar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 58px;
+  margin-top: 24px;
+  padding: 14px;
+  border: 0;
+  border-radius: 15px;
+  background: #243D24;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao-continuar ion-icon {
+  font-size: 22px;
+}

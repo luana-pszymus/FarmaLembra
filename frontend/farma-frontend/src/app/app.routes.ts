@@ -44,18 +44,13 @@ export const routes: Routes = [
       },
 
       // ===== LEITURA DA PRESCRIÇÃO =====
-      {
-        path: 'remedios/novo/prescricao',
-        loadComponent: () =>
-          import('./paginas/pagina-placeholder.page').then(
-            (m) => m.PaginaPlaceholderPage,
-          ),
-        data: {
-          titulo: 'Fotografar prescrição',
-          descricao: 'Aqui será feita a leitura da sua receita.',
-          icone: 'medkit-outline',
-        },
-      },
+{
+  path: 'remedios/novo/prescricao',
+  loadComponent: () =>
+    import('./escanear-prescricao/escanear-prescricao.page').then(
+      (m) => m.EscanearPrescricaoPage,
+    ),
+},
 
       // ===== LEITURA DA EMBALAGEM =====
 {
