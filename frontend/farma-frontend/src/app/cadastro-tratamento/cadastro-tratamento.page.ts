@@ -1,7 +1,8 @@
 
+// ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 
@@ -45,13 +46,22 @@ export class CadastroTratamentoPage {
   // ===== MENSAGEM DO FORMULÁRIO =====
   mensagem = '';
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     // ===== REGISTRO DOS ÍCONES =====
     addIcons({
       arrowBackOutline,
       calendarOutline,
       timeOutline,
       informationCircleOutline,
+    });
+
+    // ===== RECEBE O NOME DA PESQUISA =====
+    this.route.queryParamMap.subscribe((params) => {
+      const nomeRecebido = params.get('nome');
+
+      if (nomeRecebido) {
+        this.nome = nomeRecebido;
+      }
     });
   }
 
