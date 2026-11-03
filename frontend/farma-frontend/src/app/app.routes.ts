@@ -71,18 +71,13 @@ export const routes: Routes = [
       },
 
       // ===== HISTÓRICO =====
-      {
-        path: 'historico',
-        loadComponent: () =>
-          import('./paginas/pagina-placeholder.page').then(
-            (m) => m.PaginaPlaceholderPage,
-          ),
-        data: {
-          titulo: 'Meu histórico',
-          descricao: 'Acompanhe seus registros de medicamentos.',
-          icone: 'time-outline',
-        },
-      },
+{
+  path: 'historico',
+  loadComponent: () =>
+    import('./historico/historico.page').then(
+      (m) => m.HistoricoPage,
+    ),
+},
 
       // ===== PERFIL =====
       {

@@ -1,0 +1,181 @@
+/* ===== FUNDO DA PÁGINA ===== */
+.pagina {
+  --background: #FAFCF7;
+  color: #101810;
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 28px 22px 40px;
+}
+
+/* ===== MARCA ===== */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #243D24;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 42px;
+}
+
+.marca-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  background: #B7D957;
+  font-size: 27px;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.etiqueta {
+  color: #71883D;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 8px 0;
+  color: #243D24;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.cabecalho > p:last-child {
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* ===== CARTÃO DE RESUMO ===== */
+.cartao-resumo {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid #E3E9DA;
+  border-radius: 20px;
+  background: #EFF8D8;
+}
+
+.resumo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  background: #B7D957;
+  color: #243D24;
+  font-size: 25px;
+}
+
+.cartao-resumo h2 {
+  margin: 2px 0 7px;
+  color: #243D24;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.cartao-resumo p {
+  margin: 0;
+  color: #52604A;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ===== SEÇÃO DE REGISTROS ===== */
+.secao-registros {
+  margin-top: 34px;
+}
+
+.titulo-secao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  color: #243D24;
+}
+
+.titulo-secao h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.titulo-secao ion-icon {
+  font-size: 23px;
+}
+
+/* ===== ESTADO VAZIO ===== */
+.cartao-vazio {
+  padding: 32px 22px;
+  border: 1px solid #E3E9DA;
+  border-radius: 22px;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.icone-vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 18px;
+  border-radius: 20px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 32px;
+}
+
+.cartao-vazio h3 {
+  margin: 0 0 10px;
+  color: #243D24;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cartao-vazio p {
+  margin: 0;
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ===== AVISO ===== */
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 15px;
+  background: #FFFFFF;
+  color: #626B5C;
+}
+
+.aviso ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #71883D;
+  font-size: 21px;
+}
+
+.aviso p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
