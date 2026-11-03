@@ -1,4 +1,5 @@
- <ion-content [fullscreen]="true" class="inicio">
+
+<ion-content [fullscreen]="true" class="inicio">
   <main class="conteudo">
 
     <header class="cabecalho">
@@ -26,7 +27,7 @@
       </div>
 
       <div class="destaque-texto">
-        <h2>Sua saúde em primeiro lugar</h2>
+        <h2>Seu cuidado, mais simples</h2>
         <p>
           Organize seus medicamentos e acompanhe seus horários em um só lugar.
         </p>
@@ -35,21 +36,37 @@
 
     <section class="secao">
       <div class="titulo-secao">
-        <h2>Seu dia</h2>
-        <span class="etiqueta">Hoje</span>
+        <h2>Próximo medicamento</h2>
       </div>
 
-      <div class="cartao-resumo">
+      <div class="cartao-vazio">
         <div class="resumo-icone">
           <ion-icon name="medkit-outline"></ion-icon>
         </div>
 
-        <div class="resumo-texto">
-          <h3>Seus medicamentos</h3>
-          <p>Consulte seus remédios e horários cadastrados.</p>
+        <h3>Vamos organizar seus remédios?</h3>
+        <p>
+          Cadastre seus medicamentos para consultar os horários nesta tela.
+        </p>
+      </div>
+    </section>
+
+    <section class="secao">
+      <div class="titulo-secao">
+        <h2>Seus medicamentos</h2>
+      </div>
+
+      <div class="cartao-resumo">
+        <div class="resumo-icone">
+          <ion-icon name="calendar-outline"></ion-icon>
         </div>
 
-        <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+        <div class="resumo-texto">
+          <h3>Organize sua rotina</h3>
+          <p>
+            Consulte os medicamentos cadastrados e suas orientações.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -57,7 +74,7 @@
       <h2>O que você deseja fazer?</h2>
 
       <div class="acoes">
-        <button class="acao" (click)="abrirRemedios()">
+        <button class="acao">
           <span class="acao-icone verde">
             <ion-icon name="medkit-outline"></ion-icon>
           </span>
@@ -65,15 +82,15 @@
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
         </button>
 
-        <button class="acao" (click)="abrirHistorico()">
+        <button class="acao">
           <span class="acao-icone amarelo">
             <ion-icon name="time-outline"></ion-icon>
           </span>
-          <span>Histórico</span>
+          <span>Meu histórico</span>
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
         </button>
 
-        <button class="acao" (click)="abrirPerfil()">
+        <button class="acao">
           <span class="acao-icone verde">
             <ion-icon name="person-outline"></ion-icon>
           </span>

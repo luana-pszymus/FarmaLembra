@@ -1,23 +1,16 @@
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
+from fastapi import Depends, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.routers.medicamento import router as medicamento_router
-from app.models.medicamento import Medicamento
-
-
-
 
 app = FastAPI(
     title="FarmaLembra API",
     description="API de gerenciamento de medicamentos",
     version="0.1.0",
 )
-
-
-app.include_router(medicamento_router)
 
 
 @app.get("/")
