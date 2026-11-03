@@ -1,266 +1,275 @@
 
-/* Fundo e espaçamento geral da tela */
+/* ===== FUNDO E ESTRUTURA PRINCIPAL ===== */
 .inicio {
   --background: #FAFCF7;
-  color: #243D24;
 }
 
 .conteudo {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 24px 20px 32px;
+  margin: auto;
+  padding: 24px 20px 30px;
+  color: #101810;
 }
 
-/* Cabeçalho */
-.cabecalho {
+/* ===== CABEÇALHO E MARCA ===== */
+.cabecalho,
+.marca,
+.titulo-secao,
+.atalho {
   display: flex;
   align-items: center;
+}
+
+.cabecalho,
+.titulo-secao {
   justify-content: space-between;
-  margin-bottom: 32px;
+}
+
+.cabecalho {
+  margin-bottom: 34px;
 }
 
 .marca {
-  display: flex;
-  align-items: center;
   gap: 10px;
   color: #243D24;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.icone-marca {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #B7D957;
-  color: #243D24;
-  font-size: 28px;
-  font-weight: 700;
+.marca-icone {
+  position: relative;
+  color: #78A92D;
+  font-size: 38px;
 }
 
-.botao-perfil {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border: none;
+.marca-icone span {
+  position: absolute;
+  top: 7px;
+  left: 12px;
+  color: white;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.notificacao {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
   border-radius: 50%;
   background: #EFF8D8;
   color: #243D24;
-  font-size: 28px;
+  font-size: 23px;
 }
 
-/* Boas-vindas */
+/* ===== BOAS-VINDAS ===== */
 .boas-vindas {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.saudacao {
-  margin-bottom: 8px;
-  color: #526B37;
-  font-size: 14px;
-  font-weight: 700;
+.etiqueta {
+  color: #728B3D;
+  font-size: 12px;
+  font-weight: 800;
   letter-spacing: 1px;
 }
 
 .boas-vindas h1 {
-  margin: 0 0 8px;
+  margin: 8px 0;
   color: #243D24;
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 32px;
 }
 
-.descricao {
+.boas-vindas > p:last-child {
   margin: 0;
-  color: #555F50;
+  color: #626B5C;
   font-size: 18px;
-  line-height: 1.6;
 }
 
-/* Cartão de destaque */
-.cartao-destaque {
+/* ===== CARTÃO DE DESTAQUE ===== */
+.cartao-proximo {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 22px;
-  margin-bottom: 32px;
-  border: 1px solid #E2EDCD;
-  border-radius: 20px;
-  background: #EFF8D8;
+  margin-bottom: 30px;
+  border-radius: 22px;
+  background: #243D24;
+  color: white;
 }
 
-.destaque-icone,
-.resumo-icone {
-  display: flex;
+.proximo-icone {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 15px;
-  background: #FFFFFF;
-  color: #526B37;
-  font-size: 27px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #EFF8D8;
+  color: #243D24;
+  font-size: 29px;
 }
 
-.destaque-texto h2,
-.resumo-texto h3 {
-  margin: 0 0 8px;
-  color: #243D24;
+.proximo-texto span {
+  color: #B7D957;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.proximo-texto h2 {
+  margin: 6px 0;
   font-size: 19px;
-  font-weight: 700;
 }
 
-.destaque-texto p,
-.resumo-texto p {
+.proximo-texto p {
   margin: 0;
-  color: #526052;
-  font-size: 16px;
-  line-height: 1.6;
+  color: #E2EAD9;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* Seções */
+/* ===== TÍTULOS DAS SEÇÕES ===== */
 .secao {
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 
-.titulo-secao {
-  margin-bottom: 16px;
-}
-
-.secao h2,
-.titulo-secao h2 {
-  margin: 0;
+.titulo-secao h2,
+.secao > h2 {
+  margin: 0 0 16px;
   color: #243D24;
-  font-size: 23px;
+  font-size: 21px;
+}
+
+.titulo-secao a {
+  color: #526B37;
+  font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
 }
 
-/* Cartões de medicamentos */
-.cartao-vazio,
-.cartao-resumo {
-  padding: 22px;
-  border: 1px solid #E6EAE0;
-  border-radius: 18px;
-  background: #FFFFFF;
-}
-
+/* ===== CARTÃO SEM MEDICAMENTOS ===== */
 .cartao-vazio {
+  padding: 24px 20px;
+  border: 1px solid #E3E9DA;
+  border-radius: 22px;
+  background: white;
   text-align: center;
 }
 
-.cartao-vazio .resumo-icone {
+.vazio-icone {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
   margin: 0 auto 14px;
+  border-radius: 18px;
   background: #EFF8D8;
+  color: #526B37;
+  font-size: 29px;
 }
 
 .cartao-vazio h3 {
   margin: 0 0 10px;
   color: #243D24;
-  font-size: 20px;
+  font-size: 19px;
 }
 
 .cartao-vazio p {
   margin: 0;
-  color: #596254;
-  font-size: 17px;
+  color: #626B5C;
+  font-size: 16px;
   line-height: 1.6;
 }
 
-.cartao-resumo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.cartao-resumo .resumo-icone {
-  background: #EFF8D8;
-}
-
-/* Atalhos */
-.acoes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.acao {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-height: 68px;
-  padding: 12px 16px;
-  border: 1px solid #E6EAE0;
-  border-radius: 16px;
-  background: #FFFFFF;
-  color: #243D24;
-  text-align: left;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.acao-icone {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  font-size: 23px;
-}
-
-.verde {
-  background: #EFF8D8;
-  color: #526B37;
-}
-
-.amarelo {
-  background: #FFF2D5;
-  color: #85652A;
-}
-
-.seta {
-  margin-left: auto;
-  color: #75816D;
-  font-size: 20px;
-}
-
-/* Rodapé */
-.rodape {
+/* ===== BOTÃO ADICIONAR REMÉDIO ===== */
+.botao-adicionar {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 0;
+  min-height: 50px;
+  margin-top: 20px;
+  border-radius: 15px;
+  background: #B7D957;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.botao-adicionar ion-icon {
+  font-size: 22px;
+}
+
+/* ===== ATALHOS DE NAVEGAÇÃO ===== */
+.atalhos {
+  display: grid;
+  gap: 12px;
+}
+
+.atalho {
+  gap: 12px;
+  min-height: 70px;
+  padding: 12px;
+  border-radius: 17px;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.remedios {
+  background: #EFF8D8;
+}
+
+.historico {
+  background: #FFF2D5;
+}
+
+.perfil {
+  background: #E8F0DC;
+}
+
+.atalho-icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: white;
+  font-size: 23px;
+}
+
+.seta {
+  margin-left: auto;
+  font-size: 20px;
+}
+
+/* ===== RODAPÉ ===== */
+.rodape {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 0;
   color: #68745E;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .rodape ion-icon {
   color: #72963B;
-  font-size: 20px;
+  font-size: 19px;
 }
 
-.rodape p {
-  margin: 0;
-}
-
-/* Ajustes para celulares pequenos */
+/* ===== AJUSTES PARA TELAS PEQUENAS ===== */
 @media (max-width: 360px) {
   .conteudo {
-    padding: 20px 14px 28px;
+    padding-inline: 14px;
   }
 
-  .cartao-destaque,
-  .cartao-vazio,
-  .cartao-resumo {
+  .cartao-proximo {
     padding: 16px;
   }
 }

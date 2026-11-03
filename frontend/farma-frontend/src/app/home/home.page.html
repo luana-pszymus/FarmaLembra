@@ -2,107 +2,107 @@
 <ion-content [fullscreen]="true" class="inicio">
   <main class="conteudo">
 
+    <!-- ===== CABEÇALHO E MARCA ===== -->
     <header class="cabecalho">
       <div class="marca">
-        <div class="icone-marca">+</div>
+        <div class="marca-icone">
+          <ion-icon name="heart"></ion-icon>
+          <span>+</span>
+        </div>
         <span>FarmaLembra</span>
       </div>
 
-      <button class="botao-perfil" aria-label="Abrir perfil">
-        <ion-icon name="person-circle-outline"></ion-icon>
+      <button class="notificacao" aria-label="Notificações">
+        <ion-icon name="notifications-outline"></ion-icon>
       </button>
     </header>
 
+    <!-- ===== BOAS-VINDAS ===== -->
     <section class="boas-vindas">
-      <p class="saudacao">CUIDAR DE VOCÊ É IMPORTANTE</p>
+      <p class="etiqueta">SUA SAÚDE EM PRIMEIRO LUGAR</p>
       <h1>Olá! 👋</h1>
-      <p class="descricao">
-        Vamos cuidar da sua saúde hoje?
-      </p>
+      <p>Vamos cuidar da sua saúde hoje?</p>
     </section>
 
-    <section class="cartao-destaque">
-      <div class="destaque-icone">
-        <ion-icon name="heart-outline"></ion-icon>
+    <!-- ===== DESTAQUE DO PRÓXIMO REMÉDIO ===== -->
+    <section class="cartao-proximo">
+      <div class="proximo-icone">
+        <ion-icon name="alarm-outline"></ion-icon>
       </div>
 
-      <div class="destaque-texto">
-        <h2>Seu cuidado, mais simples</h2>
+      <div class="proximo-texto">
+        <span>SEU PRÓXIMO REMÉDIO</span>
+        <h2>Organize seus horários</h2>
         <p>
-          Organize seus medicamentos e acompanhe seus horários em um só lugar.
+          Adicione seus medicamentos para acompanhar
+          os horários de cada dose.
         </p>
       </div>
     </section>
 
+    <!-- ===== ÁREA DE MEDICAMENTOS ===== -->
     <section class="secao">
       <div class="titulo-secao">
-        <h2>Próximo medicamento</h2>
+        <h2>Seus remédios</h2>
+        <a routerLink="/tabs/remedios">Ver todos</a>
       </div>
 
       <div class="cartao-vazio">
-        <div class="resumo-icone">
+        <div class="vazio-icone">
           <ion-icon name="medkit-outline"></ion-icon>
         </div>
 
-        <h3>Vamos organizar seus remédios?</h3>
+        <h3>Seus remédios ficarão aqui</h3>
+
         <p>
-          Cadastre seus medicamentos para consultar os horários nesta tela.
+          Cadastre seus medicamentos para organizar
+          os horários e acompanhar seus cuidados.
         </p>
+
+        <a class="botao-adicionar" routerLink="/tabs/remedios">
+          <ion-icon name="add-outline"></ion-icon>
+          Adicionar remédio
+        </a>
       </div>
     </section>
 
+    <!-- ===== ATALHOS PARA OUTRAS TELAS ===== -->
     <section class="secao">
-      <div class="titulo-secao">
-        <h2>Seus medicamentos</h2>
-      </div>
+      <h2>O que você deseja consultar?</h2>
 
-      <div class="cartao-resumo">
-        <div class="resumo-icone">
-          <ion-icon name="calendar-outline"></ion-icon>
-        </div>
+      <div class="atalhos">
 
-        <div class="resumo-texto">
-          <h3>Organize sua rotina</h3>
-          <p>
-            Consulte os medicamentos cadastrados e suas orientações.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="secao">
-      <h2>O que você deseja fazer?</h2>
-
-      <div class="acoes">
-        <button class="acao">
-          <span class="acao-icone verde">
+        <a class="atalho remedios" routerLink="/tabs/remedios">
+          <div class="atalho-icone">
             <ion-icon name="medkit-outline"></ion-icon>
-          </span>
+          </div>
           <span>Meus remédios</span>
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
-        </button>
+        </a>
 
-        <button class="acao">
-          <span class="acao-icone amarelo">
+        <a class="atalho historico" routerLink="/tabs/historico">
+          <div class="atalho-icone">
             <ion-icon name="time-outline"></ion-icon>
-          </span>
+          </div>
           <span>Meu histórico</span>
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
-        </button>
+        </a>
 
-        <button class="acao">
-          <span class="acao-icone verde">
+        <a class="atalho perfil" routerLink="/tabs/perfil">
+          <div class="atalho-icone">
             <ion-icon name="person-outline"></ion-icon>
-          </span>
+          </div>
           <span>Meu perfil</span>
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
-        </button>
+        </a>
+
       </div>
     </section>
 
+    <!-- ===== MENSAGEM FINAL ===== -->
     <footer class="rodape">
-      <ion-icon name="leaf-outline"></ion-icon>
-      <p>Pequenos cuidados fazem a diferença.</p>
+      <ion-icon name="heart"></ion-icon>
+      <span>Pequenos cuidados fazem a diferença.</span>
     </footer>
 
   </main>
