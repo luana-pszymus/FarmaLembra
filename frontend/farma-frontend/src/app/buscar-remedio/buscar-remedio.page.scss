@@ -1,0 +1,148 @@
+
+/* ===== FUNDO E ESTRUTURA ===== */
+.pagina-busca {
+  --background: #FAFCF7;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 20px 35px;
+  color: #101810;
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 28px;
+  color: #526B37;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.voltar ion-icon {
+  font-size: 21px;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: 30px;
+}
+
+.etiqueta {
+  margin-bottom: 10px;
+  color: #728B3D;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 10px;
+  color: #243D24;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.cabecalho > p:last-child {
+  margin: 0;
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* ===== CAMPO DE PESQUISA ===== */
+form label {
+  display: block;
+  margin-bottom: 9px;
+  color: #243D24;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.campo-pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.campo-pesquisa ion-input {
+  flex: 1;
+  min-height: 54px;
+  padding-inline: 14px !important;
+  border: 1px solid #E3E9DA;
+  border-radius: 14px;
+  --background: #FFFFFF;
+  --color: #101810;
+  --placeholder-color: #737B70;
+  font-size: 16px;
+}
+
+.campo-pesquisa ion-button {
+  width: 56px;
+  height: 54px;
+  margin: 0;
+  --background: #243D24;
+  --color: #FFFFFF;
+  --border-radius: 14px;
+}
+
+.campo-pesquisa ion-button ion-icon {
+  font-size: 23px;
+}
+
+/* ===== MENSAGEM ===== */
+.mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 14px;
+  background: #EFF8D8;
+  color: #435832;
+}
+
+.mensagem ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 21px;
+}
+
+.mensagem p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== ORIENTAÇÃO ===== */
+.orientacao {
+  margin-top: 30px;
+  padding: 19px;
+  border: 1px solid #E3E9DA;
+  border-radius: 18px;
+  background: #FFFFFF;
+}
+
+.orientacao h2 {
+  margin: 0 0 9px;
+  color: #243D24;
+  font-size: 19px;
+}
+
+.orientacao p {
+  margin: 0;
+  color: #626B5C;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ===== TELAS PEQUENAS ===== */
+@media (max-width: 360px) {
+  .conteudo {
+    padding-inline: 14px;
+  }
+}

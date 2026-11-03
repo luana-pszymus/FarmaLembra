@@ -1,0 +1,60 @@
+
+<ion-content [fullscreen]="true" class="pagina-busca">
+  <main class="conteudo">
+
+    <!-- ===== VOLTAR ===== -->
+    <a class="voltar" routerLink="/tabs/remedios/novo">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Voltar
+    </a>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="cabecalho">
+      <p class="etiqueta">ADICIONAR MEDICAMENTO</p>
+      <h1>Procurar remédio</h1>
+      <p>
+        Digite o nome do medicamento que deseja adicionar.
+        Você poderá conferir a apresentação correta antes de continuar.
+      </p>
+    </header>
+
+    <!-- ===== CAMPO DE PESQUISA ===== -->
+    <form (ngSubmit)="pesquisar()">
+      <label for="nome-remedio">Nome do medicamento</label>
+
+      <div class="campo-pesquisa">
+        <ion-input
+          id="nome-remedio"
+          name="nomeRemedio"
+          [(ngModel)]="nomeRemedio"
+          placeholder="Ex.: nome do medicamento"
+          type="text"
+          autocomplete="off">
+        </ion-input>
+
+        <ion-button type="submit" aria-label="Pesquisar medicamento">
+          <ion-icon name="search-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </form>
+
+    <!-- ===== MENSAGEM DA PESQUISA ===== -->
+    @if (mensagem) {
+      <div class="mensagem">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <p>{{ mensagem }}</p>
+      </div>
+    }
+
+    <!-- ===== ORIENTAÇÃO ===== -->
+    <section class="orientacao">
+      <h2>Antes de adicionar</h2>
+      <p>
+        Confira o nome, a concentração e a apresentação do medicamento.
+        Essas informações não substituem a dose e os horários indicados
+        pelo profissional de saúde.
+      </p>
+    </section>
+
+  </main>
+</ion-content>

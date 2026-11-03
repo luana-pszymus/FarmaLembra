@@ -62,19 +62,14 @@ export const routes: Routes = [
         },
       },
 
-      // ===== FUTURA PESQUISA DE MEDICAMENTOS =====
-      {
-        path: 'remedios/novo/buscar',
-        loadComponent: () =>
-          import('./paginas/pagina-placeholder.page').then(
-            (m) => m.PaginaPlaceholderPage,
-          ),
-        data: {
-          titulo: 'Procurar medicamento',
-          descricao: 'Aqui você poderá pesquisar pelo nome do remédio.',
-          icone: 'medkit-outline',
-        },
-      },
+     // ===== PESQUISA DE MEDICAMENTOS =====
+{
+  path: 'remedios/novo/buscar',
+  loadComponent: () =>
+    import('./buscar-remedio/buscar-remedio.page').then(
+      (m) => m.BuscarRemedioPage,
+    ),
+},
 
       // ===== HISTÓRICO =====
       {
