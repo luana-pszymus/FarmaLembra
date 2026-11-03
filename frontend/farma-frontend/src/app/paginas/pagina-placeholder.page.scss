@@ -1,0 +1,89 @@
+
+.pagina {
+  --background: #FAFCF7;
+  color: #101810;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 28px 22px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #243D24;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 52px;
+}
+
+.marca-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  background: #B7D957;
+  font-size: 27px;
+}
+
+.cabecalho {
+  margin-bottom: 30px;
+}
+
+.etiqueta {
+  color: #71883D;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 8px 0;
+  color: #243D24;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.cabecalho > p:last-child {
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cartao-vazio {
+  padding: 30px 22px;
+  border: 1px solid #E3E9DA;
+  border-radius: 22px;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 32px;
+}
+
+.cartao-vazio h2 {
+  color: #243D24;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.cartao-vazio p {
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.6;
+}
