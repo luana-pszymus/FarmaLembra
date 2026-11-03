@@ -1,0 +1,56 @@
+
+<ion-content [fullscreen]="true" class="pagina-remedios">
+  <main class="conteudo">
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="cabecalho">
+      <p class="etiqueta">SUA ROTINA DE CUIDADOS</p>
+      <h1>Meus remédios</h1>
+      <p>Organize seus medicamentos em um só lugar.</p>
+    </header>
+
+    <!-- ===== BOTÃO DE CADASTRO ===== -->
+    <a class="botao-adicionar" routerLink="/tabs/remedios/novo">
+      <ion-icon name="add-outline"></ion-icon>
+      Adicionar remédio
+    </a>
+
+    <!-- ===== LISTA DE MEDICAMENTOS ===== -->
+    <section class="secao-lista">
+      <div class="titulo-lista">
+        <h2>Seus medicamentos</h2>
+        <span>0 cadastrados</span>
+      </div>
+
+      <!-- Mensagem exibida quando a lista está vazia -->
+      <div class="estado-vazio">
+        <div class="vazio-icone">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+
+        <h3>Nenhum remédio cadastrado</h3>
+
+        <p>
+          Quando você adicionar um medicamento,
+          ele aparecerá aqui com as informações
+          e os horários de uso.
+        </p>
+
+        <a routerLink="/tabs/remedios/novo">
+          <ion-icon name="add-outline"></ion-icon>
+          Cadastrar meu primeiro remédio
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== ORIENTAÇÃO AO USUÁRIO ===== -->
+    <div class="aviso">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>
+        Lembre-se: siga sempre as orientações
+        de uso indicadas pelo profissional de saúde.
+      </p>
+    </div>
+
+  </main>
+</ion-content>

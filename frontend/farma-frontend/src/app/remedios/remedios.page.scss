@@ -1,0 +1,168 @@
+
+/* ===== FUNDO E ESTRUTURA ===== */
+.pagina-remedios {
+  --background: #FAFCF7;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 28px 20px 35px;
+  color: #101810;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.etiqueta {
+  margin-bottom: 10px;
+  color: #728B3D;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 8px;
+  color: #243D24;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.cabecalho > p:last-child {
+  margin: 0;
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* ===== BOTÃO ADICIONAR ===== */
+.botao-adicionar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 54px;
+  margin-bottom: 34px;
+  border-radius: 16px;
+  background: #B7D957;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.botao-adicionar ion-icon {
+  font-size: 23px;
+}
+
+/* ===== TÍTULO DA LISTA ===== */
+.secao-lista {
+  margin-bottom: 25px;
+}
+
+.titulo-lista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.titulo-lista h2 {
+  margin: 0;
+  color: #243D24;
+  font-size: 21px;
+}
+
+.titulo-lista span {
+  color: #737B70;
+  font-size: 13px;
+}
+
+/* ===== ESTADO SEM MEDICAMENTOS ===== */
+.estado-vazio {
+  padding: 30px 22px;
+  border: 1px solid #E3E9DA;
+  border-radius: 22px;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.vazio-icone {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 18px;
+  border-radius: 21px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 34px;
+}
+
+.estado-vazio h3 {
+  margin: 0 0 10px;
+  color: #243D24;
+  font-size: 20px;
+}
+
+.estado-vazio p {
+  margin: 0;
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.estado-vazio a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  margin-top: 18px;
+  color: #526B37;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ===== AVISO DE ORIENTAÇÃO ===== */
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #EFF8D8;
+  color: #435832;
+}
+
+.aviso ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 21px;
+}
+
+.aviso p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== TELAS PEQUENAS ===== */
+@media (max-width: 360px) {
+  .conteudo {
+    padding-inline: 14px;
+  }
+
+  .estado-vazio {
+    padding: 25px 16px;
+  }
+
+  .titulo-lista h2 {
+    font-size: 19px;
+  }
+}

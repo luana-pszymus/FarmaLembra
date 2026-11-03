@@ -1,0 +1,75 @@
+
+<ion-content [fullscreen]="true" class="pagina-adicionar">
+  <main class="conteudo">
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="cabecalho">
+      <p class="etiqueta">NOVO MEDICAMENTO</p>
+      <h1>Como deseja adicionar?</h1>
+      <p>
+        Escolha uma forma de incluir seu medicamento.
+        Vamos ajudar você durante o cadastro.
+      </p>
+    </header>
+
+    <!-- ===== OPÇÃO: PRESCRIÇÃO MÉDICA ===== -->
+    <a class="opcao prescricao" routerLink="/tabs/remedios/novo/prescricao">
+      <div class="icone">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </div>
+
+      <div class="texto-opcao">
+        <h2>Fotografar prescrição</h2>
+        <p>
+          Leia sua receita e preencha os dados
+          do tratamento para você conferir.
+        </p>
+      </div>
+
+      <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+    </a>
+
+    <!-- ===== OPÇÃO: EMBALAGEM ===== -->
+    <a class="opcao embalagem" routerLink="/tabs/remedios/novo/caixa">
+      <div class="icone">
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+
+      <div class="texto-opcao">
+        <h2>Escanear embalagem</h2>
+        <p>
+          Use a câmera para identificar o medicamento
+          e sua concentração.
+        </p>
+      </div>
+
+      <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+    </a>
+
+    <!-- ===== OPÇÃO: PESQUISA ===== -->
+    <a class="opcao pesquisa" routerLink="/tabs/remedios/novo/buscar">
+      <div class="icone">
+        <ion-icon name="search-outline"></ion-icon>
+      </div>
+
+      <div class="texto-opcao">
+        <h2>Procurar e adicionar</h2>
+        <p>
+          Digite o nome do medicamento e escolha
+          a opção correspondente.
+        </p>
+      </div>
+
+      <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+    </a>
+
+    <!-- ===== ORIENTAÇÃO ===== -->
+    <div class="orientacao">
+      <p>
+        Você poderá conferir as informações antes
+        de salvar o medicamento.
+      </p>
+    </div>
+
+  </main>
+</ion-content>

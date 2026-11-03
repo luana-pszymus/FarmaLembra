@@ -1,0 +1,137 @@
+
+/* ===== FUNDO E ESTRUTURA ===== */
+.pagina-adicionar {
+  --background: #FAFCF7;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 20px 35px;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: 30px;
+}
+
+.etiqueta {
+  margin-bottom: 10px;
+  color: #728B3D;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 10px;
+  color: #243D24;
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.cabecalho > p:last-child {
+  margin: 0;
+  color: #626B5C;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* ===== CARTÕES DAS OPÇÕES ===== */
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #E3E9DA;
+  border-radius: 20px;
+  background: #FFFFFF;
+  color: #243D24;
+  text-decoration: none;
+}
+
+.icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+  font-size: 27px;
+}
+
+.prescricao .icone {
+  background: #EFF8D8;
+  color: #526B37;
+}
+
+.embalagem .icone {
+  background: #E8F0DC;
+  color: #435E31;
+}
+
+.pesquisa .icone {
+  background: #FFF2D5;
+  color: #856B32;
+}
+
+/* ===== TEXTOS DOS CARTÕES ===== */
+.texto-opcao {
+  flex: 1;
+  min-width: 0;
+}
+
+.texto-opcao h2 {
+  margin: 0 0 6px;
+  color: #243D24;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.texto-opcao p {
+  margin: 0;
+  color: #626B5C;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.seta {
+  flex-shrink: 0;
+  color: #71805F;
+  font-size: 21px;
+}
+
+/* ===== ORIENTAÇÃO FINAL ===== */
+.orientacao {
+  margin-top: 25px;
+  padding: 16px;
+  border-radius: 15px;
+  background: #EFF8D8;
+  text-align: center;
+}
+
+.orientacao p {
+  margin: 0;
+  color: #435832;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== AJUSTES PARA TELAS PEQUENAS ===== */
+@media (max-width: 360px) {
+  .conteudo {
+    padding-inline: 14px;
+  }
+
+  .opcao {
+    gap: 10px;
+    padding: 15px 11px;
+  }
+
+  .icone {
+    width: 47px;
+    height: 47px;
+    font-size: 24px;
+  }
+}
