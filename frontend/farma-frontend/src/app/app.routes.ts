@@ -9,6 +9,15 @@ export const routes: Routes = [
       import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
+      
+      // ===== CADASTRO DOS DADOS DO TRATAMENTO =====
+{
+  path: 'remedios/novo/dados',
+  loadComponent: () =>
+    import('./cadastro-tratamento/cadastro-tratamento.page').then(
+      (m) => m.CadastroTratamentoPage,
+    ),
+},
       // ===== INÍCIO =====
       {
         path: 'home',

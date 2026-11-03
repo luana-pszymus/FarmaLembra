@@ -1,0 +1,183 @@
+
+<ion-content [fullscreen]="true" class="pagina-cadastro">
+  <main class="conteudo">
+
+    <!-- ===== VOLTAR ===== -->
+    <a class="voltar" routerLink="/tabs/remedios">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Voltar
+    </a>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="cabecalho">
+      <p class="etiqueta">NOVO MEDICAMENTO</p>
+      <h1>Dados do tratamento</h1>
+      <p>
+        Confira as informações do medicamento e preencha
+        como ele foi indicado para você.
+      </p>
+    </header>
+
+    <!-- ===== FORMULÁRIO ===== -->
+    <form (ngSubmit)="conferirDados()">
+
+      <!-- ===== IDENTIFICAÇÃO ===== -->
+      <section class="grupo">
+        <h2>Sobre o medicamento</h2>
+
+        <div class="campo">
+          <label for="nome">Nome do medicamento *</label>
+          <input
+            id="nome"
+            name="nome"
+            type="text"
+            [(ngModel)]="nome"
+            placeholder="Digite o nome"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="apresentacao">Apresentação</label>
+          <input
+            id="apresentacao"
+            name="apresentacao"
+            type="text"
+            [(ngModel)]="apresentacao"
+            placeholder="Ex.: comprimido, solução, gotas">
+        </div>
+
+        <div class="campo">
+          <label for="concentracao">Concentração</label>
+          <input
+            id="concentracao"
+            name="concentracao"
+            type="text"
+            [(ngModel)]="concentracao"
+            placeholder="Ex.: conforme indicado na embalagem">
+        </div>
+      </section>
+
+      <!-- ===== DOSE ===== -->
+      <section class="grupo">
+        <h2>Como você deve tomar?</h2>
+
+        <div class="campo">
+          <label for="dose">Quantidade por tomada *</label>
+          <input
+            id="dose"
+            name="dose"
+            type="text"
+            [(ngModel)]="dose"
+            placeholder="Ex.: 1"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="unidadeDose">Unidade</label>
+          <select
+            id="unidadeDose"
+            name="unidadeDose"
+            [(ngModel)]="unidadeDose">
+            <option value="comprimido">Comprimido(s)</option>
+            <option value="cápsula">Cápsula(s)</option>
+            <option value="gota">Gota(s)</option>
+            <option value="mL">mL</option>
+            <option value="colher">Colher(es)</option>
+            <option value="unidade">Unidade(s)</option>
+            <option value="outra">Outra</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="frequencia">Frequência *</label>
+          <select
+            id="frequencia"
+            name="frequencia"
+            [(ngModel)]="frequencia">
+            <option value="Todos os dias">Todos os dias</option>
+            <option value="Dias alternados">Dias alternados</option>
+            <option value="Dias específicos">Dias específicos</option>
+            <option value="Conforme orientação">Conforme orientação</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="horarios">Horários de uso</label>
+          <input
+            id="horarios"
+            name="horarios"
+            type="text"
+            [(ngModel)]="horarios"
+            placeholder="Ex.: 08:00 e 20:00">
+          <small>Se houver mais de um horário, separe-os por vírgula.</small>
+        </div>
+      </section>
+
+      <!-- ===== PERÍODO ===== -->
+      <section class="grupo">
+        <h2>Período do tratamento</h2>
+
+        <div class="campo">
+          <label for="dataInicio">
+            <ion-icon name="calendar-outline"></ion-icon>
+            Data de início *
+          </label>
+          <input
+            id="dataInicio"
+            name="dataInicio"
+            type="date"
+            [(ngModel)]="dataInicio"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="dataFim">
+            <ion-icon name="calendar-outline"></ion-icon>
+            Data de término
+          </label>
+          <input
+            id="dataFim"
+            name="dataFim"
+            type="date"
+            [(ngModel)]="dataFim">
+          <small>Deixe em branco se não houver uma data de término definida.</small>
+        </div>
+      </section>
+
+      <!-- ===== OBSERVAÇÕES ===== -->
+      <section class="grupo">
+        <h2>Orientações adicionais</h2>
+
+        <div class="campo">
+          <label for="observacoes">Observações</label>
+          <textarea
+            id="observacoes"
+            name="observacoes"
+            [(ngModel)]="observacoes"
+            rows="4"
+            placeholder="Ex.: tomar após uma refeição">
+          </textarea>
+        </div>
+      </section>
+
+      <!-- ===== MENSAGEM ===== -->
+      @if (mensagem) {
+        <div class="mensagem">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <p>{{ mensagem }}</p>
+        </div>
+      }
+
+      <!-- ===== BOTÃO DE CONFERÊNCIA ===== -->
+      <button class="botao-confirmar" type="submit">
+        Conferir informações
+      </button>
+
+      <p class="nota">
+        * Campos obrigatórios. Preencha conforme a prescrição
+        ou orientação do profissional de saúde.
+      </p>
+
+    </form>
+  </main>
+</ion-content>
