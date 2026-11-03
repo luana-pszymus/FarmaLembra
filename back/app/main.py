@@ -4,8 +4,8 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.database import Base, engine, get_db
-from app.models.medicamento import Medicamento
-from app.routers import medicamento
+from app.models.medicamentos import Medicamento
+from app.routers import medicamentos
 
 # Cria as tabelas registradas nos modelos.
 Base.metadata.create_all(bind=engine)
@@ -18,7 +18,7 @@ app = FastAPI(
 )
 
 # Registra as rotas de medicamentos.
-app.include_router(medicamento.router)
+app.include_router(medicamentos.router)
 
 
 @app.get("/")
