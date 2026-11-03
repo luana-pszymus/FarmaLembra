@@ -58,18 +58,13 @@ export const routes: Routes = [
       },
 
       // ===== LEITURA DA EMBALAGEM =====
-      {
-        path: 'remedios/novo/caixa',
-        loadComponent: () =>
-          import('./paginas/pagina-placeholder.page').then(
-            (m) => m.PaginaPlaceholderPage,
-          ),
-        data: {
-          titulo: 'Escanear embalagem',
-          descricao: 'Aqui você poderá identificar seu medicamento.',
-          icone: 'medkit-outline',
-        },
-      },
+{
+  path: 'remedios/novo/caixa',
+  loadComponent: () =>
+    import('./escanear-embalagem/escanear-embalagem.page').then(
+      (m) => m.EscanearEmbalagemPage,
+    ),
+},
 
       // ===== PESQUISA DE MEDICAMENTOS =====
       {
