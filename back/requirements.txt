@@ -8,3 +8,7 @@ alembic
 pytest
 httpx
 python-dotenv
+Kivy==2.3.1
+KivyMD==2.0.0
+pygame==2.6.1
+pycairo==1.29.1
