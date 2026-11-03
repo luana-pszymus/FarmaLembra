@@ -1,37 +1,79 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
 
-/* Core CSS required for Ionic components to work properly */
+/* Estilos principais do Ionic */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Utilitários do Ionic */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Identidade visual do FarmaLembra */
+:root {
+  color-scheme: light;
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+  --ion-font-family: 'Arial', sans-serif;
+
+  --ion-color-primary: #243D24;
+  --ion-color-primary-rgb: 36, 61, 36;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #203620;
+  --ion-color-primary-tint: #3a523a;
+
+  --ion-color-secondary: #B7D957;
+  --ion-color-secondary-rgb: 183, 217, 87;
+  --ion-color-secondary-contrast: #101810;
+  --ion-color-secondary-contrast-rgb: 16, 24, 16;
+  --ion-color-secondary-shade: #a1bf4d;
+  --ion-color-secondary-tint: #bfdd68;
+
+  --ion-background-color: #FAFCF7;
+  --ion-text-color: #101810;
+
+  --farma-verde: #243D24;
+  --farma-lima: #B7D957;
+  --farma-claro: #EFF8D8;
+  --farma-fundo: #FAFCF7;
+  --farma-escuro: #101810;
+  --farma-branco: #FFFFFF;
+  --farma-cinza: #737B70;
+  --farma-borda: #E3E9DA;
+}
+
+/* Configuração geral */
+html,
+body {
+  background: var(--farma-fundo);
+  color: var(--farma-escuro);
+  font-family: var(--ion-font-family);
+}
+
+/* Evita que os cartões tenham aparência diferente */
+ion-card {
+  --background: var(--farma-branco);
+  color: var(--farma-escuro);
+}
+
+/* Campos de formulário */
+ion-input,
+ion-textarea,
+ion-select {
+  --highlight-color-focused: var(--farma-verde);
+}
+
+/* Botões */
+ion-button {
+  --border-radius: 14px;
+  font-weight: 600;
+}
+
+/* Rolagem */
+* {
+  box-sizing: border-box;
+}
