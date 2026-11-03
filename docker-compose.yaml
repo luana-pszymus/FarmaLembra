@@ -1,0 +1,39 @@
+
+services:
+  db:
+    image: postgres:16
+    container_name: farmalembra-db
+    restart: always
+    environment:
+      POSTGRES_USER: farmalembra
+      POSTGRES_PASSWORD: farmalembra123
+      POSTGRES_DB: farmalembra
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U farmalembra -d farmalembra"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./back
+    container_name: farmalembra-api
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+psycopg://farmalembra:farmalembra123@db:5432/farmalembra
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+cd /workspaces/FarmaLembra
+
+git add docker-compose.yaml
+git commit -m "feat: configura PostgreSQL e backend com Docker Compose"
