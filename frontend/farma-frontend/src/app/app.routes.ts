@@ -9,15 +9,6 @@ export const routes: Routes = [
       import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
-      
-      // ===== CADASTRO DOS DADOS DO TRATAMENTO =====
-{
-  path: 'remedios/novo/dados',
-  loadComponent: () =>
-    import('./cadastro-tratamento/cadastro-tratamento.page').then(
-      (m) => m.CadastroTratamentoPage,
-    ),
-},
       // ===== INÍCIO =====
       {
         path: 'home',
@@ -43,7 +34,16 @@ export const routes: Routes = [
           ),
       },
 
-      // ===== FUTURA LEITURA DA PRESCRIÇÃO =====
+      // ===== CADASTRO DOS DADOS DO TRATAMENTO =====
+      {
+        path: 'remedios/novo/dados',
+        loadComponent: () =>
+          import('./cadastro-tratamento/cadastro-tratamento.page').then(
+            (m) => m.CadastroTratamentoPage,
+          ),
+      },
+
+      // ===== LEITURA DA PRESCRIÇÃO =====
       {
         path: 'remedios/novo/prescricao',
         loadComponent: () =>
@@ -57,7 +57,7 @@ export const routes: Routes = [
         },
       },
 
-      // ===== FUTURA LEITURA DA EMBALAGEM =====
+      // ===== LEITURA DA EMBALAGEM =====
       {
         path: 'remedios/novo/caixa',
         loadComponent: () =>
@@ -71,14 +71,14 @@ export const routes: Routes = [
         },
       },
 
-     // ===== PESQUISA DE MEDICAMENTOS =====
-{
-  path: 'remedios/novo/buscar',
-  loadComponent: () =>
-    import('./buscar-remedio/buscar-remedio.page').then(
-      (m) => m.BuscarRemedioPage,
-    ),
-},
+      // ===== PESQUISA DE MEDICAMENTOS =====
+      {
+        path: 'remedios/novo/buscar',
+        loadComponent: () =>
+          import('./buscar-remedio/buscar-remedio.page').then(
+            (m) => m.BuscarRemedioPage,
+          ),
+      },
 
       // ===== HISTÓRICO =====
       {

@@ -2,7 +2,7 @@
 // ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import {
   IonContent,
@@ -40,7 +40,7 @@ export class BuscarRemedioPage {
   nomeRemedio = '';
   mensagem = '';
 
-  constructor() {
+  constructor(private router: Router) {
     // ===== REGISTRO DOS ÍCONES =====
     addIcons({
       searchOutline,
@@ -56,7 +56,11 @@ export class BuscarRemedioPage {
       return;
     }
 
-    this.mensagem =
-      'A pesquisa será conectada ao catálogo de medicamentos quando a API estiver disponível.';
+    // ===== ENVIA O NOME PARA O CADASTRO =====
+    this.router.navigate(['/tabs/remedios/novo/dados'], {
+      queryParams: {
+        nome: this.nomeRemedio.trim(),
+      },
+    });
   }
 }
