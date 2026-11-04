@@ -1,12 +1,11 @@
+
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from app.database import Base, engine, get_db
-from app.models.medicamento import Medicamento
+
 from app.database import get_db
 from app.routers import medicamentos
-
-Base.metadata.create_all(bind=engine)
+from app.routers import pacientes
 
 app = FastAPI(
     title="FarmaLembra API",
@@ -15,6 +14,7 @@ app = FastAPI(
 )
 
 app.include_router(medicamentos.router)
+app.include_router(pacientes.router)
 
 
 @app.get("/")
