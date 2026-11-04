@@ -1,0 +1,166 @@
+
+<ion-content [fullscreen]="true">
+  <main class="pagina-login">
+    <section class="conteudo-login">
+
+      <!-- Identidade do aplicativo -->
+      <div class="marca">
+        <div class="icone-marca">
+          <span>+</span>
+        </div>
+
+        <h1>Farma<span>Lembra</span></h1>
+        <p>Cuidando da sua saúde, todos os dias.</p>
+      </div>
+
+      <!-- Título -->
+      <div class="titulo-login">
+        <h2>{{ modoCadastro ? 'Crie sua conta' : 'Bem-vindo de volta!' }}</h2>
+
+        <p>
+          {{
+            modoCadastro
+              ? 'Cadastre-se para organizar seus medicamentos.'
+              : 'Entre para acompanhar seus medicamentos e tratamentos.'
+          }}
+        </p>
+      </div>
+
+      <!-- Formulário -->
+      <form (ngSubmit)="entrar()">
+
+        <div class="campo" *ngIf="modoCadastro">
+          <label for="nome">Nome completo</label>
+
+          <input
+            id="nome"
+            type="text"
+            name="nome"
+            [(ngModel)]="nome"
+            placeholder="Digite seu nome"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="seuemail@exemplo.com"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+
+          <div class="campo-senha">
+            <input
+              id="senha"
+              [type]="mostrarSenha ? 'text' : 'password'"
+              name="senha"
+              [(ngModel)]="senha"
+              placeholder="Digite sua senha"
+              [autocomplete]="modoCadastro ? 'new-password' : 'current-password'"
+              required
+            />
+
+            <button
+              type="button"
+              class="botao-visualizar"
+              (click)="mostrarSenha = !mostrarSenha"
+              [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'"
+            >
+              {{ mostrarSenha ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="campo" *ngIf="modoCadastro">
+          <label for="confirmarSenha">Confirmar senha</label>
+
+          <input
+            id="confirmarSenha"
+            type="password"
+            name="confirmarSenha"
+            [(ngModel)]="confirmarSenha"
+            placeholder="Digite novamente sua senha"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <!-- Recuperação de senha -->
+        <div class="recuperar" *ngIf="!modoCadastro">
+          <button type="button" (click)="recuperarSenha()">
+            Esqueci minha senha
+          </button>
+        </div>
+
+        <!-- Mensagem de erro -->
+        <div class="mensagem-erro" *ngIf="mensagemErro">
+          {{ mensagemErro }}
+        </div>
+
+        <!-- Botão principal -->
+        <ion-button
+          expand="block"
+          type="submit"
+          class="botao-principal"
+          [disabled]="carregando"
+        >
+          <ion-spinner
+            *ngIf="carregando"
+            name="crescent"
+          ></ion-spinner>
+
+          <span *ngIf="!carregando">
+            {{ modoCadastro ? 'Criar minha conta' : 'Entrar' }}
+          </span>
+        </ion-button>
+
+      </form>
+
+      <!-- Separador -->
+      <div class="separador">
+        <span></span>
+        <p>ou continue com</p>
+        <span></span>
+      </div>
+
+      <!-- Google -->
+      <button
+        type="button"
+        class="botao-google"
+        (click)="entrarComGoogle()"
+        [disabled]="carregando"
+      >
+        <strong class="icone-google">G</strong>
+        Continuar com Google
+      </button>
+
+      <!-- Alternar login e cadastro -->
+      <div class="alternar-conta">
+        <span>
+          {{ modoCadastro ? 'Já possui uma conta?' : 'Ainda não possui uma conta?' }}
+        </span>
+
+        <button type="button" (click)="alternarModo()">
+          {{ modoCadastro ? 'Entrar' : 'Criar conta' }}
+        </button>
+      </div>
+
+      <!-- Rodapé -->
+      <footer>
+        FarmaLembra · Sua saúde em boas mãos.
+      </footer>
+
+    </section>
+  </main>
+</ion-content>
