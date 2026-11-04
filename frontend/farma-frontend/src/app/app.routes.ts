@@ -1,4 +1,4 @@
-
+// ===== IMPORTAÇÃO DAS ROTAS =====
 import type { Routes } from '@angular/router';
 
 // ===== ROTAS PRINCIPAIS DO APLICATIVO =====
@@ -9,6 +9,7 @@ export const routes: Routes = [
       import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
+
       // ===== INÍCIO =====
       {
         path: 'home',
@@ -22,6 +23,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./remedios/remedios.page').then(
             (m) => m.RemediosPage,
+          ),
+      },
+
+      // ===== DETALHES DE UM MEDICAMENTO =====
+      {
+        path: 'remedios/detalhes',
+        loadComponent: () =>
+          import('./detalhes-remedio/detalhes-remedio.page').then(
+            (m) => m.DetalhesRemedioPage,
           ),
       },
 
@@ -44,22 +54,22 @@ export const routes: Routes = [
       },
 
       // ===== LEITURA DA PRESCRIÇÃO =====
-{
-  path: 'remedios/novo/prescricao',
-  loadComponent: () =>
-    import('./escanear-prescricao/escanear-prescricao.page').then(
-      (m) => m.EscanearPrescricaoPage,
-    ),
-},
+      {
+        path: 'remedios/novo/prescricao',
+        loadComponent: () =>
+          import('./escanear-prescricao/escanear-prescricao.page').then(
+            (m) => m.EscanearPrescricaoPage,
+          ),
+      },
 
       // ===== LEITURA DA EMBALAGEM =====
-{
-  path: 'remedios/novo/caixa',
-  loadComponent: () =>
-    import('./escanear-embalagem/escanear-embalagem.page').then(
-      (m) => m.EscanearEmbalagemPage,
-    ),
-},
+      {
+        path: 'remedios/novo/caixa',
+        loadComponent: () =>
+          import('./escanear-embalagem/escanear-embalagem.page').then(
+            (m) => m.EscanearEmbalagemPage,
+          ),
+      },
 
       // ===== PESQUISA DE MEDICAMENTOS =====
       {
@@ -71,13 +81,13 @@ export const routes: Routes = [
       },
 
       // ===== HISTÓRICO =====
-{
-  path: 'historico',
-  loadComponent: () =>
-    import('./historico/historico.page').then(
-      (m) => m.HistoricoPage,
-    ),
-},
+      {
+        path: 'historico',
+        loadComponent: () =>
+          import('./historico/historico.page').then(
+            (m) => m.HistoricoPage,
+          ),
+      },
 
       // ===== PERFIL =====
       {
