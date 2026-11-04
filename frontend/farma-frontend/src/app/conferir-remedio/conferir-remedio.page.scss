@@ -1,0 +1,227 @@
+/* ===== FUNDO E ESTRUTURA ===== */
+.pagina-conferencia {
+  --background: #FAFCF7;
+}
+
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 22px 20px 40px;
+  color: #101810;
+}
+
+/* ===== VOLTAR ===== */
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #526B37;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.voltar ion-icon {
+  font-size: 21px;
+}
+
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin: 22px 0 25px;
+}
+
+.etiqueta {
+  margin: 0 0 9px;
+  color: #728B3D;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 8px;
+  color: #243D24;
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.cabecalho > p:last-child {
+  margin: 0;
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ===== CARTÕES ===== */
+.cartao {
+  margin-bottom: 16px;
+  padding: 21px;
+  border: 1px solid #E3E9DA;
+  border-radius: 20px;
+  background: #FFFFFF;
+}
+
+.cartao h2 {
+  margin: 0 0 17px;
+  color: #243D24;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+/* ===== IDENTIFICAÇÃO ===== */
+.medicamento {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icone-principal {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 19px;
+  background: #EFF8D8;
+  color: #526B37;
+  font-size: 32px;
+}
+
+.medicamento h2 {
+  margin: 0 0 6px;
+  overflow-wrap: anywhere;
+}
+
+.medicamento p {
+  margin: 0 0 5px;
+  color: #626B5C;
+  font-size: 15px;
+}
+
+.medicamento span {
+  color: #737B70;
+  font-size: 14px;
+}
+
+/* ===== INFORMAÇÕES ===== */
+.informacao {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 0;
+  border-bottom: 1px solid #EEF1E9;
+}
+
+.informacao:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.informacao span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #737B70;
+  font-size: 15px;
+}
+
+.informacao span ion-icon {
+  font-size: 18px;
+}
+
+.informacao strong {
+  color: #243D24;
+  font-size: 15px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* ===== OBSERVAÇÕES ===== */
+.observacoes {
+  margin: 0;
+  color: #626B5C;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ===== AVISO ===== */
+.aviso,
+.mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #EFF8D8;
+  color: #435832;
+}
+
+.aviso ion-icon,
+.mensagem ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 21px;
+}
+
+.aviso p,
+.mensagem p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== BOTÕES ===== */
+.botao-confirmar,
+.botao-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 15px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.botao-confirmar {
+  background: #243D24;
+  color: #FFFFFF;
+}
+
+.botao-confirmar ion-icon {
+  font-size: 22px;
+}
+
+.botao-editar {
+  border: 1px solid #E3E9DA;
+  background: #FFFFFF;
+  color: #435832;
+}
+
+/* ===== TELAS PEQUENAS ===== */
+@media (max-width: 360px) {
+  .conteudo {
+    padding-inline: 14px;
+  }
+
+  .cartao {
+    padding: 17px;
+  }
+
+  .informacao {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .informacao strong {
+    text-align: left;
+  }
+}

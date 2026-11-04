@@ -1,7 +1,8 @@
+
 // ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 
@@ -48,7 +49,10 @@ export class CadastroTratamentoPage {
   // ===== MENSAGEM DO FORMULÁRIO =====
   mensagem = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     // ===== REGISTRO DOS ÍCONES =====
     addIcons({
       arrowBackOutline,
@@ -57,26 +61,57 @@ export class CadastroTratamentoPage {
       informationCircleOutline,
     });
 
-    // ===== RECEBE OS DADOS DA ORIGEM =====
+    // ===== RECEBE TODOS OS DADOS DA ORIGEM OU DA EDIÇÃO =====
     this.route.queryParamMap.subscribe((params) => {
-      const nomeRecebido = params.get('nome');
-      const apresentacaoRecebida = params.get('apresentacao');
-      const concentracaoRecebida = params.get('concentracao');
-      const origemRecebida = params.get('origem');
 
-      if (nomeRecebido) {
-        this.nome = nomeRecebido;
+      // ===== DADOS DO MEDICAMENTO =====
+      if (params.has('nome')) {
+        this.nome = params.get('nome') ?? '';
       }
 
-      if (apresentacaoRecebida) {
-        this.apresentacao = apresentacaoRecebida;
+      if (params.has('apresentacao')) {
+        this.apresentacao = params.get('apresentacao') ?? '';
       }
 
-      if (concentracaoRecebida) {
-        this.concentracao = concentracaoRecebida;
+      if (params.has('concentracao')) {
+        this.concentracao = params.get('concentracao') ?? '';
+      }
+
+      // ===== DADOS DA DOSE =====
+      if (params.has('dose')) {
+        this.dose = params.get('dose') ?? '';
+      }
+
+      if (params.has('unidadeDose')) {
+        this.unidadeDose = params.get('unidadeDose') ?? '';
+      }
+
+      // ===== FREQUÊNCIA E HORÁRIOS =====
+      if (params.has('frequencia')) {
+        this.frequencia = params.get('frequencia') ?? '';
+      }
+
+      if (params.has('horarios')) {
+        this.horarios = params.get('horarios') ?? '';
+      }
+
+      // ===== PERÍODO DO TRATAMENTO =====
+      if (params.has('dataInicio')) {
+        this.dataInicio = params.get('dataInicio') ?? '';
+      }
+
+      if (params.has('dataFim')) {
+        this.dataFim = params.get('dataFim') ?? '';
+      }
+
+      // ===== ORIENTAÇÕES =====
+      if (params.has('observacoes')) {
+        this.observacoes = params.get('observacoes') ?? '';
       }
 
       // ===== IDENTIFICA O CAMINHO UTILIZADO =====
+      const origemRecebida = params.get('origem');
+
       if (
         origemRecebida === 'pesquisa' ||
         origemRecebida === 'embalagem' ||
@@ -84,10 +119,13 @@ export class CadastroTratamentoPage {
       ) {
         this.origem = origemRecebida;
       }
+
+      // ===== LIMPA MENSAGENS ANTERIORES =====
+      this.mensagem = '';
     });
   }
 
-  // ===== CONFERÊNCIA DOS DADOS =====
+  // ===== CONFERE E ENVIA OS DADOS =====
   conferirDados() {
     if (
       !this.nome.trim() ||
@@ -100,13 +138,28 @@ export class CadastroTratamentoPage {
       return;
     }
 
+    // ===== VALIDA O PERÍODO DO TRATAMENTO =====
     if (this.dataFim && this.dataFim < this.dataInicio) {
       this.mensagem =
         'A data de término não pode ser anterior à data de início.';
       return;
     }
 
-    this.mensagem =
-      'Dados preenchidos! A confirmação e o salvamento serão habilitados após a integração com o sistema.';
+    // ===== ENVIA TODOS OS DADOS PARA A TELA DE REVISÃO =====
+    this.router.navigate(['/tabs/remedios/novo/conferir'], {
+      queryParams: {
+        origem: this.origem,
+        nome: this.nome.trim(),
+        apresentacao: this.apresentacao,
+        concentracao: this.concentracao,
+        dose: this.dose.trim(),
+        unidadeDose: this.unidadeDose,
+        frequencia: this.frequencia,
+        horarios: this.horarios,
+        dataInicio: this.dataInicio,
+        dataFim: this.dataFim,
+        observacoes: this.observacoes,
+      },
+    });
   }
 }
