@@ -1,7 +1,7 @@
 // ===== IMPORTAÇÕES =====
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 
@@ -48,7 +48,10 @@ export class CadastroTratamentoPage {
   // ===== MENSAGEM DO FORMULÁRIO =====
   mensagem = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     // ===== REGISTRO DOS ÍCONES =====
     addIcons({
       arrowBackOutline,
@@ -64,17 +67,9 @@ export class CadastroTratamentoPage {
       const concentracaoRecebida = params.get('concentracao');
       const origemRecebida = params.get('origem');
 
-      if (nomeRecebido) {
-        this.nome = nomeRecebido;
-      }
-
-      if (apresentacaoRecebida) {
-        this.apresentacao = apresentacaoRecebida;
-      }
-
-      if (concentracaoRecebida) {
-        this.concentracao = concentracaoRecebida;
-      }
+      if (nomeRecebido) this.nome = nomeRecebido;
+      if (apresentacaoRecebida) this.apresentacao = apresentacaoRecebida;
+      if (concentracaoRecebida) this.concentracao = concentracaoRecebida;
 
       // ===== IDENTIFICA O CAMINHO UTILIZADO =====
       if (
@@ -87,7 +82,7 @@ export class CadastroTratamentoPage {
     });
   }
 
-  // ===== CONFERÊNCIA DOS DADOS =====
+  // ===== CONFERE E ENVIA OS DADOS =====
   conferirDados() {
     if (
       !this.nome.trim() ||
@@ -106,7 +101,21 @@ export class CadastroTratamentoPage {
       return;
     }
 
-    this.mensagem =
-      'Dados preenchidos! A confirmação e o salvamento serão habilitados após a integração com o sistema.';
+    // ===== ENVIA OS DADOS PARA A TELA DE REVISÃO =====
+    this.router.navigate(['/tabs/remedios/novo/conferir'], {
+      queryParams: {
+        origem: this.origem,
+        nome: this.nome.trim(),
+        apresentacao: this.apresentacao,
+        concentracao: this.concentracao,
+        dose: this.dose.trim(),
+        unidadeDose: this.unidadeDose,
+        frequencia: this.frequencia,
+        horarios: this.horarios,
+        dataInicio: this.dataInicio,
+        dataFim: this.dataFim,
+        observacoes: this.observacoes,
+      },
+    });
   }
 }

@@ -1,0 +1,117 @@
+<ion-content [fullscreen]="true" class="pagina-conferencia">
+  <main class="conteudo">
+
+    <!-- ===== VOLTAR ===== -->
+    <button class="voltar" type="button" (click)="editar()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Voltar e corrigir
+    </button>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="cabecalho">
+      <p class="etiqueta">ÚLTIMA ETAPA</p>
+      <h1>Confira as informações</h1>
+      <p>
+        Verifique se os dados estão iguais aos da sua
+        prescrição ou orientação profissional.
+      </p>
+    </header>
+
+    <!-- ===== IDENTIFICAÇÃO ===== -->
+    <section class="cartao medicamento">
+      <div class="icone-principal">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </div>
+
+      <div>
+        <h2>{{ nome || 'Nome não informado' }}</h2>
+        @if (apresentacao) {
+          <p>{{ apresentacao }}</p>
+        }
+        @if (concentracao) {
+          <span>{{ concentracao }}</span>
+        }
+      </div>
+    </section>
+
+    <!-- ===== DOSE E FREQUÊNCIA ===== -->
+    <section class="cartao">
+      <h2>Como tomar</h2>
+
+      <div class="informacao">
+        <span>Quantidade por tomada</span>
+        <strong>{{ dose }} {{ unidadeDose }}</strong>
+      </div>
+
+      <div class="informacao">
+        <span>Frequência</span>
+        <strong>{{ frequencia }}</strong>
+      </div>
+
+      <div class="informacao">
+        <span>
+          <ion-icon name="time-outline"></ion-icon>
+          Horários
+        </span>
+        <strong>{{ horarios || 'Não informado' }}</strong>
+      </div>
+    </section>
+
+    <!-- ===== PERÍODO ===== -->
+    <section class="cartao">
+      <h2>Período do tratamento</h2>
+
+      <div class="informacao">
+        <span>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Data de início
+        </span>
+        <strong>{{ dataInicio }}</strong>
+      </div>
+
+      <div class="informacao">
+        <span>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Data de término
+        </span>
+        <strong>{{ dataFim || 'Não informada' }}</strong>
+      </div>
+    </section>
+
+    <!-- ===== OBSERVAÇÕES ===== -->
+    @if (observacoes) {
+      <section class="cartao">
+        <h2>Orientações adicionais</h2>
+        <p class="observacoes">{{ observacoes }}</p>
+      </section>
+    }
+
+    <!-- ===== AVISO ===== -->
+    <div class="aviso">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>
+        Confira tudo com atenção. Não altere a dose ou
+        os horários sem orientação de um profissional de saúde.
+      </p>
+    </div>
+
+    <!-- ===== MENSAGEM ===== -->
+    @if (mensagem) {
+      <div class="mensagem">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <p>{{ mensagem }}</p>
+      </div>
+    }
+
+    <!-- ===== AÇÕES ===== -->
+    <button class="botao-confirmar" type="button" (click)="confirmar()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      Confirmar informações
+    </button>
+
+    <button class="botao-editar" type="button" (click)="editar()">
+      Corrigir informações
+    </button>
+
+  </main>
+</ion-content>
