@@ -1,96 +1,59 @@
-
 import { Injectable } from '@angular/core';
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  sendPasswordResetEmail,
-  updatePassword,
-  signOut,
-  onAuthStateChanged,
-  User,
-  getAuth,
-} from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { BehaviorSubject } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-// Inicializa a conexão com o Firebase
-const firebaseApp = initializeApp(environment.firebase);
-const firebaseAuth = getAuth(firebaseApp);
+interface UsuarioResponse {
+  id: number;
+  nome: string;
+  email: string;
+}
+
+interface TokenResponse {
+  access_token: string;
+  token_type: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // Guarda o usuário atualmente conectado
-  private usuarioSubject = new BehaviorSubject<User | null>(null);
+  private apiUrl = environment.apiUrl;
 
-  // Permite que outras telas acompanhem o usuário
-  usuario$ = this.usuarioSubject.asObservable();
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    // Observa mudanças no estado de autenticação
-    onAuthStateChanged(firebaseAuth, (usuario) => {
-      this.usuarioSubject.next(usuario);
-    });
+  cadastrar(nome: string, email: string, senha: string) {
+    return firstValueFrom(this.http.post<UsuarioResponse>(`${this.apiUrl}/usuarios/`, { nome, email, senha }));
   }
 
-  // Cadastro com e-mail e senha
-  cadastrar(email: string, senha: string) {
-    return createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      senha,
+  async entrar(email: string, senha: string) {
+    const dados = new URLSearchParams();
+
+    dados.set('username', email);
+    dados.set('password', senha);
+
+    const resposta = await firstValueFrom(
+      this.http.post<TokenResponse>(`${this.apiUrl}/auth/login`, dados.toString(), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }),
     );
+
+    localStorage.setItem('access_token', resposta.access_token);
+
+    return resposta;
   }
 
-  // Login com e-mail e senha
-  entrar(email: string, senha: string) {
-    return signInWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      senha,
-    );
-  }
-
-  // Login com conta Google
-  entrarComGoogle() {
-    const provedor = new GoogleAuthProvider();
-
-    return signInWithPopup(firebaseAuth, provedor);
-  }
-
-  // Envia e-mail para recuperação de senha
-  recuperarSenha(email: string) {
-    return sendPasswordResetEmail(firebaseAuth, email);
-  }
-
-  // Altera a senha do usuário conectado
-  alterarSenha(novaSenha: string) {
-    const usuario = firebaseAuth.currentUser;
-
-    if (!usuario) {
-      throw new Error('Nenhum usuário está conectado.');
-    }
-
-    return updatePassword(usuario, novaSenha);
-  }
-
-  // Encerra a sessão
   sair() {
-    return signOut(firebaseAuth);
+    localStorage.removeItem('access_token');
   }
 
-  // Retorna o usuário conectado
-  get usuarioAtual(): User | null {
-    return firebaseAuth.currentUser;
+  get token(): string | null {
+    return localStorage.getItem('access_token');
   }
 
-  // Informa se existe usuário conectado
   get estaLogado(): boolean {
-    return firebaseAuth.currentUser !== null;
+    return this.token !== null;
   }
 }

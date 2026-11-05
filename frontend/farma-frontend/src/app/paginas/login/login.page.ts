@@ -1,15 +1,9 @@
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  AlertController,
-  IonContent,
-  IonButton,
-  IonSpinner,
-} from '@ionic/angular';
+import { AlertController, IonContent, IonButton, IonSpinner } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { updateProfile } from 'firebase/auth';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -17,13 +11,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonContent,
-    IonButton,
-    IonSpinner,
-  ],
+  imports: [CommonModule, FormsModule, IonContent, IonButton, IonSpinner],
 })
 export class LoginPage {
   modoCadastro = false;
@@ -53,7 +41,7 @@ export class LoginPage {
   async entrar() {
     this.mensagemErro = '';
 
-    if (!this.email || !this.senha) {
+    if (!this.email.trim() || !this.senha) {
       this.mensagemErro = 'Preencha seu e-mail e sua senha.';
       return;
     }
@@ -64,8 +52,8 @@ export class LoginPage {
         return;
       }
 
-      if (this.senha.length < 6) {
-        this.mensagemErro = 'A senha precisa ter pelo menos 6 caracteres.';
+      if (this.senha.length < 8) {
+        this.mensagemErro = 'A senha precisa ter pelo menos 8 caracteres.';
         return;
       }
 
@@ -79,25 +67,25 @@ export class LoginPage {
 
     try {
       if (this.modoCadastro) {
-        const resultado = await this.authService.cadastrar(
-          this.email.trim(),
-          this.senha,
-        );
+        await this.authService.cadastrar(this.nome.trim(), this.email.trim(), this.senha);
 
-        await updateProfile(resultado.user, {
-          displayName: this.nome.trim(),
-        });
+        // Após cadastrar, realiza o login automaticamente.
+        await this.authService.entrar(this.email.trim(), this.senha);
       } else {
-        await this.authService.entrar(
-          this.email.trim(),
-          this.senha,
-        );
+        await this.authService.entrar(this.email.trim(), this.senha);
       }
 
       await this.router.navigateByUrl('/tabs/home', {
         replaceUrl: true,
       });
     } catch (erro: unknown) {
+      console.error('Erro ao realizar login:', erro);
+
+      if (erro instanceof HttpErrorResponse) {
+        console.log('Status HTTP:', erro.status);
+        console.log('Resposta do servidor:', erro.error);
+        console.log('Mensagem:', erro.message);
+      }
       this.mensagemErro = this.tratarErro(erro);
     } finally {
       this.carregando = false;
@@ -105,69 +93,11 @@ export class LoginPage {
   }
 
   async entrarComGoogle() {
-    this.mensagemErro = '';
-    this.carregando = true;
-
-    try {
-      await this.authService.entrarComGoogle();
-
-      await this.router.navigateByUrl('/tabs/home', {
-        replaceUrl: true,
-      });
-    } catch (erro: unknown) {
-      this.mensagemErro = this.tratarErro(erro);
-    } finally {
-      this.carregando = false;
-    }
+    await this.mostrarAlerta('Indisponível no momento', 'O login com Google ainda não está integrado ao sistema.');
   }
 
   async recuperarSenha() {
-    const alerta = await this.alertController.create({
-      header: 'Recuperar senha',
-      message: 'Informe seu e-mail para receber o link de recuperação.',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Seu e-mail',
-          value: this.email,
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Enviar',
-          handler: async (dados) => {
-            if (!dados.email?.trim()) {
-              return false;
-            }
-
-            try {
-              await this.authService.recuperarSenha(
-                dados.email.trim(),
-              );
-
-              await this.mostrarAlerta(
-                'E-mail enviado',
-                'Se o endereço estiver cadastrado, você receberá as instruções para redefinir sua senha.',
-              );
-            } catch (erro: unknown) {
-              await this.mostrarAlerta(
-                'Não foi possível enviar',
-                this.tratarErro(erro),
-              );
-            }
-
-            return true;
-          },
-        },
-      ],
-    });
-
-    await alerta.present();
+    await this.mostrarAlerta('Recuperação de senha', 'A recuperação de senha ainda será implementada no backend.');
   }
 
   private async mostrarAlerta(titulo: string, mensagem: string) {
@@ -181,25 +111,28 @@ export class LoginPage {
   }
 
   private tratarErro(erro: unknown): string {
-    const codigo =
-      typeof erro === 'object' && erro !== null && 'code' in erro
-        ? String(erro.code)
-        : '';
+    if (erro instanceof HttpErrorResponse) {
+      if (erro.status === 0) {
+        return 'Não foi possível conectar ao servidor. Verifique se o backend está funcionando.';
+      }
 
-    const mensagens: Record<string, string> = {
-      'auth/invalid-email': 'O e-mail informado é inválido.',
-      'auth/user-not-found': 'Não encontramos uma conta com esse e-mail.',
-      'auth/wrong-password': 'A senha está incorreta.',
-      'auth/invalid-credential': 'E-mail ou senha incorretos.',
-      'auth/email-already-in-use': 'Esse e-mail já possui uma conta.',
-      'auth/weak-password': 'Escolha uma senha mais forte.',
-      'auth/popup-closed-by-user': 'A janela do Google foi fechada.',
-      'auth/popup-blocked': 'O navegador bloqueou a janela de login.',
-      'auth/unauthorized-domain': 'Este domínio não está autorizado no Firebase.',
-      'auth/too-many-requests': 'Muitas tentativas. Tente novamente mais tarde.',
-      'auth/network-request-failed': 'Verifique sua conexão com a internet.',
-    };
+      if (erro.status === 401) {
+        return 'E-mail ou senha incorretos.';
+      }
 
-    return mensagens[codigo] || 'Não foi possível realizar a operação. Tente novamente.';
+      if (erro.status === 409) {
+        return 'Esse e-mail já possui uma conta.';
+      }
+
+      if (erro.status === 422) {
+        return 'Os dados informados são inválidos. Confira o e-mail e a senha.';
+      }
+
+      if (erro.status >= 500) {
+        return 'Ocorreu um erro no servidor. Tente novamente mais tarde.';
+      }
+    }
+
+    return 'Não foi possível realizar a operação. Tente novamente.';
   }
 }

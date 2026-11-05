@@ -1,10 +1,12 @@
 // ===== IMPORTAÇÃO DAS ROTAS =====
+import { authGuard } from './guards/auth.guard';
 import type { Routes } from '@angular/router';
 
 // ===== ROTAS PRINCIPAIS DO APLICATIVO =====
 export const routes: Routes = [
   {
     path: 'tabs',
+    canActivate: [authGuard],
     loadComponent: () => import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
@@ -88,7 +90,7 @@ export const routes: Routes = [
   // ===== ENTRADA DO APLICATIVO =====
   {
     path: '',
-    redirectTo: 'tabs/home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {

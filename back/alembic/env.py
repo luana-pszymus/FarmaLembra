@@ -8,6 +8,7 @@ from app.database import Base, DATABASE_URL
 from app.models.medicamentos import Medicamento
 from app.models.pacientes import Paciente
 from app.models.usuarios import Usuario
+from app.models.prescricoes import Prescricao
 
 config = context.config
 
