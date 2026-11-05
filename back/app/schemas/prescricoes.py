@@ -1,5 +1,6 @@
+
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-from datetime import date
+from datetime import date, time
 from typing import Literal
 
 
@@ -11,6 +12,13 @@ class PrescricaoBase(BaseModel):
 
     modo_agendamento: Literal["horarios_fixos", "intervalo"]
     intervalo_horas: int | None = Field(default=None, gt=0)
+
+    frequencia: str | None = None
+    horarios: list[str] | None = None
+    dias_semana: list[int] | None = None
+
+    # Utilizado somente no agendamento por intervalo
+    horario_inicial: time | None = None
 
     quantidade_por_dose: float = Field(gt=0)
     unidade_quantidade: str
@@ -25,16 +33,63 @@ class PrescricaoBase(BaseModel):
 
     @model_validator(mode="after")
     def validar_tratamento(self):
-        if self.modo_agendamento == "intervalo" and self.intervalo_horas is None:
-            raise ValueError(
-                "Informe o intervalo em horas para esse tipo de agendamento."
-            )
 
-        if self.modo_agendamento == "horarios_fixos" and self.intervalo_horas is not None:
-            raise ValueError(
-                "Não informe intervalo_horas para horários fixos."
-            )
+        # Validação do agendamento por intervalo
+        if self.modo_agendamento == "intervalo":
+            if self.intervalo_horas is None:
+                raise ValueError("Informe o intervalo em horas.")
 
+            if self.horario_inicial is None:
+                raise ValueError("Informe o horário da primeira dose.")
+
+            if self.horarios:
+                raise ValueError(
+                    "Não informe horários fixos para agendamento por intervalo."
+                )
+
+        # Validação dos horários fixos
+        if self.modo_agendamento == "horarios_fixos":
+            if self.intervalo_horas is not None:
+                raise ValueError(
+                    "Não informe intervalo_horas para horários fixos."
+                )
+
+            if self.horario_inicial is not None:
+                raise ValueError(
+                    "O horário inicial é utilizado apenas para intervalos."
+                )
+
+            if not self.horarios:
+                raise ValueError("Informe pelo menos um horário.")
+
+        # Validação do formato dos horários fixos
+        if self.horarios:
+            try:
+                horarios_convertidos = [
+                    time.fromisoformat(horario)
+                    for horario in self.horarios
+                ]
+            except (ValueError, TypeError):
+                raise ValueError(
+                    "Informe horários válidos no formato HH:MM."
+                )
+
+            if len(horarios_convertidos) != len(set(horarios_convertidos)):
+                raise ValueError("Não informe horários repetidos.")
+
+        # Validação dos dias da semana
+        if self.dias_semana is not None:
+            if any(dia < 0 or dia > 6 for dia in self.dias_semana):
+                raise ValueError(
+                    "Os dias da semana devem estar entre 0 e 6."
+                )
+
+            if len(self.dias_semana) != len(set(self.dias_semana)):
+                raise ValueError(
+                    "Não informe dias da semana repetidos."
+                )
+
+        # Validação da duração do tratamento
         if self.tipo_duracao == "temporario" and self.data_fim is None:
             raise ValueError(
                 "Informe a data de término para tratamentos temporários."
