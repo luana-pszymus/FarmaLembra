@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -9,6 +10,7 @@ from app.schemas.pacientes import (
     PacienteResponse,
     PacienteUpdate,
 )
+from app.routers.auth import obter_usuario_atual
 
 
 router = APIRouter(
@@ -26,19 +28,12 @@ router = APIRouter(
 def criar_paciente(
     dados: PacienteCreate,
     db: Session = Depends(get_db),
+    usuario=Depends(obter_usuario_atual),
 ):
-    # Verifica se o e-mail já está cadastrado
-    paciente_existente = db.scalar(
-        select(Paciente).where(Paciente.email == dados.email)
+    paciente = Paciente(
+        **dados.model_dump(),
+        usuario_id=usuario.id,
     )
-
-    if paciente_existente:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Já existe um paciente cadastrado com este e-mail",
-        )
-
-    paciente = Paciente(**dados.model_dump())
 
     db.add(paciente)
     db.commit()
@@ -47,16 +42,19 @@ def criar_paciente(
     return paciente
 
 
-# LISTAR PACIENTES
+# LISTAR PACIENTES DO USUÁRIO
 @router.get(
     "/",
     response_model=list[PacienteResponse],
 )
 def listar_pacientes(
     db: Session = Depends(get_db),
+    usuario=Depends(obter_usuario_atual),
 ):
     pacientes = db.scalars(
-        select(Paciente).order_by(Paciente.nome)
+        select(Paciente)
+        .where(Paciente.usuario_id == usuario.id)
+        .order_by(Paciente.nome)
     ).all()
 
     return pacientes
@@ -70,8 +68,14 @@ def listar_pacientes(
 def buscar_paciente(
     paciente_id: int,
     db: Session = Depends(get_db),
+    usuario=Depends(obter_usuario_atual),
 ):
-    paciente = db.get(Paciente, paciente_id)
+    paciente = db.scalar(
+        select(Paciente).where(
+            Paciente.id == paciente_id,
+            Paciente.usuario_id == usuario.id,
+        )
+    )
 
     if paciente is None:
         raise HTTPException(
@@ -91,8 +95,14 @@ def atualizar_paciente(
     paciente_id: int,
     dados: PacienteUpdate,
     db: Session = Depends(get_db),
+    usuario=Depends(obter_usuario_atual),
 ):
-    paciente = db.get(Paciente, paciente_id)
+    paciente = db.scalar(
+        select(Paciente).where(
+            Paciente.id == paciente_id,
+            Paciente.usuario_id == usuario.id,
+        )
+    )
 
     if paciente is None:
         raise HTTPException(
@@ -101,20 +111,6 @@ def atualizar_paciente(
         )
 
     dados_atualizados = dados.model_dump(exclude_unset=True)
-
-    if "email" in dados_atualizados:
-        email_existente = db.scalar(
-            select(Paciente).where(
-                Paciente.email == dados_atualizados["email"],
-                Paciente.id != paciente_id,
-            )
-        )
-
-        if email_existente:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Este e-mail já está sendo utilizado por outro paciente",
-            )
 
     for campo, valor in dados_atualizados.items():
         setattr(paciente, campo, valor)
@@ -133,8 +129,14 @@ def atualizar_paciente(
 def excluir_paciente(
     paciente_id: int,
     db: Session = Depends(get_db),
+    usuario=Depends(obter_usuario_atual),
 ):
-    paciente = db.get(Paciente, paciente_id)
+    paciente = db.scalar(
+        select(Paciente).where(
+            Paciente.id == paciente_id,
+            Paciente.usuario_id == usuario.id,
+        )
+    )
 
     if paciente is None:
         raise HTTPException(

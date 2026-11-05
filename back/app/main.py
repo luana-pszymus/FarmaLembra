@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.routers import medicamentos
 from app.routers import pacientes
+from app.routers import usuarios
+from app.routers import auth
 
 app = FastAPI(
     title="FarmaLembra API",
@@ -15,6 +17,8 @@ app = FastAPI(
 
 app.include_router(medicamentos.router)
 app.include_router(pacientes.router)
+app.include_router(usuarios.router)
+app.include_router(auth.router)
 
 
 @app.get("/")
