@@ -33,7 +33,3 @@ services:
 
 volumes:
   postgres_data:
-cd /workspaces/FarmaLembra
-
-git add docker-compose.yaml
-git commit -m "feat: configura PostgreSQL e backend com Docker Compose"
