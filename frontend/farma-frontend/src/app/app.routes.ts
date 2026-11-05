@@ -16,6 +16,11 @@ export const routes: Routes = [
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
       },
 
+      {
+        path: 'pacientes',
+        loadComponent: () => import('./pacientes/pacientes.page').then((m) => m.PacientesPage),
+      },
+
       // ===== LISTA DE REMÉDIOS =====
       {
         path: 'remedios',
