@@ -1,3 +1,4 @@
+
 from sqlalchemy import (
     Column,
     Integer,
@@ -7,6 +8,7 @@ from sqlalchemy import (
     Numeric,
     Text,
     ForeignKey,
+    JSON,
 )
 from sqlalchemy.sql import func
 
@@ -45,6 +47,24 @@ class Prescricao(Base):
 
     intervalo_horas = Column(
         Integer,
+        nullable=True
+    )
+
+    # Frequência do tratamento
+    frequencia = Column(
+        String(30),
+        nullable=True
+    )
+
+    # Lista de horários, exemplo: ["08:00", "20:00"]
+    horarios = Column(
+        JSON,
+        nullable=True
+    )
+
+    # Dias da semana: 0 = segunda-feira até 6 = domingo
+    dias_semana = Column(
+        JSON,
         nullable=True
     )
 
