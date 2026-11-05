@@ -1,20 +1,16 @@
-// ===== IMPORTAÇÕES =====
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
-// ===== ÍCONES DA REVISÃO =====
 import {
   arrowBackOutline,
-  medkitOutline,
   calendarOutline,
-  timeOutline,
-  informationCircleOutline,
   checkmarkCircleOutline,
+  informationCircleOutline,
+  medkitOutline,
+  timeOutline,
 } from 'ionicons/icons';
 
-// ===== COMPONENTE DE REVISÃO =====
 @Component({
   selector: 'app-conferir-remedio',
   templateUrl: './conferir-remedio.page.html',
@@ -22,8 +18,9 @@ import {
   imports: [IonContent, IonIcon],
 })
 export class ConferirRemedioPage {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  // ===== DADOS RECEBIDOS =====
   origem = '';
   nome = '';
   apresentacao = '';
@@ -36,14 +33,9 @@ export class ConferirRemedioPage {
   dataFim = '';
   observacoes = '';
 
-  // ===== MENSAGEM DA CONFIRMAÇÃO =====
   mensagem = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {
-    // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
       arrowBackOutline,
       medkitOutline,
@@ -53,7 +45,6 @@ export class ConferirRemedioPage {
       checkmarkCircleOutline,
     });
 
-    // ===== RECEBE OS DADOS DO FORMULÁRIO =====
     this.route.queryParamMap.subscribe((params) => {
       this.origem = params.get('origem') || '';
       this.nome = params.get('nome') || '';
@@ -69,9 +60,8 @@ export class ConferirRemedioPage {
     });
   }
 
-  // ===== VOLTA PARA EDITAR OS DADOS =====
-  editar() {
-    this.router.navigate(['/tabs/remedios/novo/dados'], {
+  editar(): Promise<boolean> {
+    return this.router.navigate(['/tabs/remedios/novo/dados'], {
       queryParams: {
         origem: this.origem,
         nome: this.nome,
@@ -88,8 +78,7 @@ export class ConferirRemedioPage {
     });
   }
 
-  // ===== CONFIRMAÇÃO DO CADASTRO =====
-  confirmar() {
+  confirmar(): void {
     this.mensagem =
       'As informações foram conferidas. O salvamento estará disponível quando o aplicativo estiver integrado ao sistema.';
   }

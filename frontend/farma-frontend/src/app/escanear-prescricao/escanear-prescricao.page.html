@@ -1,7 +1,5 @@
-
 <ion-content [fullscreen]="true" class="pagina-prescricao">
   <main class="conteudo">
-
     <!-- ===== VOLTAR ===== -->
     <a class="voltar" routerLink="/tabs/remedios/novo">
       <ion-icon name="arrow-back-outline"></ion-icon>
@@ -12,44 +10,32 @@
     <header class="cabecalho">
       <p class="etiqueta">NOVO MEDICAMENTO</p>
       <h1>Fotografar prescrição</h1>
-      <p>
-        Tire uma foto da sua receita para facilitar
-        o preenchimento dos dados do tratamento.
-      </p>
+      <p>Tire uma foto da sua receita para facilitar o preenchimento dos dados do tratamento.</p>
     </header>
 
     <!-- ===== ÁREA DA FOTO ===== -->
     <section class="cartao-foto">
-
       @if (fotoUrl) {
-        <!-- ===== VISUALIZAÇÃO DA RECEITA ===== -->
-        <div class="visualizacao">
-          <img
-            [src]="fotoUrl"
-            alt="Foto da prescrição médica">
+      <!-- ===== VISUALIZAÇÃO DA RECEITA ===== -->
+      <div class="visualizacao">
+        <img [src]="fotoUrl" alt="Foto da prescrição médica" />
 
-          <button
-            class="botao-remover"
-            type="button"
-            (click)="limparFoto()">
-            <ion-icon name="trash-outline"></ion-icon>
-            Remover foto
-          </button>
-        </div>
+        <button class="botao-remover" type="button" (click)="limparFoto()">
+          <ion-icon name="trash-outline"></ion-icon>
+          Remover foto
+        </button>
+      </div>
       } @else {
-        <!-- ===== ORIENTAÇÃO PARA FOTOGRAFAR ===== -->
-        <div class="area-vazia">
-          <div class="icone-camera">
-            <ion-icon name="camera-outline"></ion-icon>
-          </div>
-
-          <h2>Fotografe sua receita</h2>
-
-          <p>
-            Coloque a receita em uma superfície plana,
-            com boa iluminação e todos os dados visíveis.
-          </p>
+      <!-- ===== ORIENTAÇÃO PARA FOTOGRAFAR ===== -->
+      <div class="area-vazia">
+        <div class="icone-camera">
+          <ion-icon name="camera-outline"></ion-icon>
         </div>
+
+        <h2>Fotografe sua receita</h2>
+
+        <p>Coloque a receita em uma superfície plana, com boa iluminação e todos os dados visíveis.</p>
+      </div>
       }
 
       <!-- ===== ESCOLHER IMAGEM ===== -->
@@ -64,35 +50,28 @@
         type="file"
         accept="image/*"
         capture="environment"
-        (change)="selecionarFoto($event)">
-
+        (change)="selecionarFoto($event)"
+      />
     </section>
 
     <!-- ===== ORIENTAÇÃO ===== -->
     <div class="orientacao">
       <ion-icon name="information-circle-outline"></ion-icon>
       <p>
-        Confira se o nome dos medicamentos, as doses
-        e as orientações estão legíveis. A leitura
-        automática da receita será integrada posteriormente.
+        Confira se o nome dos medicamentos, as doses e as orientações estão legíveis. A leitura automática da receita
+        será integrada posteriormente.
       </p>
     </div>
 
     <!-- ===== MENSAGEM ===== -->
     @if (mensagem) {
-      <div class="mensagem">
-        {{ mensagem }}
-      </div>
+    <div class="mensagem">{{ mensagem }}</div>
     }
 
     <!-- ===== CONTINUAR ===== -->
-    <button
-      class="botao-continuar"
-      type="button"
-      (click)="continuar()">
+    <button class="botao-continuar" type="button" (click)="continuar()">
       Continuar para os dados
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </button>
-
   </main>
 </ion-content>

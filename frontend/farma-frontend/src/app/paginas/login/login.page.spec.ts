@@ -1,11 +1,12 @@
-
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+import { AuthService } from '../../services/auth.service';
 
 import { LoginPage } from './login.page';
-import { AuthService } from '../../services/auth.service';
 
 describe('LoginPage', () => {
   let component: LoginPage;

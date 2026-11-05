@@ -1,6 +1,5 @@
 <ion-content [fullscreen]="true" class="pagina-embalagem">
   <main class="conteudo">
-
     <!-- ===== VOLTAR ===== -->
     <a class="voltar" routerLink="/tabs/remedios/novo">
       <ion-icon name="arrow-back-outline"></ion-icon>
@@ -11,42 +10,32 @@
     <header class="cabecalho">
       <p class="etiqueta">NOVO MEDICAMENTO</p>
       <h1>Escanear embalagem</h1>
-      <p>
-        Fotografe a embalagem para facilitar a identificação
-        do seu medicamento.
-      </p>
+      <p>Fotografe a embalagem para facilitar a identificação do seu medicamento.</p>
     </header>
 
     <!-- ===== ÁREA DA FOTO ===== -->
     <section class="cartao-foto">
-
       @if (fotoUrl) {
-        <!-- ===== VISUALIZAÇÃO DA FOTO ===== -->
-        <div class="visualizacao">
-          <img [src]="fotoUrl" alt="Foto da embalagem do medicamento">
+      <!-- ===== VISUALIZAÇÃO DA FOTO ===== -->
+      <div class="visualizacao">
+        <img [src]="fotoUrl" alt="Foto da embalagem do medicamento" />
 
-          <button
-            class="botao-remover"
-            type="button"
-            (click)="limparFoto()">
-            <ion-icon name="trash-outline"></ion-icon>
-            Remover foto
-          </button>
-        </div>
+        <button class="botao-remover" type="button" (click)="limparFoto()">
+          <ion-icon name="trash-outline"></ion-icon>
+          Remover foto
+        </button>
+      </div>
       } @else {
-        <!-- ===== ORIENTAÇÃO PARA FOTOGRAFAR ===== -->
-        <div class="area-vazia">
-          <div class="icone-camera">
-            <ion-icon name="camera-outline"></ion-icon>
-          </div>
-
-          <h2>Fotografe seu medicamento</h2>
-
-          <p>
-            Procure deixar o nome e a concentração
-            do medicamento bem visíveis.
-          </p>
+      <!-- ===== ORIENTAÇÃO PARA FOTOGRAFAR ===== -->
+      <div class="area-vazia">
+        <div class="icone-camera">
+          <ion-icon name="camera-outline"></ion-icon>
         </div>
+
+        <h2>Fotografe seu medicamento</h2>
+
+        <p>Procure deixar o nome e a concentração do medicamento bem visíveis.</p>
+      </div>
       }
 
       <!-- ===== ESCOLHER FOTO OU ABRIR CÂMERA ===== -->
@@ -61,35 +50,28 @@
         type="file"
         accept="image/*"
         capture="environment"
-        (change)="selecionarFoto($event)">
-
+        (change)="selecionarFoto($event)"
+      />
     </section>
 
     <!-- ===== ORIENTAÇÃO ===== -->
     <div class="orientacao">
       <ion-icon name="information-circle-outline"></ion-icon>
       <p>
-        A foto será usada nesta etapa apenas para visualização.
-        A identificação automática do medicamento será integrada
+        A foto será usada nesta etapa apenas para visualização. A identificação automática do medicamento será integrada
         posteriormente.
       </p>
     </div>
 
     <!-- ===== MENSAGEM ===== -->
     @if (mensagem) {
-      <div class="mensagem">
-        {{ mensagem }}
-      </div>
+    <div class="mensagem">{{ mensagem }}</div>
     }
 
     <!-- ===== CONTINUAR ===== -->
-    <button
-      class="botao-continuar"
-      type="button"
-      (click)="continuar()">
+    <button class="botao-continuar" type="button" (click)="continuar()">
       Continuar para os dados
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </button>
-
   </main>
 </ion-content>

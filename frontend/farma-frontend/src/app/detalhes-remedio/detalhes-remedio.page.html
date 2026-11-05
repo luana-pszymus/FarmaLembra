@@ -1,6 +1,5 @@
 <ion-content [fullscreen]="true" class="pagina-detalhes">
   <main class="conteudo">
-
     <!-- ===== VOLTAR ===== -->
     <a class="voltar" routerLink="/tabs/remedios">
       <ion-icon name="arrow-back-outline"></ion-icon>
@@ -17,118 +16,101 @@
     <!-- ===== MEDICAMENTO RECEBIDO ===== -->
     @if (temMedicamento) {
 
-      <!-- ===== IDENTIFICAÇÃO ===== -->
-      <section class="cartao medicamento">
-        <div class="icone-principal">
-          <ion-icon name="medkit-outline"></ion-icon>
-        </div>
+    <!-- ===== IDENTIFICAÇÃO ===== -->
+    <section class="cartao medicamento">
+      <div class="icone-principal">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </div>
 
-        <div class="identificacao">
-          <h2>{{ nome }}</h2>
+      <div class="identificacao">
+        <h2>{{ nome }}</h2>
 
-          @if (apresentacao) {
-            <p>{{ apresentacao }}</p>
-          }
-
-          @if (concentracao) {
-            <span>{{ concentracao }}</span>
-          }
-        </div>
-      </section>
-
-      <!-- ===== COMO TOMAR ===== -->
-      <section class="cartao">
-        <h2>Como tomar</h2>
-
-        @if (dose || unidadeDose) {
-          <div class="informacao">
-            <span>Quantidade por tomada</span>
-            <strong>{{ dose }} {{ unidadeDose }}</strong>
-          </div>
+        @if (apresentacao) {
+        <p>{{ apresentacao }}</p>
+        } @if (concentracao) {
+        <span>{{ concentracao }}</span>
         }
+      </div>
+    </section>
 
-        @if (frequencia) {
-          <div class="informacao">
-            <span>Frequência</span>
-            <strong>{{ frequencia }}</strong>
-          </div>
-        }
+    <!-- ===== COMO TOMAR ===== -->
+    <section class="cartao">
+      <h2>Como tomar</h2>
 
-        @if (horarios) {
-          <div class="informacao">
-            <span>
-              <ion-icon name="time-outline"></ion-icon>
-              Horários
-            </span>
-            <strong>{{ horarios }}</strong>
-          </div>
-        }
-      </section>
+      @if (dose || unidadeDose) {
+      <div class="informacao">
+        <span>Quantidade por tomada</span>
+        <strong>{{ dose }} {{ unidadeDose }}</strong>
+      </div>
+      } @if (frequencia) {
+      <div class="informacao">
+        <span>Frequência</span>
+        <strong>{{ frequencia }}</strong>
+      </div>
+      } @if (horarios) {
+      <div class="informacao">
+        <span>
+          <ion-icon name="time-outline"></ion-icon>
+          Horários
+        </span>
+        <strong>{{ horarios }}</strong>
+      </div>
+      }
+    </section>
 
-      <!-- ===== PERÍODO ===== -->
-      <section class="cartao">
-        <h2>Período do tratamento</h2>
+    <!-- ===== PERÍODO ===== -->
+    <section class="cartao">
+      <h2>Período do tratamento</h2>
 
-        @if (dataInicio) {
-          <div class="informacao">
-            <span>
-              <ion-icon name="calendar-outline"></ion-icon>
-              Data de início
-            </span>
-            <strong>{{ dataInicio }}</strong>
-          </div>
-        }
-
-        <div class="informacao">
-          <span>
-            <ion-icon name="calendar-outline"></ion-icon>
-            Data de término
-          </span>
-
-          <strong>
-            {{ dataFim || 'Não informada' }}
-          </strong>
-        </div>
-      </section>
-
-      <!-- ===== OBSERVAÇÕES ===== -->
-      @if (observacoes) {
-        <section class="cartao">
-          <h2>Orientações adicionais</h2>
-          <p class="observacoes">{{ observacoes }}</p>
-        </section>
+      @if (dataInicio) {
+      <div class="informacao">
+        <span>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Data de início
+        </span>
+        <strong>{{ dataInicio }}</strong>
+      </div>
       }
 
-      <!-- ===== AVISO ===== -->
-      <div class="aviso">
-        <ion-icon name="information-circle-outline"></ion-icon>
-        <p>
-          Siga sempre a prescrição e as orientações
-          do profissional de saúde.
-        </p>
+      <div class="informacao">
+        <span>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Data de término
+        </span>
+
+        <strong> {{ dataFim || 'Não informada' }} </strong>
       </div>
+    </section>
+
+    <!-- ===== OBSERVAÇÕES ===== -->
+    @if (observacoes) {
+    <section class="cartao">
+      <h2>Orientações adicionais</h2>
+      <p class="observacoes">{{ observacoes }}</p>
+    </section>
+    }
+
+    <!-- ===== AVISO ===== -->
+    <div class="aviso">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>Siga sempre a prescrição e as orientações do profissional de saúde.</p>
+    </div>
 
     } @else {
 
-      <!-- ===== ESTADO SEM MEDICAMENTO SELECIONADO ===== -->
-      <section class="estado-vazio">
-        <div class="icone-vazio">
-          <ion-icon name="medkit-outline"></ion-icon>
-        </div>
+    <!-- ===== ESTADO SEM MEDICAMENTO SELECIONADO ===== -->
+    <section class="estado-vazio">
+      <div class="icone-vazio">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </div>
 
-        <h2>Nenhum medicamento selecionado</h2>
+      <h2>Nenhum medicamento selecionado</h2>
 
-        <p>
-          Quando você abrir os detalhes de um medicamento
-          cadastrado, as informações aparecerão nesta tela.
-        </p>
+      <p>Quando você abrir os detalhes de um medicamento cadastrado, as informações aparecerão nesta tela.</p>
 
-        <a routerLink="/tabs/remedios">
-          Voltar para meus remédios
-        </a>
-      </section>
+      <a routerLink="/tabs/remedios"> Voltar para meus remédios </a>
+    </section>
 
     }
-
   </main>
 </ion-content>

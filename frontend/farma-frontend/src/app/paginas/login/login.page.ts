@@ -1,14 +1,7 @@
-
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  AlertController,
-  IonContent,
-  IonButton,
-  IonSpinner,
-} from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AlertController, IonButton, IonContent, IonSpinner } from '@ionic/angular';
 import { updateProfile } from 'firebase/auth';
 
 import { AuthService } from '../../services/auth.service';
@@ -17,15 +10,13 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonContent,
-    IonButton,
-    IonSpinner,
-  ],
+  imports: [FormsModule, IonContent, IonButton, IonSpinner],
 })
 export class LoginPage {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly alertController = inject(AlertController);
+
   modoCadastro = false;
   mostrarSenha = false;
   carregando = false;
@@ -37,20 +28,14 @@ export class LoginPage {
 
   mensagemErro = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private alertController: AlertController,
-  ) {}
-
-  alternarModo() {
+  alternarModo(): void {
     this.modoCadastro = !this.modoCadastro;
     this.mensagemErro = '';
     this.senha = '';
     this.confirmarSenha = '';
   }
 
-  async entrar() {
+  async entrar(): Promise<void> {
     this.mensagemErro = '';
 
     if (!this.email || !this.senha) {
@@ -79,19 +64,13 @@ export class LoginPage {
 
     try {
       if (this.modoCadastro) {
-        const resultado = await this.authService.cadastrar(
-          this.email.trim(),
-          this.senha,
-        );
+        const resultado = await this.authService.cadastrar(this.email.trim(), this.senha);
 
         await updateProfile(resultado.user, {
           displayName: this.nome.trim(),
         });
       } else {
-        await this.authService.entrar(
-          this.email.trim(),
-          this.senha,
-        );
+        await this.authService.entrar(this.email.trim(), this.senha);
       }
 
       await this.router.navigateByUrl('/tabs/home', {
@@ -104,7 +83,7 @@ export class LoginPage {
     }
   }
 
-  async entrarComGoogle() {
+  async entrarComGoogle(): Promise<void> {
     this.mensagemErro = '';
     this.carregando = true;
 
@@ -121,7 +100,7 @@ export class LoginPage {
     }
   }
 
-  async recuperarSenha() {
+  async recuperarSenha(): Promise<void> {
     const alerta = await this.alertController.create({
       header: 'Recuperar senha',
       message: 'Informe seu e-mail para receber o link de recuperação.',
@@ -146,19 +125,14 @@ export class LoginPage {
             }
 
             try {
-              await this.authService.recuperarSenha(
-                dados.email.trim(),
-              );
+              await this.authService.recuperarSenha(dados.email.trim());
 
               await this.mostrarAlerta(
                 'E-mail enviado',
                 'Se o endereço estiver cadastrado, você receberá as instruções para redefinir sua senha.',
               );
             } catch (erro: unknown) {
-              await this.mostrarAlerta(
-                'Não foi possível enviar',
-                this.tratarErro(erro),
-              );
+              await this.mostrarAlerta('Não foi possível enviar', this.tratarErro(erro));
             }
 
             return true;
@@ -170,7 +144,7 @@ export class LoginPage {
     await alerta.present();
   }
 
-  private async mostrarAlerta(titulo: string, mensagem: string) {
+  private async mostrarAlerta(titulo: string, mensagem: string): Promise<void> {
     const alerta = await this.alertController.create({
       header: titulo,
       message: mensagem,
@@ -181,10 +155,7 @@ export class LoginPage {
   }
 
   private tratarErro(erro: unknown): string {
-    const codigo =
-      typeof erro === 'object' && erro !== null && 'code' in erro
-        ? String(erro.code)
-        : '';
+    const codigo = typeof erro === 'object' && erro !== null && 'code' in erro ? String(erro.code) : '';
 
     const mensagens: Record<string, string> = {
       'auth/invalid-email': 'O e-mail informado é inválido.',

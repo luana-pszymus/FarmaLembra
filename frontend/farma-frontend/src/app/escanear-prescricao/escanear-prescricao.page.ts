@@ -1,20 +1,16 @@
-
-// ===== IMPORTAÇÕES =====
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import type { OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
-// ===== ÍCONES DA PRESCRIÇÃO =====
 import {
   arrowBackOutline,
+  arrowForwardOutline,
   cameraOutline,
   informationCircleOutline,
   trashOutline,
-  arrowForwardOutline,
 } from 'ionicons/icons';
 
-// ===== COMPONENTE DA PRESCRIÇÃO =====
 @Component({
   selector: 'app-escanear-prescricao',
   templateUrl: './escanear-prescricao.page.html',
@@ -22,13 +18,12 @@ import {
   imports: [IonContent, IonIcon, RouterLink],
 })
 export class EscanearPrescricaoPage implements OnDestroy {
+  private readonly router = inject(Router);
 
-  // ===== FOTO DA RECEITA =====
   fotoUrl: string | null = null;
   mensagem = '';
 
-  constructor(private router: Router) {
-    // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
       arrowBackOutline,
       cameraOutline,
@@ -38,8 +33,7 @@ export class EscanearPrescricaoPage implements OnDestroy {
     });
   }
 
-  // ===== SELEÇÃO DA FOTO =====
-  selecionarFoto(event: Event) {
+  selecionarFoto(event: Event): void {
     const campo = event.target as HTMLInputElement;
     const arquivo = campo.files?.[0];
 
@@ -47,23 +41,19 @@ export class EscanearPrescricaoPage implements OnDestroy {
       return;
     }
 
-    // ===== VERIFICA O TIPO DO ARQUIVO =====
     if (!arquivo.type.startsWith('image/')) {
       this.mensagem = 'Selecione uma imagem da sua prescrição.';
       campo.value = '';
       return;
     }
 
-    // ===== REMOVE A FOTO ANTERIOR =====
     this.limparFoto();
 
-    // ===== MOSTRA A NOVA FOTO =====
     this.fotoUrl = URL.createObjectURL(arquivo);
     this.mensagem = 'Imagem selecionada! Confira se a receita está legível.';
   }
 
-  // ===== REMOVE A FOTO =====
-  limparFoto() {
+  limparFoto(): void {
     if (this.fotoUrl) {
       URL.revokeObjectURL(this.fotoUrl);
     }
@@ -72,8 +62,7 @@ export class EscanearPrescricaoPage implements OnDestroy {
     this.mensagem = '';
   }
 
-  // ===== AVANÇA PARA O CADASTRO =====
-  continuar() {
+  continuar(): void {
     if (!this.fotoUrl) {
       this.mensagem = 'Primeiro, fotografe ou escolha sua prescrição.';
       return;
@@ -86,8 +75,7 @@ export class EscanearPrescricaoPage implements OnDestroy {
     });
   }
 
-  // ===== LIBERA A FOTO AO SAIR =====
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.limparFoto();
   }
 }

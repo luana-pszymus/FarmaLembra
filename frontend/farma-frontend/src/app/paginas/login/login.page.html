@@ -1,8 +1,6 @@
-
 <ion-content [fullscreen]="true">
   <main class="pagina-login">
     <section class="conteudo-login">
-
       <!-- Identidade do aplicativo -->
       <div class="marca">
         <div class="icone-marca">
@@ -18,18 +16,15 @@
         <h2>{{ modoCadastro ? 'Crie sua conta' : 'Bem-vindo de volta!' }}</h2>
 
         <p>
-          {{
-            modoCadastro
-              ? 'Cadastre-se para organizar seus medicamentos.'
-              : 'Entre para acompanhar seus medicamentos e tratamentos.'
-          }}
+          {{ modoCadastro ? 'Cadastre-se para organizar seus medicamentos.' : 'Entre para acompanhar seus medicamentos e
+          tratamentos.' }}
         </p>
       </div>
 
       <!-- Formulário -->
       <form (ngSubmit)="entrar()">
-
-        <div class="campo" *ngIf="modoCadastro">
+        @if (modoCadastro) {
+        <div class="campo">
           <label for="nome">Nome completo</label>
 
           <input
@@ -42,6 +37,7 @@
             required
           />
         </div>
+        }
 
         <div class="campo">
           <label for="email">E-mail</label>
@@ -82,7 +78,8 @@
           </div>
         </div>
 
-        <div class="campo" *ngIf="modoCadastro">
+        @if (modoCadastro) {
+        <div class="campo">
           <label for="confirmarSenha">Confirmar senha</label>
 
           <input
@@ -95,36 +92,28 @@
             required
           />
         </div>
+        }
 
         <!-- Recuperação de senha -->
-        <div class="recuperar" *ngIf="!modoCadastro">
-          <button type="button" (click)="recuperarSenha()">
-            Esqueci minha senha
-          </button>
+        @if (!modoCadastro) {
+        <div class="recuperar">
+          <button type="button" (click)="recuperarSenha()">Esqueci minha senha</button>
         </div>
+        }
 
         <!-- Mensagem de erro -->
-        <div class="mensagem-erro" *ngIf="mensagemErro">
-          {{ mensagemErro }}
-        </div>
+        @if (mensagemErro) {
+        <div class="mensagem-erro">{{ mensagemErro }}</div>
+        }
 
         <!-- Botão principal -->
-        <ion-button
-          expand="block"
-          type="submit"
-          class="botao-principal"
-          [disabled]="carregando"
-        >
-          <ion-spinner
-            *ngIf="carregando"
-            name="crescent"
-          ></ion-spinner>
-
-          <span *ngIf="!carregando">
-            {{ modoCadastro ? 'Criar minha conta' : 'Entrar' }}
-          </span>
+        <ion-button expand="block" type="submit" class="botao-principal" [disabled]="carregando">
+          @if (carregando) {
+          <ion-spinner name="crescent"></ion-spinner>
+          } @if (!carregando) {
+          <span> {{ modoCadastro ? 'Criar minha conta' : 'Entrar' }} </span>
+          }
         </ion-button>
-
       </form>
 
       <!-- Separador -->
@@ -135,32 +124,20 @@
       </div>
 
       <!-- Google -->
-      <button
-        type="button"
-        class="botao-google"
-        (click)="entrarComGoogle()"
-        [disabled]="carregando"
-      >
+      <button type="button" class="botao-google" (click)="entrarComGoogle()" [disabled]="carregando">
         <strong class="icone-google">G</strong>
         Continuar com Google
       </button>
 
       <!-- Alternar login e cadastro -->
       <div class="alternar-conta">
-        <span>
-          {{ modoCadastro ? 'Já possui uma conta?' : 'Ainda não possui uma conta?' }}
-        </span>
+        <span> {{ modoCadastro ? 'Já possui uma conta?' : 'Ainda não possui uma conta?' }} </span>
 
-        <button type="button" (click)="alternarModo()">
-          {{ modoCadastro ? 'Entrar' : 'Criar conta' }}
-        </button>
+        <button type="button" (click)="alternarModo()">{{ modoCadastro ? 'Entrar' : 'Criar conta' }}</button>
       </div>
 
       <!-- Rodapé -->
-      <footer>
-        FarmaLembra · Sua saúde em boas mãos.
-      </footer>
-
+      <footer>FarmaLembra · Sua saúde em boas mãos.</footer>
     </section>
   </main>
 </ion-content>

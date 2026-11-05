@@ -1,9 +1,7 @@
-
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 // ===== ÍCONES UTILIZADOS NA HOME =====
 import {
   addOutline,

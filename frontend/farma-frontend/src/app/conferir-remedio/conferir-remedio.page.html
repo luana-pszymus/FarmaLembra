@@ -1,6 +1,5 @@
 <ion-content [fullscreen]="true" class="pagina-conferencia">
   <main class="conteudo">
-
     <!-- ===== VOLTAR ===== -->
     <button class="voltar" type="button" (click)="editar()">
       <ion-icon name="arrow-back-outline"></ion-icon>
@@ -11,10 +10,7 @@
     <header class="cabecalho">
       <p class="etiqueta">ÚLTIMA ETAPA</p>
       <h1>Confira as informações</h1>
-      <p>
-        Verifique se os dados estão iguais aos da sua
-        prescrição ou orientação profissional.
-      </p>
+      <p>Verifique se os dados estão iguais aos da sua prescrição ou orientação profissional.</p>
     </header>
 
     <!-- ===== IDENTIFICAÇÃO ===== -->
@@ -26,10 +22,9 @@
       <div>
         <h2>{{ nome || 'Nome não informado' }}</h2>
         @if (apresentacao) {
-          <p>{{ apresentacao }}</p>
-        }
-        @if (concentracao) {
-          <span>{{ concentracao }}</span>
+        <p>{{ apresentacao }}</p>
+        } @if (concentracao) {
+        <span>{{ concentracao }}</span>
         }
       </div>
     </section>
@@ -80,27 +75,24 @@
 
     <!-- ===== OBSERVAÇÕES ===== -->
     @if (observacoes) {
-      <section class="cartao">
-        <h2>Orientações adicionais</h2>
-        <p class="observacoes">{{ observacoes }}</p>
-      </section>
+    <section class="cartao">
+      <h2>Orientações adicionais</h2>
+      <p class="observacoes">{{ observacoes }}</p>
+    </section>
     }
 
     <!-- ===== AVISO ===== -->
     <div class="aviso">
       <ion-icon name="information-circle-outline"></ion-icon>
-      <p>
-        Confira tudo com atenção. Não altere a dose ou
-        os horários sem orientação de um profissional de saúde.
-      </p>
+      <p>Confira tudo com atenção. Não altere a dose ou os horários sem orientação de um profissional de saúde.</p>
     </div>
 
     <!-- ===== MENSAGEM ===== -->
     @if (mensagem) {
-      <div class="mensagem">
-        <ion-icon name="information-circle-outline"></ion-icon>
-        <p>{{ mensagem }}</p>
-      </div>
+    <div class="mensagem">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>{{ mensagem }}</p>
+    </div>
     }
 
     <!-- ===== AÇÕES ===== -->
@@ -109,9 +101,6 @@
       Confirmar informações
     </button>
 
-    <button class="botao-editar" type="button" (click)="editar()">
-      Corrigir informações
-    </button>
-
+    <button class="botao-editar" type="button" (click)="editar()">Corrigir informações</button>
   </main>
 </ion-content>

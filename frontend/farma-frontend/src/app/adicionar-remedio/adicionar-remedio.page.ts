@@ -1,16 +1,9 @@
-
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 // ===== ÍCONES DAS FORMAS DE CADASTRO =====
-import {
-  documentTextOutline,
-  cameraOutline,
-  searchOutline,
-  chevronForwardOutline,
-} from 'ionicons/icons';
+import { documentTextOutline, cameraOutline, searchOutline, chevronForwardOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-adicionar-remedio',

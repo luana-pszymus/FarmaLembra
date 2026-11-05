@@ -1,20 +1,17 @@
-// ===== IMPORTAÇÕES =====
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import type { OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
-// ===== ÍCONES DA CÂMERA =====
 import {
   arrowBackOutline,
+  arrowForwardOutline,
   cameraOutline,
   imageOutline,
   informationCircleOutline,
   trashOutline,
-  arrowForwardOutline,
 } from 'ionicons/icons';
 
-// ===== COMPONENTE DA LEITURA DA EMBALAGEM =====
 @Component({
   selector: 'app-escanear-embalagem',
   templateUrl: './escanear-embalagem.page.html',
@@ -22,13 +19,12 @@ import {
   imports: [IonContent, IonIcon, RouterLink],
 })
 export class EscanearEmbalagemPage implements OnDestroy {
+  private readonly router = inject(Router);
 
-  // ===== FOTO SELECIONADA =====
   fotoUrl: string | null = null;
   mensagem = '';
 
-  constructor(private router: Router) {
-    // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
       arrowBackOutline,
       cameraOutline,
@@ -39,8 +35,7 @@ export class EscanearEmbalagemPage implements OnDestroy {
     });
   }
 
-  // ===== SELEÇÃO DA FOTO =====
-  selecionarFoto(event: Event) {
+  selecionarFoto(event: Event): void {
     const campo = event.target as HTMLInputElement;
     const arquivo = campo.files?.[0];
 
@@ -48,23 +43,19 @@ export class EscanearEmbalagemPage implements OnDestroy {
       return;
     }
 
-    // ===== VERIFICA O TIPO DO ARQUIVO =====
     if (!arquivo.type.startsWith('image/')) {
       this.mensagem = 'Selecione um arquivo de imagem.';
       campo.value = '';
       return;
     }
 
-    // ===== LIMPA A FOTO ANTERIOR =====
     this.limparFoto();
 
-    // ===== MOSTRA A NOVA FOTO =====
     this.fotoUrl = URL.createObjectURL(arquivo);
     this.mensagem = 'Foto selecionada! Confira se a embalagem está legível.';
   }
 
-  // ===== REMOVE A FOTO =====
-  limparFoto() {
+  limparFoto(): void {
     if (this.fotoUrl) {
       URL.revokeObjectURL(this.fotoUrl);
     }
@@ -73,8 +64,7 @@ export class EscanearEmbalagemPage implements OnDestroy {
     this.mensagem = '';
   }
 
-  // ===== AVANÇA PARA O CADASTRO =====
-  continuar() {
+  continuar(): void {
     if (!this.fotoUrl) {
       this.mensagem = 'Primeiro, tire uma foto ou escolha uma imagem.';
       return;
@@ -87,8 +77,7 @@ export class EscanearEmbalagemPage implements OnDestroy {
     });
   }
 
-  // ===== LIBERA A FOTO AO SAIR DA TELA =====
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.limparFoto();
   }
 }

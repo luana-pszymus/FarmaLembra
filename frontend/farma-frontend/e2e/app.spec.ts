@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test';
 
-test('visits the app root url', async ({ page }) => {
+test('deve abrir a página inicial do FarmaLembra', async ({ page }) => {
+  // Acessa a página inicial do aplicativo.
   await page.goto('/');
-  await expect(page.locator('#container')).toContainText('Ready to create an app?');
+
+  // Verifica se a saudação da página inicial aparece.
+  await expect(page.getByRole('heading', { name: /Olá!/ })).toBeVisible();
+
+  // Verifica se a marca do aplicativo aparece.
+  await expect(page.getByText('FarmaLembra', { exact: true })).toBeVisible();
 });

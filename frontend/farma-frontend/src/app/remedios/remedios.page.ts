@@ -1,16 +1,9 @@
-
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 // ===== ÍCONES DA TELA DE REMÉDIOS =====
-import {
-  addOutline,
-  medkitOutline,
-  searchOutline,
-  informationCircleOutline,
-} from 'ionicons/icons';
+import { addOutline, medkitOutline, searchOutline, informationCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-remedios',

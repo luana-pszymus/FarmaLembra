@@ -1,46 +1,23 @@
-// ===== IMPORTAÇÕES =====
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
-import {
-  IonContent,
-  IonIcon,
-  IonInput,
-  IonButton,
-} from '@ionic/angular';
-
+import { IonButton, IonContent, IonIcon, IonInput } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+import { arrowBackOutline, informationCircleOutline, searchOutline } from 'ionicons/icons';
 
-// ===== ÍCONES DA PESQUISA =====
-import {
-  searchOutline,
-  arrowBackOutline,
-  informationCircleOutline,
-} from 'ionicons/icons';
-
-// ===== COMPONENTE DA TELA =====
 @Component({
   selector: 'app-buscar-remedio',
   templateUrl: './buscar-remedio.page.html',
   styleUrls: ['./buscar-remedio.page.scss'],
-  imports: [
-    IonContent,
-    IonIcon,
-    IonInput,
-    IonButton,
-    FormsModule,
-    RouterLink,
-  ],
+  imports: [IonContent, IonIcon, IonInput, IonButton, FormsModule, RouterLink],
 })
 export class BuscarRemedioPage {
+  private readonly router = inject(Router);
 
-  // ===== CAMPO DE PESQUISA =====
   nomeRemedio = '';
   mensagem = '';
 
-  constructor(private router: Router) {
-    // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
       searchOutline,
       arrowBackOutline,
@@ -48,14 +25,12 @@ export class BuscarRemedioPage {
     });
   }
 
-  // ===== PESQUISA DO MEDICAMENTO =====
-  pesquisar() {
+  pesquisar(): void {
     if (!this.nomeRemedio.trim()) {
       this.mensagem = 'Digite o nome de um medicamento.';
       return;
     }
 
-    // ===== ENVIA O NOME E A ORIGEM PARA O CADASTRO =====
     this.router.navigate(['/tabs/remedios/novo/dados'], {
       queryParams: {
         nome: this.nomeRemedio.trim(),

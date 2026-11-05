@@ -1,19 +1,15 @@
-// ===== IMPORTAÇÕES =====
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
-// ===== ÍCONES DA TELA =====
 import {
   arrowBackOutline,
-  medkitOutline,
   calendarOutline,
-  timeOutline,
   informationCircleOutline,
+  medkitOutline,
+  timeOutline,
 } from 'ionicons/icons';
 
-// ===== COMPONENTE DE DETALHES =====
 @Component({
   selector: 'app-detalhes-remedio',
   templateUrl: './detalhes-remedio.page.html',
@@ -21,8 +17,8 @@ import {
   imports: [IonContent, IonIcon, RouterLink],
 })
 export class DetalhesRemedioPage {
+  private readonly route = inject(ActivatedRoute);
 
-  // ===== DADOS DO MEDICAMENTO =====
   nome = '';
   apresentacao = '';
   concentracao = '';
@@ -34,11 +30,9 @@ export class DetalhesRemedioPage {
   dataFim = '';
   observacoes = '';
 
-  // ===== VERIFICA SE RECEBEU UM MEDICAMENTO =====
   temMedicamento = false;
 
-  constructor(private route: ActivatedRoute) {
-    // ===== REGISTRO DOS ÍCONES =====
+  constructor() {
     addIcons({
       arrowBackOutline,
       medkitOutline,
@@ -47,7 +41,6 @@ export class DetalhesRemedioPage {
       informationCircleOutline,
     });
 
-    // ===== RECEBE OS DADOS PELA ROTA =====
     this.route.queryParamMap.subscribe((params) => {
       this.nome = params.get('nome') || '';
       this.apresentacao = params.get('apresentacao') || '';
@@ -60,7 +53,6 @@ export class DetalhesRemedioPage {
       this.dataFim = params.get('dataFim') || '';
       this.observacoes = params.get('observacoes') || '';
 
-      // ===== CONFERE SE EXISTE UM NOME RECEBIDO =====
       this.temMedicamento = this.nome.trim().length > 0;
     });
   }

@@ -2,7 +2,6 @@
 import { Component } from '@angular/core';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 // ===== ÍCONES DO PERFIL =====
 import {
   personOutline,
@@ -23,7 +22,6 @@ import {
   imports: [IonContent, IonIcon],
 })
 export class PaginaPlaceholderPage {
-
   // ===== REGISTRO DOS ÍCONES =====
   constructor() {
     addIcons({
