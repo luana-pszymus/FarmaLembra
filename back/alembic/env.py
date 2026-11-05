@@ -9,6 +9,9 @@ from app.models.medicamentos import Medicamento
 from app.models.pacientes import Paciente
 from app.models.usuarios import Usuario
 from app.models.prescricoes import Prescricao
+from app.models.vinculos_discord import VinculoDiscord
+from app.models.mensagens_discord import MensagemDiscord
+from app.models.lembretes import Lembrete
 
 config = context.config
 
