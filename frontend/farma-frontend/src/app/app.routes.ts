@@ -1,8 +1,8 @@
-// ===== IMPORTAÇÃO DAS ROTAS =====
-import { authGuard } from './guards/auth.guard';
 import type { Routes } from '@angular/router';
 
-// ===== ROTAS PRINCIPAIS DO APLICATIVO =====
+import { authGuard } from './guards/auth.guard';
+
+// Rotas principais do aplicativo.
 export const routes: Routes = [
   {
     path: 'tabs',
@@ -10,69 +10,49 @@ export const routes: Routes = [
     loadComponent: () => import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
-      // ===== INÍCIO =====
       {
         path: 'home',
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
       },
-
       {
         path: 'pacientes',
         loadComponent: () => import('./pacientes/pacientes.page').then((m) => m.PacientesPage),
       },
-
-      // ===== LISTA DE REMÉDIOS =====
       {
         path: 'remedios',
         loadComponent: () => import('./remedios/remedios.page').then((m) => m.RemediosPage),
       },
-
-      // ===== DETALHES DE UM MEDICAMENTO =====
       {
         path: 'remedios/detalhes',
         loadComponent: () => import('./detalhes-remedio/detalhes-remedio.page').then((m) => m.DetalhesRemedioPage),
       },
-
-      // ===== ESCOLHA DA FORMA DE ADICIONAR =====
       {
         path: 'remedios/novo',
         loadComponent: () => import('./adicionar-remedio/adicionar-remedio.page').then((m) => m.AdicionarRemedioPage),
       },
-
-      // ===== CADASTRO DOS DADOS DO TRATAMENTO =====
       {
         path: 'remedios/novo/dados',
         loadComponent: () =>
           import('./cadastro-tratamento/cadastro-tratamento.page').then((m) => m.CadastroTratamentoPage),
       },
-
-      // ===== LEITURA DA PRESCRIÇÃO =====
       {
         path: 'remedios/novo/prescricao',
         loadComponent: () =>
           import('./escanear-prescricao/escanear-prescricao.page').then((m) => m.EscanearPrescricaoPage),
       },
-
-      // ===== LEITURA DA EMBALAGEM =====
       {
         path: 'remedios/novo/caixa',
         loadComponent: () =>
           import('./escanear-embalagem/escanear-embalagem.page').then((m) => m.EscanearEmbalagemPage),
       },
-
-      // ===== PESQUISA DE MEDICAMENTOS =====
       {
         path: 'remedios/novo/buscar',
         loadComponent: () => import('./buscar-remedio/buscar-remedio.page').then((m) => m.BuscarRemedioPage),
       },
-
-      // ===== HISTÓRICO =====
       {
         path: 'historico',
         loadComponent: () => import('./historico/historico.page').then((m) => m.HistoricoPage),
       },
-
-      // ===== PERFIL =====
       {
         path: 'perfil',
         loadComponent: () => import('./paginas/pagina-placeholder.page').then((m) => m.PaginaPlaceholderPage),
@@ -82,8 +62,6 @@ export const routes: Routes = [
           icone: 'person-outline',
         },
       },
-
-      // ===== ROTA PADRÃO DAS ABAS =====
       {
         path: '',
         redirectTo: 'home',
@@ -91,8 +69,6 @@ export const routes: Routes = [
       },
     ],
   },
-
-  // ===== ENTRADA DO APLICATIVO =====
   {
     path: '',
     redirectTo: 'login',

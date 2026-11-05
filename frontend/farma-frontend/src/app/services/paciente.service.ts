@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
+
 import { environment } from '../../environments/environment';
 
 export interface Paciente {
@@ -15,9 +16,8 @@ export interface Paciente {
   providedIn: 'root',
 })
 export class PacienteService {
-  private apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = environment.apiUrl;
 
   listar(): Observable<Paciente[]> {
     return this.http.get<Paciente[]>(`${this.apiUrl}/pacientes/`);

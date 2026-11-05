@@ -7,42 +7,54 @@
     </header>
 
     <!-- Carregamento -->
-    <div class="estado" *ngIf="carregando">
+    @if (carregando) {
+    <div class="estado">
       <ion-spinner name="crescent"></ion-spinner>
       <p>Carregando pacientes...</p>
     </div>
+    }
 
     <!-- Erro -->
-    <div class="estado erro" *ngIf="!carregando && mensagemErro">
+    @if (!carregando && mensagemErro) {
+    <div class="estado erro">
       <p>{{ mensagemErro }}</p>
       <button (click)="carregarPacientes()">Tentar novamente</button>
     </div>
+    }
 
     <!-- Lista -->
-    <section *ngIf="!carregando && !mensagemErro">
+    @if (!carregando && !mensagemErro) {
+    <section>
       <div class="titulo-lista">
         <h2>Pacientes cadastrados</h2>
         <span>{{ pacientes.length }}</span>
       </div>
 
-      <div class="estado-vazio" *ngIf="pacientes.length === 0">
+      @if (pacientes.length === 0) {
+      <div class="estado-vazio">
         <h3>Nenhum paciente cadastrado</h3>
         <p>Quando você cadastrar um paciente, ele aparecerá nesta lista.</p>
       </div>
-
-      <div class="lista-pacientes" *ngIf="pacientes.length > 0">
-        <article class="card-paciente" *ngFor="let paciente of pacientes">
+      } @if (pacientes.length > 0) {
+      <div class="lista-pacientes">
+        @for (paciente of pacientes; track paciente.id) {
+        <article class="card-paciente">
           <div class="avatar">{{ paciente.nome.charAt(0).toUpperCase() }}</div>
 
           <div class="dados-paciente">
             <h3>{{ paciente.nome }}</h3>
 
-            <p *ngIf="paciente.telefone">{{ paciente.telefone }}</p>
-
-            <p *ngIf="paciente.data_nascimento">Nascimento: {{ paciente.data_nascimento | date:'dd/MM/yyyy' }}</p>
+            @if (paciente.telefone) {
+            <p>{{ paciente.telefone }}</p>
+            } @if (paciente.data_nascimento) {
+            <p>Nascimento: {{ paciente.data_nascimento | date: 'dd/MM/yyyy' }}</p>
+            }
           </div>
         </article>
+        }
       </div>
+      }
     </section>
+    }
   </main>
 </ion-content>

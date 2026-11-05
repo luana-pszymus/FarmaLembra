@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { AlertController, IonContent, IonButton, IonSpinner } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IonButton, IonContent, IonSpinner, AlertController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -14,6 +14,10 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, FormsModule, IonContent, IonButton, IonSpinner],
 })
 export class LoginPage {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly alertController = inject(AlertController);
+
   modoCadastro = false;
   mostrarSenha = false;
   carregando = false;
@@ -25,20 +29,14 @@ export class LoginPage {
 
   mensagemErro = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private alertController: AlertController,
-  ) {}
-
-  alternarModo() {
+  alternarModo(): void {
     this.modoCadastro = !this.modoCadastro;
     this.mensagemErro = '';
     this.senha = '';
     this.confirmarSenha = '';
   }
 
-  async entrar() {
+  async entrar(): Promise<void> {
     this.mensagemErro = '';
 
     if (!this.email.trim() || !this.senha) {
@@ -86,21 +84,22 @@ export class LoginPage {
         console.log('Resposta do servidor:', erro.error);
         console.log('Mensagem:', erro.message);
       }
+
       this.mensagemErro = this.tratarErro(erro);
     } finally {
       this.carregando = false;
     }
   }
 
-  async entrarComGoogle() {
+  async entrarComGoogle(): Promise<void> {
     await this.mostrarAlerta('Indisponível no momento', 'O login com Google ainda não está integrado ao sistema.');
   }
 
-  async recuperarSenha() {
+  async recuperarSenha(): Promise<void> {
     await this.mostrarAlerta('Recuperação de senha', 'A recuperação de senha ainda será implementada no backend.');
   }
 
-  private async mostrarAlerta(titulo: string, mensagem: string) {
+  private async mostrarAlerta(titulo: string, mensagem: string): Promise<void> {
     const alerta = await this.alertController.create({
       header: titulo,
       message: mensagem,

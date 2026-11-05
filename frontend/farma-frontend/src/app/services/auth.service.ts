@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+
 import { environment } from '../../environments/environment';
 
 interface UsuarioResponse {
@@ -18,15 +19,14 @@ interface TokenResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
-
-  cadastrar(nome: string, email: string, senha: string) {
+  cadastrar(nome: string, email: string, senha: string): Promise<UsuarioResponse> {
     return firstValueFrom(this.http.post<UsuarioResponse>(`${this.apiUrl}/usuarios/`, { nome, email, senha }));
   }
 
-  async entrar(email: string, senha: string) {
+  async entrar(email: string, senha: string): Promise<TokenResponse> {
     const dados = new URLSearchParams();
 
     dados.set('username', email);
@@ -45,7 +45,7 @@ export class AuthService {
     return resposta;
   }
 
-  sair() {
+  sair(): void {
     localStorage.removeItem('access_token');
   }
 
