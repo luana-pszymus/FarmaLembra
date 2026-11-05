@@ -32,4 +32,12 @@ export class PacienteService {
   criar(dados: PacienteCreate): Observable<Paciente> {
     return this.http.post<Paciente>(`${this.apiUrl}/pacientes/`, dados);
   }
+
+  atualizar(id: number, dados: PacienteCreate): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.apiUrl}/pacientes/${id}`, dados);
+  }
+
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/pacientes/${id}`);
+  }
 }

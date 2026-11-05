@@ -117,3 +117,112 @@
     font-size: 13px;
   }
 }
+
+.acoes-pacientes {
+  margin-bottom: 24px;
+}
+
+.botao-adicionar,
+.botao-salvar {
+  background: #39856b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-adicionar {
+  width: 100%;
+}
+
+.formulario-paciente {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+
+  h2 {
+    color: #203b32;
+    margin-top: 0;
+  }
+
+  label {
+    display: block;
+    color: #43574e;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 16px 0 7px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dce5df;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    color: #203b32;
+  }
+}
+
+.botoes-formulario {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+
+  button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 9px;
+    border: none;
+    font-weight: 600;
+  }
+}
+
+.botao-cancelar {
+  background: #edf1ee;
+  color: #43574e;
+}
+
+.botao-salvar {
+  background: #39856b;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.erro-formulario {
+  color: #b42318;
+  font-size: 13px;
+}
+
+.botao-editar {
+  margin-left: auto;
+  padding: 9px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #e3f1eb;
+  color: #39856b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-excluir {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #fdeaea;
+  color: #b42318;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-editar,
+.botao-excluir {
+  white-space: nowrap;
+}
