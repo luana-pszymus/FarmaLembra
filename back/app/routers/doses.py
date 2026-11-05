@@ -7,10 +7,12 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+
 from app.models.prescricoes import Prescricao
 from app.models.pacientes import Paciente
 from app.models.doses_programadas import DoseProgramada
 from app.models.registros_tomada import RegistroTomada
+from app.models.lembretes import Lembrete
 from app.models.usuarios import Usuario
 
 from app.schemas.doses import (
@@ -30,7 +32,7 @@ router = APIRouter(
 FUSO_HORARIO = ZoneInfo("America/Sao_Paulo")
 
 
-# GERAR DOSES DE UMA PRESCRIÇÃO
+# GERAR DOSES E LEMBRETES DE UMA PRESCRIÇÃO
 @router.post(
     "/gerar/{prescricao_id}",
     response_model=list[DoseProgramadaResponse],
@@ -62,7 +64,8 @@ def gerar_doses(
             detail="Não é possível gerar doses de uma prescrição inativa."
         )
 
-    data_final = prescricao.data_fim or date.today()
+    agora = datetime.now(FUSO_HORARIO)
+    data_final = prescricao.data_fim or agora.date()
 
     if data_final < prescricao.data_inicio:
         raise HTTPException(
@@ -71,6 +74,26 @@ def gerar_doses(
         )
 
     doses_criadas = []
+
+    def garantir_lembrete(data_hora):
+        # Não cria lembretes para horários que já passaram.
+        if data_hora < agora:
+            return
+
+        lembrete_existente = db.scalar(
+            select(Lembrete).where(
+                Lembrete.prescricao_id == prescricao.id,
+                Lembrete.agendado_para == data_hora
+            )
+        )
+
+        if not lembrete_existente:
+            lembrete = Lembrete(
+                prescricao_id=prescricao.id,
+                agendado_para=data_hora,
+                status="pendente"
+            )
+            db.add(lembrete)
 
     def adicionar_dose(data_hora):
         dose_existente = db.scalar(
@@ -81,6 +104,11 @@ def gerar_doses(
         )
 
         if dose_existente:
+            # Recupera lembretes de doses futuras
+            # que ainda não possuem lembrete.
+            if dose_existente.status == "pendente":
+                garantir_lembrete(dose_existente.agendado_para)
+
             return
 
         dose = DoseProgramada(
@@ -91,6 +119,8 @@ def gerar_doses(
 
         db.add(dose)
         doses_criadas.append(dose)
+
+        garantir_lembrete(data_hora)
 
     # AGENDAMENTO POR HORÁRIOS FIXOS
     if prescricao.modo_agendamento == "horarios_fixos":
@@ -161,7 +191,7 @@ def gerar_doses(
         db.rollback()
         raise HTTPException(
             status_code=500,
-            detail="Erro ao gerar doses."
+            detail="Erro ao gerar doses e lembretes."
         )
 
     return doses_criadas
