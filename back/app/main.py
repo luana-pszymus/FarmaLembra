@@ -1,12 +1,14 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from app.database import Base, engine, get_db
-from app.models.medicamento import Medicamento
+
 from app.database import get_db
 from app.routers import medicamentos
-
-Base.metadata.create_all(bind=engine)
+from app.routers import pacientes
+from app.routers import usuarios
+from app.routers import prescricoes
+from app.routers import auth
 
 app = FastAPI(
     title="FarmaLembra API",
@@ -14,7 +16,22 @@ app = FastAPI(
     version="0.1.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8100",
+        "http://127.0.0.1:8100",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(medicamentos.router)
+app.include_router(pacientes.router)
+app.include_router(usuarios.router)
+app.include_router(prescricoes.router)
+app.include_router(auth.router)
 
 
 @app.get("/")

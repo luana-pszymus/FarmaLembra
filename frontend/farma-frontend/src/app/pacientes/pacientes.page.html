@@ -1,0 +1,48 @@
+<ion-content [fullscreen]="true" class="pagina-pacientes">
+  <main class="conteudo">
+    <header class="cabecalho">
+      <p class="etiqueta">CUIDADO E ACOMPANHAMENTO</p>
+      <h1>Meus pacientes</h1>
+      <p>Gerencie as pessoas cujos tratamentos você acompanha.</p>
+    </header>
+
+    <!-- Carregamento -->
+    <div class="estado" *ngIf="carregando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando pacientes...</p>
+    </div>
+
+    <!-- Erro -->
+    <div class="estado erro" *ngIf="!carregando && mensagemErro">
+      <p>{{ mensagemErro }}</p>
+      <button (click)="carregarPacientes()">Tentar novamente</button>
+    </div>
+
+    <!-- Lista -->
+    <section *ngIf="!carregando && !mensagemErro">
+      <div class="titulo-lista">
+        <h2>Pacientes cadastrados</h2>
+        <span>{{ pacientes.length }}</span>
+      </div>
+
+      <div class="estado-vazio" *ngIf="pacientes.length === 0">
+        <h3>Nenhum paciente cadastrado</h3>
+        <p>Quando você cadastrar um paciente, ele aparecerá nesta lista.</p>
+      </div>
+
+      <div class="lista-pacientes" *ngIf="pacientes.length > 0">
+        <article class="card-paciente" *ngFor="let paciente of pacientes">
+          <div class="avatar">{{ paciente.nome.charAt(0).toUpperCase() }}</div>
+
+          <div class="dados-paciente">
+            <h3>{{ paciente.nome }}</h3>
+
+            <p *ngIf="paciente.telefone">{{ paciente.telefone }}</p>
+
+            <p *ngIf="paciente.data_nascimento">Nascimento: {{ paciente.data_nascimento | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</ion-content>

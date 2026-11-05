@@ -1,10 +1,12 @@
 // ===== IMPORTAÇÃO DAS ROTAS =====
+import { authGuard } from './guards/auth.guard';
 import type { Routes } from '@angular/router';
 
 // ===== ROTAS PRINCIPAIS DO APLICATIVO =====
 export const routes: Routes = [
   {
     path: 'tabs',
+    canActivate: [authGuard],
     loadComponent: () => import('./tabs/tabs.page').then((m) => m.TabsPage),
 
     children: [
@@ -12,6 +14,11 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+      },
+
+      {
+        path: 'pacientes',
+        loadComponent: () => import('./pacientes/pacientes.page').then((m) => m.PacientesPage),
       },
 
       // ===== LISTA DE REMÉDIOS =====
@@ -88,7 +95,7 @@ export const routes: Routes = [
   // ===== ENTRADA DO APLICATIVO =====
   {
     path: '',
-    redirectTo: 'tabs/home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
