@@ -10,6 +10,7 @@ from app.routers import usuarios
 from app.routers import prescricoes
 from app.routers import auth
 from app.routers import doses
+from app.routers import relatorios
 
 app = FastAPI(
     title="FarmaLembra API",
@@ -34,6 +35,7 @@ app.include_router(usuarios.router)
 app.include_router(prescricoes.router)
 app.include_router(auth.router)
 app.include_router(doses.router)
+app.include_router(relatorios.router)
 
 
 @app.get("/")
