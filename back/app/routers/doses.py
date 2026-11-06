@@ -22,6 +22,7 @@ from app.schemas.doses import (
 )
 
 from app.routers.auth import obter_usuario_atual
+from app.services.agendamento import gerar_agendamentos
 
 
 router = APIRouter(
@@ -31,6 +32,34 @@ router = APIRouter(
 
 FUSO_HORARIO = ZoneInfo("America/Sao_Paulo")
 
+TEMPO_TOLERANCIA_MINUTOS = 30
+
+
+def atualizar_doses_atrasadas(db: Session, paciente_id: int):
+    limite = datetime.now(FUSO_HORARIO) - timedelta(
+        minutes=TEMPO_TOLERANCIA_MINUTOS
+    )
+
+    doses_pendentes = db.scalars(
+        select(DoseProgramada)
+        .join(
+            Prescricao,
+            DoseProgramada.prescricao_id == Prescricao.id
+        )
+        .where(
+            Prescricao.paciente_id == paciente_id,
+            DoseProgramada.status == "pendente",
+            DoseProgramada.agendado_para < limite
+        )
+    ).all()
+
+    for dose in doses_pendentes:
+        dose.status = "atrasada"
+
+    if doses_pendentes:
+        db.commit()
+
+    return len(doses_pendentes)
 
 # GERAR DOSES E LEMBRETES DE UMA PRESCRIÇÃO
 @router.post(
@@ -65,12 +94,40 @@ def gerar_doses(
         )
 
     agora = datetime.now(FUSO_HORARIO)
-    data_final = prescricao.data_fim or agora.date()
 
-    if data_final < prescricao.data_inicio:
+    # Tratamento temporário: utiliza a data de término.
+    # Tratamento contínuo: gera uma agenda inicial de 30 dias.
+    if prescricao.data_fim:
+        if prescricao.data_fim < prescricao.data_inicio:
+            raise HTTPException(
+                status_code=400,
+                detail="A data final é anterior à data inicial."
+            )
+
+        dias = (prescricao.data_fim - max(
+            prescricao.data_inicio,
+            agora.date()
+        )).days + 1
+
+        if dias <= 0:
+            return []
+
+        dias = min(dias, 90)
+
+    else:
+        dias = 30
+
+    # Calcula os horários usando o serviço de agendamento.
+    try:
+        agendamentos = gerar_agendamentos(
+            prescricao,
+            dias=dias
+        )
+
+    except (ValueError, TypeError) as erro:
         raise HTTPException(
             status_code=400,
-            detail="A data final é anterior à data inicial."
+            detail=str(erro)
         )
 
     doses_criadas = []
@@ -87,14 +144,18 @@ def gerar_doses(
         )
 
         if not lembrete_existente:
-            lembrete = Lembrete(
-                prescricao_id=prescricao.id,
-                agendado_para=data_hora,
-                status="pendente"
+            db.add(
+                Lembrete(
+                    prescricao_id=prescricao.id,
+                    agendado_para=data_hora,
+                    status="pendente"
+                )
             )
-            db.add(lembrete)
 
-    def adicionar_dose(data_hora):
+    # Salva as doses calculadas e cria os lembretes.
+    for agendamento in agendamentos:
+        data_hora = agendamento["data_hora"]
+
         dose_existente = db.scalar(
             select(DoseProgramada).where(
                 DoseProgramada.prescricao_id == prescricao.id,
@@ -106,7 +167,7 @@ def gerar_doses(
             if dose_existente.status == "pendente":
                 garantir_lembrete(dose_existente.agendado_para)
 
-            return
+            continue
 
         dose = DoseProgramada(
             prescricao_id=prescricao.id,
@@ -118,65 +179,6 @@ def gerar_doses(
         doses_criadas.append(dose)
 
         garantir_lembrete(data_hora)
-
-    # AGENDAMENTO POR HORÁRIOS FIXOS
-    if prescricao.modo_agendamento == "horarios_fixos":
-
-        data_atual = prescricao.data_inicio
-
-        while data_atual <= data_final:
-
-            if (
-                prescricao.dias_semana is None
-                or data_atual.weekday() in prescricao.dias_semana
-            ):
-                for horario in prescricao.horarios or []:
-                    hora = time.fromisoformat(horario)
-
-                    data_hora = datetime.combine(
-                        data_atual,
-                        hora,
-                        tzinfo=FUSO_HORARIO
-                    )
-
-                    adicionar_dose(data_hora)
-
-            data_atual += timedelta(days=1)
-
-    # AGENDAMENTO POR INTERVALO
-    elif prescricao.modo_agendamento == "intervalo":
-
-        if not prescricao.intervalo_horas or not prescricao.horario_inicial:
-            raise HTTPException(
-                status_code=400,
-                detail="Prescrição sem intervalo ou horário inicial."
-            )
-
-        inicio = datetime.combine(
-            prescricao.data_inicio,
-            prescricao.horario_inicial,
-            tzinfo=FUSO_HORARIO
-        )
-
-        fim = datetime.combine(
-            data_final,
-            time(23, 59, 59),
-            tzinfo=FUSO_HORARIO
-        )
-
-        intervalo = timedelta(hours=prescricao.intervalo_horas)
-
-        data_hora = inicio
-
-        while data_hora <= fim:
-            adicionar_dose(data_hora)
-            data_hora += intervalo
-
-    else:
-        raise HTTPException(
-            status_code=400,
-            detail="Modo de agendamento inválido."
-        )
 
     try:
         db.commit()
@@ -219,6 +221,8 @@ def listar_doses_paciente(
             detail="Paciente não encontrado."
         )
 
+    atualizar_doses_atrasadas(db, paciente_id)
+
     consulta = (
         select(DoseProgramada)
         .join(Prescricao, DoseProgramada.prescricao_id == Prescricao.id)
@@ -231,6 +235,7 @@ def listar_doses_paciente(
             time.min,
             tzinfo=FUSO_HORARIO
         )
+
         consulta = consulta.where(
             DoseProgramada.agendado_para >= inicio
         )
@@ -241,6 +246,7 @@ def listar_doses_paciente(
             time.min,
             tzinfo=FUSO_HORARIO
         )
+
         consulta = consulta.where(
             DoseProgramada.agendado_para < fim
         )
@@ -298,7 +304,7 @@ def confirmar_dose(
 
     dose.status = dados.resultado
 
-    # Atualiza também o lembrete correspondente
+    # Atualiza também o lembrete correspondente.
     lembrete = db.scalar(
         select(Lembrete).where(
             Lembrete.prescricao_id == dose.prescricao_id,
