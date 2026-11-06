@@ -76,6 +76,10 @@ export class PrescricaoService {
     return this.http.get<Prescricao>(`${this.apiUrl}/prescricoes/${id}`);
   }
 
+  gerarDoses(prescricaoId: number): Observable<unknown[]> {
+    return this.http.post<unknown[]>(`${this.apiUrl}/doses/gerar/${prescricaoId}`, {});
+  }
+
   criar(dados: PrescricaoCreate): Observable<Prescricao> {
     return this.http.post<Prescricao>(`${this.apiUrl}/prescricoes/`, dados);
   }

@@ -65,7 +65,13 @@ def gerar_doses(
         )
 
     agora = datetime.now(FUSO_HORARIO)
-    data_final = prescricao.data_fim or agora.date()
+
+    # Tratamentos contínuos recebem uma janela móvel de 30 dias.
+    # Tratamentos temporários respeitam a data final prescrita.
+    inicio_agendamento = max(prescricao.data_inicio, agora.date())
+    data_final = prescricao.data_fim or (
+        inicio_agendamento + timedelta(days=29)
+    )
 
     if data_final < prescricao.data_inicio:
         raise HTTPException(
@@ -95,6 +101,10 @@ def gerar_doses(
             db.add(lembrete)
 
     def adicionar_dose(data_hora):
+        # Não criar doses com horário anterior ao momento atual.
+        if data_hora < agora:
+            return
+
         dose_existente = db.scalar(
             select(DoseProgramada).where(
                 DoseProgramada.prescricao_id == prescricao.id,
@@ -122,7 +132,7 @@ def gerar_doses(
     # AGENDAMENTO POR HORÁRIOS FIXOS
     if prescricao.modo_agendamento == "horarios_fixos":
 
-        data_atual = prescricao.data_inicio
+        data_atual = inicio_agendamento
 
         while data_atual <= data_final:
 
@@ -167,6 +177,10 @@ def gerar_doses(
         intervalo = timedelta(hours=prescricao.intervalo_horas)
 
         data_hora = inicio
+
+        # Avança os horários vencidos mantendo o intervalo original.
+        while data_hora < agora:
+            data_hora += intervalo
 
         while data_hora <= fim:
             adicionar_dose(data_hora)

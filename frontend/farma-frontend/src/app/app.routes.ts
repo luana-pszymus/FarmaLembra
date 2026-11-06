@@ -36,6 +36,11 @@ export const routes: Routes = [
           import('./cadastro-tratamento/cadastro-tratamento.page').then((m) => m.CadastroTratamentoPage),
       },
       {
+        path: 'remedios/novo/conferir',
+        loadComponent: () =>
+          import('./conferir-remedio/conferir-remedio.page').then((m) => m.ConferirRemedioPage),
+      },
+      {
         path: 'remedios/novo/prescricao',
         loadComponent: () =>
           import('./escanear-prescricao/escanear-prescricao.page').then((m) => m.EscanearPrescricaoPage),

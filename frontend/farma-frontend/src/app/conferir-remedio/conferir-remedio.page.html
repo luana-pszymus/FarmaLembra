@@ -96,11 +96,11 @@
     }
 
     <!-- ===== AÇÕES ===== -->
-    <button class="botao-confirmar" type="button" (click)="confirmar()">
+    <button class="botao-confirmar" type="button" (click)="confirmar()" [disabled]="salvando || salvo">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Confirmar informações
+      {{ salvando ? "Salvando..." : salvo ? "Tratamento salvo" : "Confirmar e salvar tratamento" }}
     </button>
 
-    <button class="botao-editar" type="button" (click)="editar()">Corrigir informações</button>
+    <button class="botao-editar" type="button" (click)="salvo ? voltarMedicamentos() : editar()"> {{ salvo ? "Voltar aos medicamentos" : "Corrigir informações" }} </button>
   </main>
 </ion-content>

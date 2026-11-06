@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { PacienteService, Paciente } from '../services/paciente.service';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, calendarOutline, informationCircleOutline, timeOutline } from 'ionicons/icons';
@@ -14,6 +15,9 @@ import { arrowBackOutline, calendarOutline, informationCircleOutline, timeOutlin
 export class CadastroTratamentoPage {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly pacienteService = inject(PacienteService);
+  pacientes: Paciente[] = [];
+  pacienteId: number | null = null;
 
   origem = 'pesquisa';
 
@@ -35,6 +39,11 @@ export class CadastroTratamentoPage {
   mensagem = '';
 
   constructor() {
+    this.pacienteService.listar().subscribe({
+      next: pacientes => this.pacientes = pacientes,
+      error: () => this.mensagem = 'Não foi possível carregar os pacientes.'
+    });
+
     addIcons({
       arrowBackOutline,
       calendarOutline,
@@ -43,6 +52,9 @@ export class CadastroTratamentoPage {
     });
 
     this.route.queryParamMap.subscribe((params) => {
+      const pacienteId = params.get('pacienteId');
+      if (pacienteId) this.pacienteId = Number(pacienteId);
+
       if (params.has('nome')) {
         this.nome = params.get('nome') ?? '';
       }
@@ -94,8 +106,24 @@ export class CadastroTratamentoPage {
   }
 
   conferirDados(): void {
+    if (!this.pacienteId) {
+      this.mensagem = 'Selecione o paciente deste tratamento.';
+      return;
+    }
+
     if (!this.nome.trim() || !this.dose.trim() || !this.frequencia || !this.dataInicio) {
       this.mensagem = 'Preencha o nome, a dose, a frequência e a data de início.';
+      return;
+    }
+
+    if (this.frequencia !== 'Todos os dias') {
+      this.mensagem = 'O agendamento automático aceita apenas tratamentos diários neste momento.';
+      return;
+    }
+
+    const horariosValidos = this.horarios.split(/[,;]|\se\s/i).map(h => h.trim()).filter(Boolean);
+    if (!horariosValidos.length || horariosValidos.some(h => !/^([01]\d|2[0-3]):[0-5]\d$/.test(h))) {
+      this.mensagem = 'Informe horários válidos, como 08:00 e 20:00.';
       return;
     }
 
@@ -106,6 +134,7 @@ export class CadastroTratamentoPage {
 
     this.router.navigate(['/tabs/remedios/novo/conferir'], {
       queryParams: {
+        pacienteId: this.pacienteId,
         origem: this.origem,
         nome: this.nome.trim(),
         apresentacao: this.apresentacao,
