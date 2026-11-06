@@ -22,12 +22,12 @@
           <select id="pacienteId" name="pacienteId" [(ngModel)]="pacienteId" required>
             <option [ngValue]="null">Selecione um paciente</option>
             @for (paciente of pacientes; track paciente.id) {
-              <option [ngValue]="paciente.id">{{ paciente.nome }}</option>
+            <option [ngValue]="paciente.id">{{ paciente.nome }}</option>
             }
           </select>
           @if (pacientes.length === 0) {
-            <small>Cadastre um paciente antes de adicionar um tratamento.</small>
-            <a routerLink="/tabs/pacientes">Ir para pacientes</a>
+          <small>Cadastre um paciente antes de adicionar um tratamento.</small>
+          <a routerLink="/tabs/pacientes">Ir para pacientes</a>
           }
         </div>
       </section>

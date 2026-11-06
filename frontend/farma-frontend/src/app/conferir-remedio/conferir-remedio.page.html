@@ -101,6 +101,8 @@
       {{ salvando ? "Salvando..." : salvo ? "Tratamento salvo" : "Confirmar e salvar tratamento" }}
     </button>
 
-    <button class="botao-editar" type="button" (click)="salvo ? voltarMedicamentos() : editar()"> {{ salvo ? "Voltar aos medicamentos" : "Corrigir informações" }} </button>
+    <button class="botao-editar" type="button" (click)="salvo ? voltarMedicamentos() : editar()">
+      {{ salvo ? "Voltar aos medicamentos" : "Corrigir informações" }}
+    </button>
   </main>
 </ion-content>

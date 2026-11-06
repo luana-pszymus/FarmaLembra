@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { PacienteService, Paciente } from '../services/paciente.service';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, calendarOutline, informationCircleOutline, timeOutline } from 'ionicons/icons';
+
+import { PacienteService } from '../services/paciente.service';
+import type { Paciente } from '../services/paciente.service';
 
 @Component({
   selector: 'app-cadastro-tratamento',
@@ -40,8 +42,8 @@ export class CadastroTratamentoPage {
 
   constructor() {
     this.pacienteService.listar().subscribe({
-      next: pacientes => this.pacientes = pacientes,
-      error: () => this.mensagem = 'Não foi possível carregar os pacientes.'
+      next: (pacientes) => (this.pacientes = pacientes),
+      error: () => (this.mensagem = 'Não foi possível carregar os pacientes.'),
     });
 
     addIcons({
@@ -121,8 +123,11 @@ export class CadastroTratamentoPage {
       return;
     }
 
-    const horariosValidos = this.horarios.split(/[,;]|\se\s/i).map(h => h.trim()).filter(Boolean);
-    if (!horariosValidos.length || horariosValidos.some(h => !/^([01]\d|2[0-3]):[0-5]\d$/.test(h))) {
+    const horariosValidos = this.horarios
+      .split(/[,;]|\se\s/i)
+      .map((h) => h.trim())
+      .filter(Boolean);
+    if (!horariosValidos.length || horariosValidos.some((h) => !/^([01]\d|2[0-3]):[0-5]\d$/.test(h))) {
       this.mensagem = 'Informe horários válidos, como 08:00 e 20:00.';
       return;
     }

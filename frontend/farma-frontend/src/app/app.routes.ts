@@ -37,8 +37,7 @@ export const routes: Routes = [
       },
       {
         path: 'remedios/novo/conferir',
-        loadComponent: () =>
-          import('./conferir-remedio/conferir-remedio.page').then((m) => m.ConferirRemedioPage),
+        loadComponent: () => import('./conferir-remedio/conferir-remedio.page').then((m) => m.ConferirRemedioPage),
       },
       {
         path: 'remedios/novo/prescricao',

@@ -3,11 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
-  arrowBackOutline, calendarOutline, checkmarkCircleOutline,
-  informationCircleOutline, medkitOutline, timeOutline,
+  arrowBackOutline,
+  calendarOutline,
+  checkmarkCircleOutline,
+  informationCircleOutline,
+  medkitOutline,
+  timeOutline,
 } from 'ionicons/icons';
+
 import { MedicamentoService } from '../services/medicamento.service';
-import { PrescricaoService, PrescricaoCreate } from '../services/prescricoes.service';
+import type { PrescricaoCreate } from '../services/prescricoes.service';
+import { PrescricaoService } from '../services/prescricoes.service';
 
 @Component({
   selector: 'app-conferir-remedio',
@@ -39,11 +45,15 @@ export class ConferirRemedioPage {
 
   constructor() {
     addIcons({
-      arrowBackOutline, medkitOutline, calendarOutline, timeOutline,
-      informationCircleOutline, checkmarkCircleOutline,
+      arrowBackOutline,
+      medkitOutline,
+      calendarOutline,
+      timeOutline,
+      informationCircleOutline,
+      checkmarkCircleOutline,
     });
 
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe((params) => {
       this.pacienteId = Number(params.get('pacienteId')) || null;
       this.origem = params.get('origem') || '';
       this.nome = params.get('nome') || '';
@@ -86,11 +96,20 @@ export class ConferirRemedioPage {
     if (this.salvando || this.salvo) return;
 
     const quantidade = Number(this.dose.replace(',', '.'));
-    const horarios = this.horarios.split(/[,;]|\se\s/i).map(h => h.trim()).filter(Boolean);
+    const horarios = this.horarios
+      .split(/[,;]|\se\s/i)
+      .map((h) => h.trim())
+      .filter(Boolean);
 
-    if (!this.pacienteId || !this.nome.trim() || !Number.isFinite(quantidade) ||
-        quantidade <= 0 || !this.dataInicio || !horarios.length ||
-        horarios.some(h => !/^([01]\d|2[0-3]):[0-5]\d$/.test(h))) {
+    if (
+      !this.pacienteId ||
+      !this.nome.trim() ||
+      !Number.isFinite(quantidade) ||
+      quantidade <= 0 ||
+      !this.dataInicio ||
+      !horarios.length ||
+      horarios.some((h) => !/^([01]\d|2[0-3]):[0-5]\d$/.test(h))
+    ) {
       this.mensagem = 'Dados incompletos ou inválidos. Volte e confira o cadastro.';
       return;
     }
@@ -99,15 +118,16 @@ export class ConferirRemedioPage {
     this.mensagem = 'Salvando tratamento...';
 
     this.medicamentoService.listar().subscribe({
-      next: medicamentos => {
+      next: (medicamentos) => {
         const nome = this.nome.trim().toLocaleLowerCase();
         const dosagem = (this.concentracao.trim() || 'Não informada').toLocaleLowerCase();
         const forma = (this.apresentacao.trim() || 'Não informada').toLocaleLowerCase();
 
-        const existente = medicamentos.find(m =>
-          m.nome.trim().toLocaleLowerCase() === nome &&
-          m.dosagem.trim().toLocaleLowerCase() === dosagem &&
-          m.forma_farmaceutica.trim().toLocaleLowerCase() === forma
+        const existente = medicamentos.find(
+          (m) =>
+            m.nome.trim().toLocaleLowerCase() === nome &&
+            m.dosagem.trim().toLocaleLowerCase() === dosagem &&
+            m.forma_farmaceutica.trim().toLocaleLowerCase() === forma,
         );
 
         if (existente) {
@@ -115,17 +135,19 @@ export class ConferirRemedioPage {
           return;
         }
 
-        this.medicamentoService.criar({
-          nome: this.nome.trim(),
-          dosagem: this.concentracao.trim() || 'Não informada',
-          forma_farmaceutica: this.apresentacao.trim() || 'Não informada',
-          descricao: null,
-        }).subscribe({
-          next: medicamento => this.salvarPrescricao(medicamento.id, quantidade, horarios),
-          error: erro => this.falha(erro),
-        });
+        this.medicamentoService
+          .criar({
+            nome: this.nome.trim(),
+            dosagem: this.concentracao.trim() || 'Não informada',
+            forma_farmaceutica: this.apresentacao.trim() || 'Não informada',
+            descricao: null,
+          })
+          .subscribe({
+            next: (medicamento) => this.salvarPrescricao(medicamento.id, quantidade, horarios),
+            error: (erro) => this.falha(erro),
+          });
       },
-      error: erro => this.falha(erro),
+      error: (erro) => this.falha(erro),
     });
   }
 
@@ -150,17 +172,18 @@ export class ConferirRemedioPage {
     };
 
     this.prescricaoService.criar(dados).subscribe({
-      next: prescricao => {
+      next: (prescricao) => {
         this.prescricaoService.gerarDoses(prescricao.id).subscribe({
           next: () => {
             this.salvando = false;
             this.salvo = true;
             this.mensagem = 'Tratamento salvo e horários das doses gerados com sucesso!';
           },
-          error: erro => this.falha(erro, 'A prescrição foi salva, mas houve um erro ao gerar os horários das doses.'),
+          error: (erro) =>
+            this.falha(erro, 'A prescrição foi salva, mas houve um erro ao gerar os horários das doses.'),
         });
       },
-      error: erro => this.falha(erro),
+      error: (erro) => this.falha(erro),
     });
   }
 

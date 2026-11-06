@@ -8,9 +8,9 @@
 
     <!-- Botão para adicionar paciente -->
     <div class="acoes-pacientes">
-      <button class="botao-adicionar" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
-        + Adicionar paciente
-      </button>
+      @if (!mostrarFormulario) {
+      <button class="botao-adicionar" (click)="abrirFormulario()">+ Adicionar paciente</button>
+      }
     </div>
 
     <!-- Formulário de cadastro -->
