@@ -6,6 +6,61 @@
       <p>Gerencie as pessoas cujos tratamentos você acompanha.</p>
     </header>
 
+    <!-- Botão para adicionar paciente -->
+    <div class="acoes-pacientes">
+      <button class="botao-adicionar" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+        + Adicionar paciente
+      </button>
+    </div>
+
+    <!-- Formulário de cadastro -->
+    @if (mostrarFormulario) {
+    <section class="formulario-paciente">
+      <h2>{{ editandoId !== null ? 'Editar paciente' : 'Novo paciente' }}</h2>
+
+      <form (ngSubmit)="editandoId !== null ? atualizarPaciente() : cadastrarPaciente()">
+        <label for="nome">Nome completo</label>
+        <input id="nome" type="text" name="nome" [(ngModel)]="novoPaciente.nome" placeholder="Digite o nome" required />
+
+        <label for="telefone">Telefone</label>
+        <input
+          id="telefone"
+          type="tel"
+          name="telefone"
+          [(ngModel)]="novoPaciente.telefone"
+          placeholder="(42) 99999-9999"
+        />
+
+        <label for="dataNascimento">Data de nascimento</label>
+
+        <input
+          id="dataNascimento"
+          type="text"
+          name="dataNascimento"
+          [(ngModel)]="novoPaciente.data_nascimento"
+          (ngModelChange)="formatarEntradaData($event)"
+          placeholder="DD/MM/AAAA"
+          inputmode="numeric"
+          maxlength="10"
+        />
+
+        @if (mensagemFormulario) {
+        <p class="erro-formulario">{{ mensagemFormulario }}</p>
+        }
+
+        <div class="botoes-formulario">
+          <button type="button" class="botao-cancelar" (click)="cancelarCadastro()" [disabled]="salvando">
+            Cancelar
+          </button>
+
+          <button type="submit" class="botao-salvar" [disabled]="salvando">
+            {{ salvando ? 'Salvando...' : editandoId !== null ? 'Salvar alterações' : 'Salvar paciente' }}
+          </button>
+        </div>
+      </form>
+    </section>
+    }
+
     <!-- Carregamento -->
     @if (carregando) {
     <div class="estado">
@@ -50,6 +105,9 @@
             <p>Nascimento: {{ paciente.data_nascimento | date: 'dd/MM/yyyy' }}</p>
             }
           </div>
+
+          <button type="button" class="botao-editar" (click)="editarPaciente(paciente)">Editar</button>
+          <button type="button" class="botao-excluir" (click)="excluirPaciente(paciente)">Excluir</button>
         </article>
         }
       </div>

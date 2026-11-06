@@ -5,6 +5,7 @@ from sqlalchemy import (
     String,
     Date,
     DateTime,
+    Time,
     Numeric,
     Text,
     ForeignKey,
@@ -55,6 +56,12 @@ class Prescricao(Base):
         String(30),
         nullable=True
     )
+
+    horario_inicial = Column(
+        Time,
+        nullable=True
+    )
+
 
     # Lista de horários, exemplo: ["08:00", "20:00"]
     horarios = Column(

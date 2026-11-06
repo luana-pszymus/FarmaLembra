@@ -12,6 +12,8 @@ from app.models.prescricoes import Prescricao
 from app.models.vinculos_discord import VinculoDiscord
 from app.models.mensagens_discord import MensagemDiscord
 from app.models.lembretes import Lembrete
+from app.models.doses_programadas import DoseProgramada
+from app.models.registros_tomada import RegistroTomada
 
 config = context.config
 
