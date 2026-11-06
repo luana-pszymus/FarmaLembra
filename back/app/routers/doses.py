@@ -76,7 +76,6 @@ def gerar_doses(
     doses_criadas = []
 
     def garantir_lembrete(data_hora):
-        # Não cria lembretes para horários que já passaram.
         if data_hora < agora:
             return
 
@@ -104,8 +103,6 @@ def gerar_doses(
         )
 
         if dose_existente:
-            # Recupera lembretes de doses futuras
-            # que ainda não possuem lembrete.
             if dose_existente.status == "pendente":
                 garantir_lembrete(dose_existente.agendado_para)
 
@@ -300,6 +297,18 @@ def confirmar_dose(
     )
 
     dose.status = dados.resultado
+
+    # Atualiza também o lembrete correspondente
+    lembrete = db.scalar(
+        select(Lembrete).where(
+            Lembrete.prescricao_id == dose.prescricao_id,
+            Lembrete.agendado_para == dose.agendado_para
+        )
+    )
+
+    if lembrete:
+        lembrete.status = "respondido"
+        lembrete.respondido_em = datetime.now(FUSO_HORARIO)
 
     try:
         db.add(registro)
