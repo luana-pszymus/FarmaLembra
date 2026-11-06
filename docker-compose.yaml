@@ -1,19 +1,18 @@
-
 services:
   db:
     image: postgres:16
     container_name: farmalembra-db
     restart: always
     environment:
-      POSTGRES_USER: farmalembra
-      POSTGRES_PASSWORD: farmalembra123
-      POSTGRES_DB: farmalembra
+      POSTGRES_USER: ${POSTGRES_USER:?Configure POSTGRES_USER no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configure POSTGRES_PASSWORD no .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Configure POSTGRES_DB no .env}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U farmalembra -d farmalembra"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,12 +23,27 @@ services:
     container_name: farmalembra-api
     restart: always
     environment:
-      DATABASE_URL: postgresql+psycopg://farmalembra:farmalembra123@db:5432/farmalembra
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Configure JWT_SECRET_KEY no .env}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: ${JWT_ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      DISCORD_API_KEY: ${DISCORD_API_KEY:-}
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: farmalembra-frontend
+    restart: always
+    ports:
+      - "8100:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
