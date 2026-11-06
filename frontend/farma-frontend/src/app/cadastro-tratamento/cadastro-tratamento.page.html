@@ -14,7 +14,7 @@
     </header>
 
     <!-- ===== FORMULÁRIO ===== -->
-    <form (ngSubmit)="conferirDados()">
+    <form (ngSubmit)="conferirDados()" novalidate>
       <section class="grupo">
         <h2>Paciente</h2>
         <div class="campo">
@@ -90,10 +90,7 @@
           <label for="frequencia">Frequência *</label>
           <select id="frequencia" name="frequencia" [(ngModel)]="frequencia">
             <option value="Todos os dias">Todos os dias</option>
-            <option value="Dias alternados">Dias alternados</option>
-            <option value="Dias específicos">Dias específicos</option>
-            <option value="Conforme orientação">Conforme orientação</option>
-          </select>
+                                  </select>
         </div>
 
         <div class="campo">
@@ -151,7 +148,7 @@
       }
 
       <!-- ===== BOTÃO DE CONFERÊNCIA ===== -->
-      <button class="botao-confirmar" type="submit">Conferir informações</button>
+      <button class="botao-confirmar" type="button" (click)="conferirDados()">Conferir informações</button>
 
       <p class="nota">* Campos obrigatórios. Preencha conforme a prescrição ou orientação do profissional de saúde.</p>
     </form>
