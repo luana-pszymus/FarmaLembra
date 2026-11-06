@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
+from fastapi import Query
+from app.services.agendamento import gerar_agendamentos
 from app.database import get_db
 from app.models.prescricoes import Prescricao
 from app.models.pacientes import Paciente
@@ -183,3 +184,37 @@ def excluir_prescricao(
 
     db.delete(prescricao)
     db.commit()
+
+@router.get("/{prescricao_id}/agendamentos")
+
+def listar_agendamentos(
+    prescricao_id: int,
+    dias: int = Query(default=30, ge=1, le=90),
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(obter_usuario_atual)
+):
+    prescricao = db.scalar(
+        select(Prescricao)
+        .join(
+            Paciente,
+            Prescricao.paciente_id == Paciente.id
+        )
+        .where(
+            Prescricao.id == prescricao_id,
+            Paciente.usuario_id == usuario.id
+        )
+    )
+
+    if not prescricao:
+        raise HTTPException(
+            status_code=404,
+            detail="Prescrição não encontrada."
+        )
+
+    if prescricao.status != "ativo":
+        raise HTTPException(
+            status_code=400,
+            detail="Esta prescrição não está ativa."
+        )
+
+    return gerar_agendamentos(prescricao, dias)
