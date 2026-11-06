@@ -58,6 +58,7 @@ def test_fluxo_completo_do_farmalembra(client):
             "origem_informacao": "manual",
             "modo_agendamento": "intervalo",
             "intervalo_horas": 8,
+            "horario_inicial": "08:00",
             "quantidade_por_dose": 1,
             "unidade_quantidade": "comprimido",
             "tipo_duracao": "temporario",

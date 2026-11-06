@@ -35,6 +35,7 @@ FUSO_HORARIO = ZoneInfo("America/Sao_Paulo")
 TEMPO_TOLERANCIA_MINUTOS = 30
 
 
+# ATUALIZAR DOSES ATRASADAS
 def atualizar_doses_atrasadas(db: Session, paciente_id: int):
     limite = datetime.now(FUSO_HORARIO) - timedelta(
         minutes=TEMPO_TOLERANCIA_MINUTOS
@@ -60,6 +61,7 @@ def atualizar_doses_atrasadas(db: Session, paciente_id: int):
         db.commit()
 
     return len(doses_pendentes)
+
 
 # GERAR DOSES E LEMBRETES DE UMA PRESCRIÇÃO
 @router.post(
@@ -104,10 +106,10 @@ def gerar_doses(
                 detail="A data final é anterior à data inicial."
             )
 
-        dias = (prescricao.data_fim - max(
-            prescricao.data_inicio,
-            agora.date()
-        )).days + 1
+        dias = (
+            prescricao.data_fim
+            - max(prescricao.data_inicio, agora.date())
+        ).days + 1
 
         if dias <= 0:
             return []
@@ -132,6 +134,7 @@ def gerar_doses(
 
     doses_criadas = []
 
+    # GARANTIR QUE EXISTA UM LEMBRETE PARA A DOSE
     def garantir_lembrete(data_hora):
         if data_hora < agora:
             return
@@ -152,7 +155,7 @@ def gerar_doses(
                 )
             )
 
-    # Salva as doses calculadas e cria os lembretes.
+    # SALVAR AS DOSES CALCULADAS E CRIAR OS LEMBRETES
     for agendamento in agendamentos:
         data_hora = agendamento["data_hora"]
 
@@ -163,6 +166,7 @@ def gerar_doses(
             )
         )
 
+        # Evita duplicar doses já existentes.
         if dose_existente:
             if dose_existente.status == "pendente":
                 garantir_lembrete(dose_existente.agendado_para)
@@ -180,6 +184,7 @@ def gerar_doses(
 
         garantir_lembrete(data_hora)
 
+    # SALVAR NO BANCO
     try:
         db.commit()
 
@@ -221,11 +226,15 @@ def listar_doses_paciente(
             detail="Paciente não encontrado."
         )
 
+    # Atualiza as doses que ultrapassaram a tolerância.
     atualizar_doses_atrasadas(db, paciente_id)
 
     consulta = (
         select(DoseProgramada)
-        .join(Prescricao, DoseProgramada.prescricao_id == Prescricao.id)
+        .join(
+            Prescricao,
+            DoseProgramada.prescricao_id == Prescricao.id
+        )
         .where(Prescricao.paciente_id == paciente_id)
     )
 
@@ -270,8 +279,14 @@ def confirmar_dose(
 ):
     dose = db.scalar(
         select(DoseProgramada)
-        .join(Prescricao, DoseProgramada.prescricao_id == Prescricao.id)
-        .join(Paciente, Prescricao.paciente_id == Paciente.id)
+        .join(
+            Prescricao,
+            DoseProgramada.prescricao_id == Prescricao.id
+        )
+        .join(
+            Paciente,
+            Prescricao.paciente_id == Paciente.id
+        )
         .where(
             DoseProgramada.id == dose_id,
             Paciente.usuario_id == usuario.id
@@ -284,6 +299,7 @@ def confirmar_dose(
             detail="Dose não encontrada."
         )
 
+    # Verifica se a dose já foi confirmada.
     registro_existente = db.scalar(
         select(RegistroTomada).where(
             RegistroTomada.dose_programada_id == dose.id
@@ -316,6 +332,7 @@ def confirmar_dose(
         lembrete.status = "respondido"
         lembrete.respondido_em = datetime.now(FUSO_HORARIO)
 
+    # SALVAR CONFIRMAÇÃO
     try:
         db.add(registro)
         db.commit()

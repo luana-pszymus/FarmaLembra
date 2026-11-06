@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import type { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -74,6 +74,10 @@ export class PrescricaoService {
 
   buscar(id: number): Observable<Prescricao> {
     return this.http.get<Prescricao>(`${this.apiUrl}/prescricoes/${id}`);
+  }
+
+  gerarDoses(prescricaoId: number): Observable<unknown[]> {
+    return this.http.post<unknown[]>(`${this.apiUrl}/doses/gerar/${prescricaoId}`, {});
   }
 
   criar(dados: PrescricaoCreate): Observable<Prescricao> {
