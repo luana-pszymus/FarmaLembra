@@ -96,6 +96,7 @@ export class ConferirRemedioPage {
     if (this.salvando || this.salvo) return;
 
     const quantidade = Number(this.dose.replace(',', '.'));
+
     const horarios = this.horarios
       .split(/[,;]|\se\s/i)
       .map((h) => h.trim())
@@ -177,7 +178,11 @@ export class ConferirRemedioPage {
           next: () => {
             this.salvando = false;
             this.salvo = true;
-            this.mensagem = 'Tratamento salvo e horários das doses gerados com sucesso!';
+            this.mensagem = 'Tratamento salvo com sucesso! Redirecionando...';
+
+            setTimeout(() => {
+              this.router.navigate(['/tabs/remedios']);
+            }, 1500);
           },
           error: (erro) =>
             this.falha(erro, 'A prescrição foi salva, mas houve um erro ao gerar os horários das doses.'),

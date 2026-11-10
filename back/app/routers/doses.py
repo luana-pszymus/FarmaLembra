@@ -18,7 +18,8 @@ from app.models.usuarios import Usuario
 from app.schemas.doses import (
     DoseProgramadaResponse,
     RegistroTomadaCreate,
-    RegistroTomadaResponse
+    RegistroTomadaResponse,
+    HistoricoDoseResponse
 )
 
 from app.routers.auth import obter_usuario_atual
@@ -76,7 +77,10 @@ def gerar_doses(
 ):
     prescricao = db.scalar(
         select(Prescricao)
-        .join(Paciente, Prescricao.paciente_id == Paciente.id)
+        .join(
+            Paciente,
+            Prescricao.paciente_id == Paciente.id
+        )
         .where(
             Prescricao.id == prescricao_id,
             Paciente.usuario_id == usuario.id
@@ -119,7 +123,6 @@ def gerar_doses(
     else:
         dias = 30
 
-    # Calcula os horários usando o serviço de agendamento.
     try:
         agendamentos = gerar_agendamentos(
             prescricao,
@@ -155,7 +158,7 @@ def gerar_doses(
                 )
             )
 
-    # SALVAR AS DOSES CALCULADAS E CRIAR OS LEMBRETES
+    # SALVAR AS DOSES E CRIAR OS LEMBRETES
     for agendamento in agendamentos:
         data_hora = agendamento["data_hora"]
 
@@ -166,7 +169,6 @@ def gerar_doses(
             )
         )
 
-        # Evita duplicar doses já existentes.
         if dose_existente:
             if dose_existente.status == "pendente":
                 garantir_lembrete(dose_existente.agendado_para)
@@ -184,7 +186,6 @@ def gerar_doses(
 
         garantir_lembrete(data_hora)
 
-    # SALVAR NO BANCO
     try:
         db.commit()
 
@@ -193,6 +194,7 @@ def gerar_doses(
 
     except Exception:
         db.rollback()
+
         raise HTTPException(
             status_code=500,
             detail="Erro ao gerar doses e lembretes."
@@ -226,7 +228,7 @@ def listar_doses_paciente(
             detail="Paciente não encontrado."
         )
 
-    # Atualiza as doses que ultrapassaram a tolerância.
+    # Atualiza doses que ultrapassaram a tolerância.
     atualizar_doses_atrasadas(db, paciente_id)
 
     consulta = (
@@ -235,7 +237,9 @@ def listar_doses_paciente(
             Prescricao,
             DoseProgramada.prescricao_id == Prescricao.id
         )
-        .where(Prescricao.paciente_id == paciente_id)
+        .where(
+            Prescricao.paciente_id == paciente_id
+        )
     )
 
     if data_inicio:
@@ -261,7 +265,9 @@ def listar_doses_paciente(
         )
 
     return db.scalars(
-        consulta.order_by(DoseProgramada.agendado_para)
+        consulta.order_by(
+            DoseProgramada.agendado_para
+        )
     ).all()
 
 
@@ -291,6 +297,7 @@ def confirmar_dose(
             DoseProgramada.id == dose_id,
             Paciente.usuario_id == usuario.id
         )
+        .with_for_update(of=DoseProgramada)
     )
 
     if not dose:
@@ -299,7 +306,6 @@ def confirmar_dose(
             detail="Dose não encontrada."
         )
 
-    # Verifica se a dose já foi confirmada.
     registro_existente = db.scalar(
         select(RegistroTomada).where(
             RegistroTomada.dose_programada_id == dose.id
@@ -315,12 +321,12 @@ def confirmar_dose(
     registro = RegistroTomada(
         dose_programada_id=dose.id,
         resultado=dados.resultado,
+        origem="manual",
         observacao=dados.observacao
     )
 
     dose.status = dados.resultado
 
-    # Atualiza também o lembrete correspondente.
     lembrete = db.scalar(
         select(Lembrete).where(
             Lembrete.prescricao_id == dose.prescricao_id,
@@ -332,7 +338,6 @@ def confirmar_dose(
         lembrete.status = "respondido"
         lembrete.respondido_em = datetime.now(FUSO_HORARIO)
 
-    # SALVAR CONFIRMAÇÃO
     try:
         db.add(registro)
         db.commit()
@@ -340,9 +345,68 @@ def confirmar_dose(
 
     except Exception:
         db.rollback()
+
         raise HTTPException(
-            status_code=500,
-            detail="Erro ao confirmar dose."
+            status_code=409,
+            detail="Não foi possível confirmar. A dose pode já ter sido registrada."
         )
 
     return registro
+
+
+# HISTÓRICO DE DOSES DE UM PACIENTE
+@router.get(
+    "/paciente/{paciente_id}/historico",
+    response_model=list[HistoricoDoseResponse]
+)
+def listar_historico_paciente(
+    paciente_id: int,
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(obter_usuario_atual)
+):
+    paciente = db.scalar(
+        select(Paciente).where(
+            Paciente.id == paciente_id,
+            Paciente.usuario_id == usuario.id
+        )
+    )
+
+    if not paciente:
+        raise HTTPException(
+            status_code=404,
+            detail="Paciente não encontrado."
+        )
+
+    consulta = (
+        select(
+            DoseProgramada.id.label("dose_id"),
+            DoseProgramada.prescricao_id,
+            DoseProgramada.agendado_para,
+            DoseProgramada.status,
+            RegistroTomada.resultado,
+            RegistroTomada.origem,
+            RegistroTomada.confirmado_em,
+            RegistroTomada.observacao
+        )
+        .join(
+            Prescricao,
+            DoseProgramada.prescricao_id == Prescricao.id
+        )
+        .join(
+            RegistroTomada,
+            RegistroTomada.dose_programada_id == DoseProgramada.id
+        )
+        .where(
+            Prescricao.paciente_id == paciente_id
+        )
+        .order_by(
+            RegistroTomada.confirmado_em.desc()
+        )
+    )
+
+    resultados = db.execute(consulta).mappings().all()
+
+    return [
+        dict(registro)
+        for registro in resultados
+    ]

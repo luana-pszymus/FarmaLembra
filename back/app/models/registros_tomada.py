@@ -1,3 +1,4 @@
+
 from sqlalchemy import (
     Column,
     Integer,
@@ -26,6 +27,13 @@ class RegistroTomada(Base):
     resultado = Column(
         String(20),
         nullable=False
+    )
+
+    origem = Column(
+        String(20),
+        nullable=False,
+        default="manual",
+        server_default="manual"
     )
 
     confirmado_em = Column(

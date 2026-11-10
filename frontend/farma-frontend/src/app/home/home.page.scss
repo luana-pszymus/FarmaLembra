@@ -1,7 +1,6 @@
-
 /* ===== FUNDO E ESTRUTURA PRINCIPAL ===== */
 .inicio {
-  --background: #FAFCF7;
+  --background: #fafcf7;
 }
 
 .conteudo {
@@ -31,14 +30,14 @@
 
 .marca {
   gap: 10px;
-  color: #243D24;
+  color: #243d24;
   font-size: 22px;
   font-weight: 800;
 }
 
 .marca-icone {
   position: relative;
-  color: #78A92D;
+  color: #78a92d;
   font-size: 38px;
 }
 
@@ -58,8 +57,8 @@
   height: 44px;
   border: 0;
   border-radius: 50%;
-  background: #EFF8D8;
-  color: #243D24;
+  background: #eff8d8;
+  color: #243d24;
   font-size: 23px;
 }
 
@@ -69,7 +68,7 @@
 }
 
 .etiqueta {
-  color: #728B3D;
+  color: #728b3d;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -77,13 +76,13 @@
 
 .boas-vindas h1 {
   margin: 8px 0;
-  color: #243D24;
+  color: #243d24;
   font-size: 32px;
 }
 
 .boas-vindas > p:last-child {
   margin: 0;
-  color: #626B5C;
+  color: #626b5c;
   font-size: 18px;
 }
 
@@ -95,7 +94,7 @@
   padding: 22px;
   margin-bottom: 30px;
   border-radius: 22px;
-  background: #243D24;
+  background: #243d24;
   color: white;
 }
 
@@ -106,13 +105,13 @@
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #EFF8D8;
-  color: #243D24;
+  background: #eff8d8;
+  color: #243d24;
   font-size: 29px;
 }
 
 .proximo-texto span {
-  color: #B7D957;
+  color: #b7d957;
   font-size: 12px;
   font-weight: 700;
 }
@@ -124,7 +123,7 @@
 
 .proximo-texto p {
   margin: 0;
-  color: #E2EAD9;
+  color: #e2ead9;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -137,12 +136,12 @@
 .titulo-secao h2,
 .secao > h2 {
   margin: 0 0 16px;
-  color: #243D24;
+  color: #243d24;
   font-size: 21px;
 }
 
 .titulo-secao a {
-  color: #526B37;
+  color: #526b37;
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
@@ -151,7 +150,7 @@
 /* ===== CARTÃO SEM MEDICAMENTOS ===== */
 .cartao-vazio {
   padding: 24px 20px;
-  border: 1px solid #E3E9DA;
+  border: 1px solid #e3e9da;
   border-radius: 22px;
   background: white;
   text-align: center;
@@ -164,20 +163,20 @@
   height: 58px;
   margin: 0 auto 14px;
   border-radius: 18px;
-  background: #EFF8D8;
-  color: #526B37;
+  background: #eff8d8;
+  color: #526b37;
   font-size: 29px;
 }
 
 .cartao-vazio h3 {
   margin: 0 0 10px;
-  color: #243D24;
+  color: #243d24;
   font-size: 19px;
 }
 
 .cartao-vazio p {
   margin: 0;
-  color: #626B5C;
+  color: #626b5c;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -191,8 +190,8 @@
   min-height: 50px;
   margin-top: 20px;
   border-radius: 15px;
-  background: #B7D957;
-  color: #243D24;
+  background: #b7d957;
+  color: #243d24;
   font-size: 17px;
   font-weight: 700;
   text-decoration: none;
@@ -213,22 +212,22 @@
   min-height: 70px;
   padding: 12px;
   border-radius: 17px;
-  color: #243D24;
+  color: #243d24;
   font-size: 17px;
   font-weight: 700;
   text-decoration: none;
 }
 
 .remedios {
-  background: #EFF8D8;
+  background: #eff8d8;
 }
 
 .historico {
-  background: #FFF2D5;
+  background: #fff2d5;
 }
 
 .perfil {
-  background: #E8F0DC;
+  background: #e8f0dc;
 }
 
 .atalho-icone {
@@ -254,12 +253,12 @@
   align-items: center;
   gap: 8px;
   padding: 15px 0;
-  color: #68745E;
+  color: #68745e;
   font-size: 14px;
 }
 
 .rodape ion-icon {
-  color: #72963B;
+  color: #72963b;
   font-size: 19px;
 }
 
@@ -271,5 +270,335 @@
 
   .cartao-proximo {
     padding: 16px;
+  }
+}
+
+.lista-remedios {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cartao-remedio {
+  background: #ffffff;
+  border: 1px solid #e0e8d7;
+  border-radius: 22px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.remedio-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.remedio-icone {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 15px;
+  background: #eff7d9;
+  color: #526f39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.remedio-identificacao {
+  min-width: 0;
+}
+
+.remedio-identificacao h3 {
+  margin: 0 0 5px;
+  color: #29442b;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.remedio-identificacao p {
+  margin: 0;
+  color: #737b6d;
+  font-size: 13px;
+}
+
+.remedio-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #606b5b;
+  font-size: 14px;
+}
+
+.remedio-detalhes div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.remedio-detalhes ion-icon {
+  color: #69834d;
+  font-size: 18px;
+  min-width: 18px;
+}
+
+.remedio-rodape {
+  border-top: 1px solid #edf0e9;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #737b6d;
+  font-size: 12px;
+}
+
+.status-ativo {
+  background: #eff7d9;
+  color: #526f39;
+  border-radius: 20px;
+  padding: 6px 11px;
+  font-weight: 600;
+}
+
+.link-mais-remedios {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 16px;
+  color: #526f39;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.seletor-paciente {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 18px 0;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+  }
+
+  select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--ion-color-light-shade);
+    border-radius: 12px;
+    background: var(--ion-background-color);
+    color: var(--ion-text-color);
+    font-size: 1rem;
+    outline: none;
+  }
+}
+
+.resumo-doses {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.resumo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 5px;
+  border-radius: 12px;
+  background: var(--ion-color-light);
+
+  strong {
+    font-size: 1.5rem;
+  }
+
+  span {
+    font-size: 0.78rem;
+    color: var(--ion-color-medium);
+  }
+
+  &.tomada strong {
+    color: var(--ion-color-success);
+  }
+
+  &.pendente strong {
+    color: var(--ion-color-warning-shade);
+  }
+
+  &.atrasada strong {
+    color: var(--ion-color-danger);
+  }
+}
+
+.dose-agenda {
+  gap: 12px;
+}
+
+.dose-horario {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ion-color-primary);
+  font-size: 1.05rem;
+
+  ion-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.dose-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.status-dose {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-tomada {
+  color: var(--ion-color-success-shade);
+  background: rgba(var(--ion-color-success-rgb), 0.12);
+}
+
+.status-pendente {
+  color: var(--ion-color-warning-shade);
+  background: rgba(var(--ion-color-warning-rgb), 0.15);
+}
+
+.status-atrasada,
+.status-nao-tomada {
+  color: var(--ion-color-danger);
+  background: rgba(var(--ion-color-danger-rgb), 0.12);
+}
+
+.botoes-confirmacao {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 5px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 9px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}
+
+.botao-tomada {
+  color: white;
+  background: var(--ion-color-success);
+}
+
+.botao-nao-tomada {
+  color: var(--ion-color-danger);
+  background: rgba(var(--ion-color-danger-rgb), 0.1);
+}
+
+.mensagem-acao {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--ion-color-light);
+  font-size: 0.9rem;
+}
+
+.selecao-pacientes {
+  margin: 22px 0;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+}
+
+.lista-pacientes {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 5px 2px 12px;
+
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.perfil-paciente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 76px;
+  padding: 0;
+  background: transparent;
+  color: var(--ion-text-color);
+  cursor: pointer;
+
+  .perfil-circulo {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8edf5;
+    color: #536987;
+
+    border: 3px solid transparent;
+
+    transition: 0.2s ease;
+
+    span {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  }
+
+  .perfil-nome {
+    width: 100%;
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.selecionado {
+    .perfil-circulo {
+      border-color: var(--ion-color-primary);
+      background: rgba(var(--ion-color-primary-rgb), 0.14);
+      color: var(--ion-color-primary);
+      transform: scale(1.05);
+    }
+
+    .perfil-nome {
+      color: var(--ion-color-primary);
+      font-weight: 700;
+    }
   }
 }

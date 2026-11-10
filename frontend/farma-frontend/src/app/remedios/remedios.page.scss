@@ -1,7 +1,6 @@
-
 /* ===== FUNDO E ESTRUTURA ===== */
 .pagina-remedios {
-  --background: #FAFCF7;
+  --background: #fafcf7;
 }
 
 .conteudo {
@@ -18,7 +17,7 @@
 
 .etiqueta {
   margin-bottom: 10px;
-  color: #728B3D;
+  color: #728b3d;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -26,14 +25,14 @@
 
 .cabecalho h1 {
   margin: 0 0 8px;
-  color: #243D24;
+  color: #243d24;
   font-size: 30px;
   font-weight: 800;
 }
 
 .cabecalho > p:last-child {
   margin: 0;
-  color: #626B5C;
+  color: #626b5c;
   font-size: 17px;
   line-height: 1.5;
 }
@@ -47,8 +46,8 @@
   min-height: 54px;
   margin-bottom: 34px;
   border-radius: 16px;
-  background: #B7D957;
-  color: #243D24;
+  background: #b7d957;
+  color: #243d24;
   font-size: 17px;
   font-weight: 700;
   text-decoration: none;
@@ -73,21 +72,21 @@
 
 .titulo-lista h2 {
   margin: 0;
-  color: #243D24;
+  color: #243d24;
   font-size: 21px;
 }
 
 .titulo-lista span {
-  color: #737B70;
+  color: #737b70;
   font-size: 13px;
 }
 
 /* ===== ESTADO SEM MEDICAMENTOS ===== */
 .estado-vazio {
   padding: 30px 22px;
-  border: 1px solid #E3E9DA;
+  border: 1px solid #e3e9da;
   border-radius: 22px;
-  background: #FFFFFF;
+  background: #ffffff;
   text-align: center;
 }
 
@@ -98,20 +97,20 @@
   height: 68px;
   margin: 0 auto 18px;
   border-radius: 21px;
-  background: #EFF8D8;
-  color: #526B37;
+  background: #eff8d8;
+  color: #526b37;
   font-size: 34px;
 }
 
 .estado-vazio h3 {
   margin: 0 0 10px;
-  color: #243D24;
+  color: #243d24;
   font-size: 20px;
 }
 
 .estado-vazio p {
   margin: 0;
-  color: #626B5C;
+  color: #626b5c;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -123,7 +122,7 @@
   gap: 7px;
   min-height: 46px;
   margin-top: 18px;
-  color: #526B37;
+  color: #526b37;
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
@@ -136,7 +135,7 @@
   gap: 10px;
   padding: 15px;
   border-radius: 15px;
-  background: #EFF8D8;
+  background: #eff8d8;
   color: #435832;
 }
 
@@ -164,5 +163,155 @@
 
   .titulo-lista h2 {
     font-size: 19px;
+  }
+}
+
+.lista-tratamentos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cartao-tratamento {
+  padding: 19px;
+  border: 1px solid #e3e9da;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.topo-cartao {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.icone-medicamento {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  background: #eff8d8;
+  color: #526b37;
+  font-size: 25px;
+}
+
+.identificacao {
+  flex: 1;
+  min-width: 0;
+}
+
+.identificacao h3 {
+  margin: 2px 0 5px;
+  color: #243d24;
+  font-size: 18px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.identificacao p {
+  margin: 0;
+  color: #626b5c;
+  font-size: 14px;
+}
+
+.status-tratamento {
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #eff8d8;
+  color: #435832;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-tratamento.inativo {
+  background: #f0f0f0;
+  color: #666666;
+}
+
+.detalhes-tratamento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 12px;
+  padding-top: 17px;
+  border-top: 1px solid #e8ede3;
+}
+
+.detalhe {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+}
+
+.detalhe ion-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #728b3d;
+  font-size: 19px;
+}
+
+.detalhe div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.detalhe span {
+  color: #737b70;
+  font-size: 12px;
+}
+
+.detalhe strong {
+  color: #243d24;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.orientacoes {
+  margin-top: 18px;
+  padding: 13px;
+  border-radius: 12px;
+  background: #f5f8ef;
+  color: #435832;
+  font-size: 13px;
+}
+
+.orientacoes p {
+  margin: 5px 0 0;
+  line-height: 1.5;
+}
+
+.botao-recarregar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background: #b7d957;
+  color: #243d24;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  .topo-cartao {
+    flex-wrap: wrap;
+  }
+
+  .status-tratamento {
+    margin-left: 60px;
+  }
+
+  .detalhes-tratamento {
+    grid-template-columns: 1fr;
   }
 }

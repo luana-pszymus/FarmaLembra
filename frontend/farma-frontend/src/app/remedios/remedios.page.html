@@ -1,26 +1,53 @@
 <ion-content [fullscreen]="true" class="pagina-remedios">
   <main class="conteudo">
-    <!-- ===== CABEÇALHO ===== -->
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
       <p class="etiqueta">SUA ROTINA DE CUIDADOS</p>
       <h1>Meus remédios</h1>
       <p>Organize seus medicamentos em um só lugar.</p>
     </header>
 
-    <!-- ===== BOTÃO DE CADASTRO ===== -->
+    <!-- BOTÃO DE CADASTRO -->
     <a class="botao-adicionar" routerLink="/tabs/remedios/novo">
       <ion-icon name="add-outline"></ion-icon>
       Adicionar remédio
     </a>
 
-    <!-- ===== LISTA DE MEDICAMENTOS ===== -->
+    <!-- LISTA DE MEDICAMENTOS -->
     <section class="secao-lista">
       <div class="titulo-lista">
         <h2>Seus medicamentos</h2>
-        <span>0 cadastrados</span>
+
+        <span> {{ tratamentos.length }} {{ tratamentos.length === 1 ? 'cadastrado' : 'cadastrados' }} </span>
       </div>
 
-      <!-- Mensagem exibida quando a lista está vazia -->
+      <!-- CARREGANDO -->
+      @if (carregando) {
+      <div class="estado-vazio">
+        <p>Carregando seus medicamentos...</p>
+      </div>
+      }
+
+      <!-- ERRO -->
+      @else if (mensagemErro) {
+      <div class="estado-vazio">
+        <div class="vazio-icone">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+
+        <h3>Não foi possível carregar</h3>
+
+        <p>{{ mensagemErro }}</p>
+
+        <button class="botao-recarregar" type="button" (click)="carregarTratamentos()">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Tentar novamente
+        </button>
+      </div>
+      }
+
+      <!-- LISTA VAZIA -->
+      @else if (tratamentos.length === 0) {
       <div class="estado-vazio">
         <div class="vazio-icone">
           <ion-icon name="medkit-outline"></ion-icon>
@@ -35,11 +62,101 @@
           Cadastrar meu primeiro remédio
         </a>
       </div>
+      }
+
+      <!-- MEDICAMENTOS CADASTRADOS -->
+      @else {
+      <div class="lista-tratamentos">
+        @for (tratamento of tratamentos; track tratamento.id) {
+        <article class="cartao-tratamento">
+          <div class="topo-cartao">
+            <div class="icone-medicamento">
+              <ion-icon name="medkit-outline"></ion-icon>
+            </div>
+
+            <div class="identificacao">
+              <h3>{{ tratamento.nome }}</h3>
+
+              <p>{{ tratamento.dosagem }} @if (tratamento.apresentacao) { • {{ tratamento.apresentacao }} }</p>
+            </div>
+
+            <span class="status-tratamento" [class.inativo]="tratamento.status !== 'ativo'">
+              {{ obterStatus(tratamento.status) }}
+            </span>
+          </div>
+
+          <div class="detalhes-tratamento">
+            <div class="detalhe">
+              <ion-icon name="person-outline"></ion-icon>
+
+              <div>
+                <span>Paciente</span>
+                <strong>{{ tratamento.paciente }}</strong>
+              </div>
+            </div>
+
+            <div class="detalhe">
+              <ion-icon name="medkit-outline"></ion-icon>
+
+              <div>
+                <span>Quantidade por dose</span>
+                <strong> {{ tratamento.quantidade }} {{ tratamento.unidade }} </strong>
+              </div>
+            </div>
+
+            <div class="detalhe">
+              <ion-icon name="time-outline"></ion-icon>
+
+              <div>
+                <span>Horários</span>
+                <strong>{{ tratamento.horarios }}</strong>
+              </div>
+            </div>
+
+            <div class="detalhe">
+              <ion-icon name="calendar-outline"></ion-icon>
+
+              <div>
+                <span>Frequência</span>
+                <strong>{{ tratamento.frequencia }}</strong>
+              </div>
+            </div>
+
+            <div class="detalhe">
+              <ion-icon name="calendar-outline"></ion-icon>
+
+              <div>
+                <span>Início do tratamento</span>
+                <strong>{{ tratamento.dataInicio }}</strong>
+              </div>
+            </div>
+
+            <div class="detalhe">
+              <ion-icon name="calendar-outline"></ion-icon>
+
+              <div>
+                <span>Término</span>
+                <strong>{{ tratamento.dataFim }}</strong>
+              </div>
+            </div>
+          </div>
+
+          @if (tratamento.orientacoes) {
+          <div class="orientacoes">
+            <strong>Orientações:</strong>
+            <p>{{ tratamento.orientacoes }}</p>
+          </div>
+          }
+        </article>
+        }
+      </div>
+      }
     </section>
 
-    <!-- ===== ORIENTAÇÃO AO USUÁRIO ===== -->
+    <!-- AVISO -->
     <div class="aviso">
       <ion-icon name="information-circle-outline"></ion-icon>
+
       <p>Lembre-se: siga sempre as orientações de uso indicadas pelo profissional de saúde.</p>
     </div>
   </main>

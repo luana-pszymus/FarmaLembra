@@ -1,19 +1,19 @@
 <ion-content [fullscreen]="true" class="pagina">
   <main class="conteudo">
-    <!-- ===== MARCA DO APLICATIVO ===== -->
+    <!-- MARCA -->
     <header class="marca">
       <span class="marca-icone">+</span>
       <span>FarmaLembra</span>
     </header>
 
-    <!-- ===== CABEÇALHO ===== -->
+    <!-- CABEÇALHO -->
     <section class="cabecalho">
       <p class="etiqueta">ACOMPANHAMENTO DO TRATAMENTO</p>
       <h1>Meu histórico</h1>
       <p>Consulte os registros dos seus medicamentos e acompanhe sua rotina de cuidados.</p>
     </section>
 
-    <!-- ===== APRESENTAÇÃO DO HISTÓRICO ===== -->
+    <!-- RESUMO -->
     <section class="cartao-resumo">
       <div class="resumo-icone">
         <ion-icon name="calendar-outline"></ion-icon>
@@ -21,33 +21,284 @@
 
       <div>
         <h2>Seus registros</h2>
-        <p>Aqui ficarão organizados os registros das doses tomadas, atrasadas ou não realizadas.</p>
+        <p>Acompanhe as doses registradas para você e para os pacientes vinculados à sua conta.</p>
       </div>
     </section>
 
-    <!-- ===== LISTA DE REGISTROS ===== -->
+    <!-- LISTA -->
     <section class="secao-registros">
       <div class="titulo-secao">
         <h2>Registros de medicamentos</h2>
         <ion-icon name="time-outline"></ion-icon>
       </div>
 
-      <!-- ===== ESTADO VAZIO ===== -->
+      <!-- CARREGANDO -->
+      @if (carregando) {
+      <div class="cartao-vazio">
+        <p>Carregando seu histórico...</p>
+      </div>
+      }
+
+      <!-- ERRO -->
+      @else if (mensagemErro) {
+      <div class="cartao-vazio">
+        <div class="icone-vazio">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+
+        <h3>Não foi possível carregar</h3>
+        <p>{{ mensagemErro }}</p>
+
+        <button class="botao-recarregar" type="button" (click)="carregarHistorico()">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Tentar novamente
+        </button>
+      </div>
+      }
+
+      <!-- HISTÓRICO COM REGISTROS -->
+      @else if (registros.length > 0) {
+
+      <!-- FILTROS -->
+      <section class="filtros-historico">
+        <div class="cabecalho-filtros">
+          <div>
+            <h3>Filtrar registros</h3>
+            <p>Encontre doses específicas no histórico.</p>
+          </div>
+
+          @if (filtrosAtivos) {
+          <button type="button" class="botao-limpar-filtros" (click)="limparFiltros()">
+            <ion-icon name="refresh-outline"></ion-icon>
+            Limpar
+          </button>
+          }
+        </div>
+
+        <div class="grade-filtros">
+          <!-- STATUS COM SELEÇÃO RÁPIDA -->
+          <div class="campo-filtro campo-status">
+            <label>Status da dose</label>
+
+            <div class="opcoes-status" role="group" aria-label="Filtrar por status">
+              <!-- TODAS -->
+              <button
+                type="button"
+                class="opcao-status opcao-todas"
+                [class.ativa]="filtroStatus === 'todos'"
+                [attr.aria-pressed]="filtroStatus === 'todos'"
+                (click)="selecionarStatus('todos')"
+              >
+                <ion-icon name="list-outline"></ion-icon>
+                <span>Todas</span>
+              </button>
+
+              <!-- TOMADAS -->
+              <button
+                type="button"
+                class="opcao-status opcao-tomadas"
+                [class.ativa]="filtroStatus === 'tomada'"
+                [attr.aria-pressed]="filtroStatus === 'tomada'"
+                (click)="selecionarStatus('tomada')"
+              >
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <span>Tomadas</span>
+              </button>
+
+              <!-- NÃO TOMADAS -->
+              <button
+                type="button"
+                class="opcao-status opcao-nao-tomadas"
+                [class.ativa]="filtroStatus === 'nao_tomada'"
+                [attr.aria-pressed]="filtroStatus === 'nao_tomada'"
+                (click)="selecionarStatus('nao_tomada')"
+              >
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <span>Não tomadas</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PACIENTE -->
+          <div class="campo-filtro">
+            <label for="filtro-paciente">Paciente</label>
+
+            <select id="filtro-paciente" [value]="filtroPacienteId ?? 'todos'" (change)="alterarPaciente($event)">
+              <option value="todos">Todos os pacientes</option>
+
+              @for (paciente of pacientes; track paciente.id) {
+              <option [value]="paciente.id">{{ paciente.nome }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- ORIGEM -->
+          <div class="campo-filtro">
+            <label for="filtro-origem">Origem do registro</label>
+
+            <select id="filtro-origem" [value]="filtroOrigem" (change)="alterarOrigem($event)">
+              <option value="todas">Todas as origens</option>
+              <option value="manual">Confirmação manual</option>
+              <option value="automatica">Marcação automática</option>
+            </select>
+          </div>
+
+          <!-- ORDENAÇÃO -->
+          <div class="campo-filtro">
+            <label for="filtro-ordem">Ordenar por data</label>
+
+            <select id="filtro-ordem" [value]="ordemData" (change)="alterarOrdem($event)">
+              <option value="recentes">Mais recentes primeiro</option>
+              <option value="antigas">Mais antigas primeiro</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTADOS DOS FILTROS -->
+      @if (registrosFiltrados.length > 0) {
+
+      <div class="contador-registros">
+        {{ registrosFiltrados.length }} {{ registrosFiltrados.length === 1 ? 'registro encontrado' : 'registros
+        encontrados' }}
+      </div>
+
+      <!-- LISTA DE REGISTROS -->
+      <div class="lista-registros">
+        @for (registro of registrosFiltrados; track registro.id) {
+
+        <article class="cartao-registro">
+          <!-- IDENTIFICAÇÃO DO MEDICAMENTO -->
+          <div class="registro-topo">
+            <div class="registro-icone">
+              <ion-icon name="medkit-outline"></ion-icon>
+            </div>
+
+            <div class="registro-identificacao">
+              <h3>{{ registro.medicamento }}</h3>
+
+              <p>{{ registro.dosagem }} @if (registro.apresentacao) { · {{ registro.apresentacao }} }</p>
+            </div>
+
+            <!-- STATUS -->
+            <span class="status" [ngClass]="obterClasseStatus(registro.status)">
+              <ion-icon [name]="obterIconeStatus(registro.status)"></ion-icon>
+
+              {{ registro.statusTexto }}
+            </span>
+          </div>
+
+          <!-- DETALHES -->
+          <div class="registro-detalhes">
+            <div>
+              <ion-icon name="person-outline"></ion-icon>
+              <span>{{ registro.paciente }}</span>
+            </div>
+
+            <div>
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span> Dose programada: {{ registro.data }} </span>
+            </div>
+
+            <div>
+              <ion-icon name="time-outline"></ion-icon>
+              <span> Horário programado: {{ registro.horario }} </span>
+            </div>
+
+            <div>
+              <ion-icon name="medkit-outline"></ion-icon>
+              <span> {{ registro.quantidade }} {{ registro.unidade }} por dose </span>
+            </div>
+          </div>
+
+          <!-- ORIGEM DO REGISTRO -->
+          <div
+            class="origem-registro"
+            [class.origem-automatica]="registro.origem === 'automatica'"
+            [class.origem-manual]="registro.origem === 'manual'"
+          >
+            @if (registro.origem === 'automatica') {
+
+            <ion-icon name="information-circle-outline"></ion-icon>
+
+            <div>
+              <strong>Marcação automática</strong>
+              <p>O sistema marcou esta dose como não tomada após 24 horas sem confirmação.</p>
+            </div>
+
+            } @else {
+
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+            <div>
+              <strong>Confirmação manual</strong>
+              <p>Registro realizado pelo aplicativo ou por uma integração de confirmação.</p>
+            </div>
+
+            }
+          </div>
+
+          <!-- DATA DA CONFIRMAÇÃO -->
+          <div class="registro-confirmacao">
+            <div>
+              <ion-icon name="calendar-outline"></ion-icon>
+
+              <span> Registro realizado em: {{ registro.dataConfirmacao }} às {{ registro.horarioConfirmacao }} </span>
+            </div>
+
+            @if (registro.observacao) {
+            <p>{{ registro.observacao }}</p>
+            }
+          </div>
+        </article>
+
+        }
+      </div>
+
+      } @else {
+
+      <!-- NENHUM RESULTADO COM OS FILTROS -->
+      <div class="cartao-vazio mensagem-sem-resultados">
+        <div class="icone-vazio">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+
+        <h3>Nenhum registro encontrado</h3>
+
+        <p>Não encontramos registros com os filtros selecionados.</p>
+
+        <button class="botao-recarregar" type="button" (click)="limparFiltros()">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Limpar filtros
+        </button>
+      </div>
+
+      } }
+
+      <!-- HISTÓRICO VAZIO -->
+      @else {
+
       <div class="cartao-vazio">
         <div class="icone-vazio">
           <ion-icon name="medkit-outline"></ion-icon>
         </div>
 
-        <h3>Nenhum registro por enquanto</h3>
+        <h3>Nenhum registro encontrado</h3>
 
-        <p>Quando você começar a registrar suas doses, elas aparecerão aqui organizadas por data.</p>
+        <p>Quando houver doses confirmadas ou marcadas automaticamente, elas aparecerão aqui.</p>
       </div>
+
+      }
     </section>
 
-    <!-- ===== ORIENTAÇÃO ===== -->
+    <!-- AVISO -->
     <div class="aviso">
       <ion-icon name="information-circle-outline"></ion-icon>
-      <p>Os registros serão atualizados conforme você confirmar os medicamentos tomados no aplicativo.</p>
+
+      <p>
+        As doses são registradas após a confirmação pelo usuário ou pelo sistema. Doses sem confirmação são marcadas
+        automaticamente como não tomadas após 24 horas do horário programado.
+      </p>
     </div>
   </main>
 </ion-content>

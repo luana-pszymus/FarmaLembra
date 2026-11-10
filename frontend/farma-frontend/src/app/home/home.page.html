@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true" class="inicio">
   <main class="conteudo">
-    <!-- ===== CABEÇALHO E MARCA ===== -->
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
       <div class="marca">
         <div class="marca-icone">
@@ -15,50 +15,237 @@
       </button>
     </header>
 
-    <!-- ===== BOAS-VINDAS ===== -->
+    <!-- BOAS-VINDAS -->
     <section class="boas-vindas">
       <p class="etiqueta">SUA SAÚDE EM PRIMEIRO LUGAR</p>
       <h1>Olá! 👋</h1>
       <p>Vamos cuidar da sua saúde hoje?</p>
     </section>
 
-    <!-- ===== DESTAQUE DO PRÓXIMO REMÉDIO ===== -->
+    <!-- DESTAQUE -->
     <section class="cartao-proximo">
       <div class="proximo-icone">
-        <ion-icon name="alarm-outline"></ion-icon>
+        <ion-icon name="calendar-outline"></ion-icon>
       </div>
 
       <div class="proximo-texto">
-        <span>SEU PRÓXIMO REMÉDIO</span>
-        <h2>Organize seus horários</h2>
-        <p>Adicione seus medicamentos para acompanhar os horários de cada dose.</p>
+        <span>SUA AGENDA DE HOJE</span>
+        <h2>Seus cuidados em dia!</h2>
+        <p>Confira os horários e acompanhe as doses de cada paciente.</p>
       </div>
     </section>
 
-    <!-- ===== ÁREA DE MEDICAMENTOS ===== -->
+    <!-- AGENDA INDIVIDUAL -->
     <section class="secao">
       <div class="titulo-secao">
-        <h2>Seus remédios</h2>
-        <a routerLink="/tabs/remedios">Ver todos</a>
+        <h2>Agenda de medicamentos</h2>
+        <a routerLink="/tabs/remedios">Ver remédios</a>
       </div>
+
+      <!-- CARREGANDO PACIENTES -->
+      @if (carregando) {
+      <div class="cartao-vazio">
+        <p>Carregando pacientes...</p>
+      </div>
+      }
+
+      <!-- ERRO AO CARREGAR DADOS -->
+      @else if (mensagemErro && pacientes.length === 0) {
+      <div class="cartao-vazio">
+        <p>{{ mensagemErro }}</p>
+
+        <button class="botao-adicionar" type="button" (click)="carregarDados()">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Tentar novamente
+        </button>
+      </div>
+      }
+
+      <!-- NENHUM PACIENTE -->
+      @else if (pacientes.length === 0) {
+      <div class="cartao-vazio">
+        <div class="vazio-icone">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+
+        <h3>Nenhum paciente cadastrado</h3>
+
+        <p>Cadastre um paciente para começar a organizar os medicamentos.</p>
+
+        <a class="botao-adicionar" routerLink="/tabs/perfil"> Cadastrar paciente </a>
+      </div>
+      } @else {
+
+      <!-- SELEÇÃO DE PACIENTE -->
+      <div class="selecao-pacientes">
+        <h3>Quem está tomando os medicamentos?</h3>
+
+        <div class="lista-pacientes">
+          @for (paciente of pacientes; track paciente.id) {
+          <button
+            type="button"
+            class="perfil-paciente"
+            [class.selecionado]="pacienteSelecionadoId === paciente.id"
+            [attr.aria-pressed]="pacienteSelecionadoId === paciente.id"
+            (click)="selecionarPacientePorId(paciente.id)"
+          >
+            <div class="perfil-circulo">
+              <span>{{ iniciaisPaciente(paciente.nome) }}</span>
+            </div>
+
+            <span class="perfil-nome"> {{ paciente.nome }} </span>
+          </button>
+          }
+        </div>
+      </div>
+
+      <!-- RESUMO DAS DOSES -->
+      @if (!carregandoAgenda && !mensagemErro) {
+      <div class="resumo-doses">
+        <div class="resumo-item tomada">
+          <strong>{{ dosesTomadas }}</strong>
+          <span>Tomadas</span>
+        </div>
+
+        <div class="resumo-item pendente">
+          <strong>{{ dosesPendentes }}</strong>
+          <span>Pendentes</span>
+        </div>
+
+        <div class="resumo-item atrasada">
+          <strong>{{ dosesAtrasadas }}</strong>
+          <span>Atrasadas</span>
+        </div>
+      </div>
+      }
+
+      <!-- MENSAGEM DE CONFIRMAÇÃO -->
+      @if (mensagemAcao) {
+      <p class="mensagem-acao">{{ mensagemAcao }}</p>
+      }
+
+      <!-- CARREGANDO A AGENDA -->
+      @if (carregandoAgenda) {
+      <div class="cartao-vazio">
+        <p>Carregando a agenda do paciente...</p>
+      </div>
+      }
+
+      <!-- ERRO NA AGENDA -->
+      @else if (mensagemErro) {
+      <div class="cartao-vazio">
+        <p>{{ mensagemErro }}</p>
+
+        <button class="botao-adicionar" type="button" (click)="carregarAgenda()">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Atualizar agenda
+        </button>
+      </div>
+      }
+
+      <!-- EXISTEM DOSES -->
+      @else if (agenda.length > 0) {
+
+      <div class="lista-remedios">
+        @for (dose of agenda; track dose.id) {
+
+        <article class="cartao-remedio dose-agenda">
+          <!-- HORÁRIO -->
+          <div class="dose-horario">
+            <ion-icon name="time-outline"></ion-icon>
+            <strong>{{ dose.horario }}</strong>
+          </div>
+
+          <!-- IDENTIFICAÇÃO DO MEDICAMENTO -->
+          <div class="remedio-cabecalho">
+            <div class="remedio-icone">
+              <ion-icon name="medkit-outline"></ion-icon>
+            </div>
+
+            <div class="remedio-identificacao">
+              <h3>{{ dose.nome }}</h3>
+
+              <p>{{ dose.dosagem }} @if (dose.apresentacao) { · {{ dose.apresentacao }} }</p>
+            </div>
+          </div>
+
+          <!-- DETALHES -->
+          <div class="remedio-detalhes">
+            <div>
+              <ion-icon name="medkit-outline"></ion-icon>
+
+              <span> {{ dose.quantidade }} {{ dose.unidade }} por dose </span>
+            </div>
+          </div>
+
+          <!-- STATUS -->
+          <div class="dose-rodape">
+            <span
+              class="status-dose"
+              [class.status-tomada]="dose.status === 'tomada'"
+              [class.status-pendente]="dose.status === 'pendente'"
+              [class.status-atrasada]="dose.status === 'atrasada'"
+              [class.status-nao-tomada]="dose.status === 'nao_tomada'"
+            >
+              {{ dose.statusTexto }}
+            </span>
+          </div>
+
+          <!-- BOTÕES DE CONFIRMAÇÃO -->
+          @if ( dose.status === 'pendente' || dose.status === 'atrasada' ) {
+
+          <div class="botoes-confirmacao">
+            <button
+              type="button"
+              class="botao-tomada"
+              [disabled]="doseEmConfirmacaoId !== null"
+              (click)="confirmarDose(dose.id, 'tomada')"
+            >
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+              {{ doseEmConfirmacaoId === dose.id ? 'Salvando...' : 'Tomada' }}
+            </button>
+
+            <button
+              type="button"
+              class="botao-nao-tomada"
+              [disabled]="doseEmConfirmacaoId !== null"
+              (click)="confirmarDose(dose.id, 'nao_tomada')"
+            >
+              <ion-icon name="close-circle-outline"></ion-icon>
+              Não tomei
+            </button>
+          </div>
+          }
+        </article>
+
+        }
+      </div>
+
+      }
+
+      <!-- AGENDA VAZIA -->
+      @else {
 
       <div class="cartao-vazio">
         <div class="vazio-icone">
-          <ion-icon name="medkit-outline"></ion-icon>
+          <ion-icon name="calendar-outline"></ion-icon>
         </div>
 
-        <h3>Seus remédios ficarão aqui</h3>
+        <h3>Nenhuma dose programada para hoje</h3>
 
-        <p>Cadastre seus medicamentos para organizar os horários e acompanhar seus cuidados.</p>
+        <p>Não há medicamentos agendados para {{ pacienteSelecionado?.nome }} hoje.</p>
 
         <a class="botao-adicionar" routerLink="/tabs/remedios">
           <ion-icon name="add-outline"></ion-icon>
-          Adicionar remédio
+          Ver medicamentos
         </a>
       </div>
+
+      } }
     </section>
 
-    <!-- ===== ATALHOS PARA OUTRAS TELAS ===== -->
+    <!-- ATALHOS -->
     <section class="secao">
       <h2>O que você deseja consultar?</h2>
 
@@ -67,7 +254,9 @@
           <div class="atalho-icone">
             <ion-icon name="medkit-outline"></ion-icon>
           </div>
+
           <span>Meus remédios</span>
+
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
         </a>
 
@@ -75,7 +264,9 @@
           <div class="atalho-icone">
             <ion-icon name="time-outline"></ion-icon>
           </div>
+
           <span>Meu histórico</span>
+
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
         </a>
 
@@ -83,13 +274,15 @@
           <div class="atalho-icone">
             <ion-icon name="person-outline"></ion-icon>
           </div>
+
           <span>Meu perfil</span>
+
           <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
         </a>
       </div>
     </section>
 
-    <!-- ===== MENSAGEM FINAL ===== -->
+    <!-- RODAPÉ -->
     <footer class="rodape">
       <ion-icon name="heart"></ion-icon>
       <span>Pequenos cuidados fazem a diferença.</span>
