@@ -4,8 +4,10 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonButton, IonContent, IonSpinner, AlertController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
+import { PacienteService } from '../../services/paciente.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);
+  private readonly pacienteService = inject(PacienteService);
   private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
 
@@ -73,7 +76,13 @@ export class LoginPage {
         await this.authService.entrar(this.email.trim(), this.senha);
       }
 
-      await this.router.navigateByUrl('/tabs/home', {
+      // Verifica se o usuário já possui pacientes cadastrados.
+      const pacientes = await firstValueFrom(this.pacienteService.listar());
+
+      // Usuário sem pacientes vai para a tela de cadastro.
+      const destino = pacientes.length === 0 ? '/tabs/pacientes' : '/tabs/home';
+
+      await this.router.navigateByUrl(destino, {
         replaceUrl: true,
       });
     } catch (erro: unknown) {

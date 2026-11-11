@@ -1,17 +1,37 @@
-import type { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('access_token');
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  if (token) {
-    const requisicaoComToken = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const token = authService.token;
 
-    return next(requisicaoComToken);
-  }
+  const requisicao = token
+    ? req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    : req;
 
-  return next(req);
+  return next(requisicao).pipe(
+    catchError((erro: unknown) => {
+      if (erro instanceof HttpErrorResponse && erro.status === 401 && !req.url.includes('/auth/login')) {
+        authService.sair();
+
+        if (!router.url.includes('/login')) {
+          void router.navigateByUrl('/login', {
+            replaceUrl: true,
+          });
+        }
+      }
+
+      return throwError(() => erro);
+    }),
+  );
 };

@@ -30,6 +30,26 @@
   }
 }
 
+.acoes-pacientes {
+  margin-bottom: 24px;
+}
+
+.botao-adicionar,
+.botao-salvar,
+.botao-primeiro-paciente {
+  background: #39856b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-adicionar {
+  width: 100%;
+}
+
 .titulo-lista {
   display: flex;
   align-items: center;
@@ -50,8 +70,67 @@
   }
 }
 
-.estado,
+// Primeiro acesso
 .estado-vazio {
+  text-align: center;
+  padding: 40px 24px;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #e7efea;
+  border-radius: 18px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+
+  .icone-vazio {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: #e3f1eb;
+    color: #39856b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 300;
+  }
+
+  .etiqueta {
+    color: #39856b;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+  }
+
+  h2 {
+    color: #203b32;
+    font-size: 23px;
+    margin: 12px 0;
+  }
+
+  .descricao-vazio {
+    color: #718078;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto 24px;
+  }
+
+  .botao-primeiro-paciente {
+    width: 100%;
+    max-width: 320px;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .texto-apoio {
+    color: #89958e;
+    font-size: 12px;
+    margin-top: 18px;
+  }
+}
+
+// Estados gerais
+.estado {
   text-align: center;
   padding: 32px 16px;
   color: #718078;
@@ -74,6 +153,7 @@
   }
 }
 
+// Lista de pacientes
 .lista-pacientes {
   display: flex;
   flex-direction: column;
@@ -105,6 +185,9 @@
 }
 
 .dados-paciente {
+  flex: 1;
+  min-width: 0;
+
   h3 {
     color: #203b32;
     margin: 0 0 5px;
@@ -118,25 +201,7 @@
   }
 }
 
-.acoes-pacientes {
-  margin-bottom: 24px;
-}
-
-.botao-adicionar,
-.botao-salvar {
-  background: #39856b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 13px 18px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.botao-adicionar {
-  width: 100%;
-}
-
+// Formulário
 .formulario-paciente {
   background: white;
   padding: 20px;
@@ -191,16 +256,6 @@
   color: white;
 }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.erro-formulario {
-  color: #b42318;
-  font-size: 13px;
-}
-
 .botao-editar {
   margin-left: auto;
   padding: 9px 14px;
@@ -225,4 +280,37 @@ button:disabled {
 .botao-editar,
 .botao-excluir {
   white-space: nowrap;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.erro-formulario {
+  color: #b42318;
+  font-size: 13px;
+}
+
+// Responsividade
+@media (max-width: 480px) {
+  .conteudo {
+    padding: 24px 16px;
+  }
+
+  .card-paciente {
+    flex-wrap: wrap;
+  }
+
+  .dados-paciente {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .botao-editar {
+    margin-left: 0;
+  }
+
+  .estado-vazio {
+    padding: 32px 18px;
+  }
 }

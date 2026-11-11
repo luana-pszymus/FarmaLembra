@@ -32,7 +32,6 @@
         />
 
         <label for="dataNascimento">Data de nascimento</label>
-
         <input
           id="dataNascimento"
           type="text"
@@ -77,20 +76,32 @@
     </div>
     }
 
-    <!-- Lista -->
+    <!-- Lista de pacientes -->
     @if (!carregando && !mensagemErro) {
     <section>
+      @if (pacientes.length === 0) {
+      <div class="estado-vazio">
+        <div class="icone-vazio">+</div>
+
+        <p class="etiqueta">SEU PRIMEIRO PASSO</p>
+
+        <h2>Bem-vindo ao FarmaLembra!</h2>
+
+        <p class="descricao-vazio">
+          Para começar, cadastre seu primeiro paciente. Depois você poderá adicionar medicamentos, organizar tratamentos
+          e configurar lembretes.
+        </p>
+
+        <button class="botao-primeiro-paciente" (click)="abrirFormulario()">Cadastrar primeiro paciente</button>
+
+        <p class="texto-apoio">Você poderá cadastrar outros pacientes quando quiser.</p>
+      </div>
+      } @if (pacientes.length > 0) {
       <div class="titulo-lista">
         <h2>Pacientes cadastrados</h2>
         <span>{{ pacientes.length }}</span>
       </div>
 
-      @if (pacientes.length === 0) {
-      <div class="estado-vazio">
-        <h3>Nenhum paciente cadastrado</h3>
-        <p>Quando você cadastrar um paciente, ele aparecerá nesta lista.</p>
-      </div>
-      } @if (pacientes.length > 0) {
       <div class="lista-pacientes">
         @for (paciente of pacientes; track paciente.id) {
         <article class="card-paciente">
@@ -107,6 +118,7 @@
           </div>
 
           <button type="button" class="botao-editar" (click)="editarPaciente(paciente)">Editar</button>
+
           <button type="button" class="botao-excluir" (click)="excluirPaciente(paciente)">Excluir</button>
         </article>
         }

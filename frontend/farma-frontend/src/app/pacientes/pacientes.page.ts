@@ -4,7 +4,7 @@ import type { OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonSpinner } from '@ionic/angular';
 
-import type { Paciente } from '../services/paciente.service';
+import type { CodigoVinculoDiscord, Paciente } from '../services/paciente.service';
 import { PacienteService } from '../services/paciente.service';
 
 @Component({
@@ -27,6 +27,10 @@ export class PacientesPage implements OnInit {
 
   mostrarFormulario = false;
   editandoId: number | null = null;
+
+  codigosDiscord: Record<number, CodigoVinculoDiscord> = {};
+  gerandoCodigoId: number | null = null;
+  mensagemDiscord: Record<number, string> = {};
 
   novoPaciente = {
     nome: '',
@@ -257,7 +261,7 @@ export class PacientesPage implements OnInit {
     this.pacienteService.excluir(paciente.id).subscribe({
       next: () => {
         this.pacientes = this.pacientes.filter((item) => item.id !== paciente.id);
-
+        delete this.codigosDiscord[paciente.id];
         this.cdr.detectChanges();
       },
       error: (erro: any) => {
@@ -267,6 +271,48 @@ export class PacientesPage implements OnInit {
 
         this.cdr.detectChanges();
       },
+    });
+  }
+
+  // Gerar código de vinculação ao Discord
+  gerarCodigoDiscord(paciente: Paciente): void {
+    this.gerandoCodigoId = paciente.id;
+    this.mensagemDiscord[paciente.id] = '';
+    delete this.codigosDiscord[paciente.id];
+
+    this.pacienteService.gerarCodigoDiscord(paciente.id).subscribe({
+      next: (resposta) => {
+        this.codigosDiscord[paciente.id] = resposta;
+        this.gerandoCodigoId = null;
+        this.cdr.detectChanges();
+      },
+      error: (erro: any) => {
+        console.error('Erro ao gerar código Discord:', erro);
+
+        this.mensagemDiscord[paciente.id] = erro.error?.detail || 'Não foi possível gerar o código de vinculação.';
+
+        this.gerandoCodigoId = null;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  // Copiar código
+  async copiarCodigo(codigo: string): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(codigo);
+      alert('Código copiado! Agora use o comando /vincular no Discord.');
+    } catch (erro) {
+      console.error('Erro ao copiar código:', erro);
+      alert('Não foi possível copiar automaticamente. Selecione e copie o código.');
+    }
+  }
+
+  // Formatar validade do código
+  formatarExpiracao(data: string): string {
+    return new Date(data).toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
     });
   }
 }

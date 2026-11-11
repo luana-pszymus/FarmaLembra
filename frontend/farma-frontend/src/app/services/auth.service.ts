@@ -23,7 +23,13 @@ export class AuthService {
   private readonly apiUrl = environment.apiUrl;
 
   cadastrar(nome: string, email: string, senha: string): Promise<UsuarioResponse> {
-    return firstValueFrom(this.http.post<UsuarioResponse>(`${this.apiUrl}/usuarios/`, { nome, email, senha }));
+    return firstValueFrom(
+      this.http.post<UsuarioResponse>(`${this.apiUrl}/usuarios/`, {
+        nome,
+        email,
+        senha,
+      }),
+    );
   }
 
   async entrar(email: string, senha: string): Promise<TokenResponse> {
@@ -54,6 +60,31 @@ export class AuthService {
   }
 
   get estaLogado(): boolean {
-    return this.token !== null;
+    const token = this.token;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const partes = token.split('.');
+
+      if (partes.length !== 3) {
+        this.sair();
+        return false;
+      }
+
+      const payload = JSON.parse(atob(partes[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+      if (!payload.exp || payload.exp * 1000 <= Date.now()) {
+        this.sair();
+        return false;
+      }
+
+      return true;
+    } catch {
+      this.sair();
+      return false;
+    }
   }
 }

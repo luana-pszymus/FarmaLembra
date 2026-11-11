@@ -1,6 +1,6 @@
 /* ===== FUNDO DA PÁGINA ===== */
 .pagina {
-  --background: #FAFCF7;
+  --background: #fafcf7;
   color: #101810;
 }
 
@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #243D24;
+  color: #243d24;
   font-size: 21px;
   font-weight: 700;
   margin-bottom: 42px;
@@ -29,7 +29,7 @@
   width: 38px;
   height: 38px;
   border-radius: 13px;
-  background: #B7D957;
+  background: #b7d957;
   font-size: 27px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .etiqueta {
-  color: #71883D;
+  color: #71883d;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -47,13 +47,13 @@
 
 .cabecalho h1 {
   margin: 8px 0;
-  color: #243D24;
+  color: #243d24;
   font-size: 30px;
   font-weight: 700;
 }
 
 .cabecalho > p:last-child {
-  color: #626B5C;
+  color: #626b5c;
   font-size: 17px;
   line-height: 1.6;
 }
@@ -65,7 +65,7 @@
 
 .grupo h2 {
   margin: 0 0 14px;
-  color: #243D24;
+  color: #243d24;
   font-size: 20px;
   font-weight: 700;
 }
@@ -77,9 +77,9 @@
   gap: 15px;
   padding: 18px;
   margin-bottom: 12px;
-  border: 1px solid #E3E9DA;
+  border: 1px solid #e3e9da;
   border-radius: 18px;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 /* ===== ÍCONES ===== */
@@ -91,8 +91,8 @@
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: #EFF8D8;
-  color: #526B37;
+  background: #eff8d8;
+  color: #526b37;
   font-size: 24px;
 }
 
@@ -103,14 +103,14 @@
 
 .opcao-conteudo h3 {
   margin: 2px 0 7px;
-  color: #243D24;
+  color: #243d24;
   font-size: 17px;
   font-weight: 700;
 }
 
 .opcao-conteudo p {
   margin: 0;
-  color: #626B5C;
+  color: #626b5c;
   font-size: 15px;
   line-height: 1.5;
 }
@@ -119,7 +119,7 @@
 .estado {
   display: inline-block;
   margin-top: 9px;
-  color: #71883D;
+  color: #71883d;
   font-size: 13px;
   font-weight: 600;
 }
@@ -131,14 +131,14 @@
   gap: 10px;
   padding: 16px;
   border-radius: 15px;
-  background: #EFF8D8;
-  color: #52604A;
+  background: #eff8d8;
+  color: #52604a;
 }
 
 .aviso ion-icon {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #526B37;
+  color: #526b37;
   font-size: 21px;
 }
 
@@ -146,4 +146,48 @@
   margin: 0;
   font-size: 14px;
   line-height: 1.5;
+}
+
+.cartao-clicavel,
+.cartao-sair {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cartao-clicavel {
+  border: 1px solid #dcebe2;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cartao-clicavel:active,
+.cartao-sair:active {
+  transform: scale(0.99);
+}
+
+.cartao-clicavel:hover {
+  background: #f5faf7;
+}
+
+.seta {
+  color: #39856b;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.cartao-sair {
+  border: 1px solid #f2dddd;
+  background: #fffafa;
+}
+
+.cartao-sair h3 {
+  color: #b42318;
+}
+
+.icone-sair {
+  background: #fdeaea;
+  color: #b42318;
 }

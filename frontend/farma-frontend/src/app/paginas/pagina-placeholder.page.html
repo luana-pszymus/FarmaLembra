@@ -1,19 +1,17 @@
 <ion-content [fullscreen]="true" class="pagina">
   <main class="conteudo">
-    <!-- ===== MARCA ===== -->
     <header class="marca">
       <span class="marca-icone">+</span>
       <span>FarmaLembra</span>
     </header>
 
-    <!-- ===== CABEÇALHO ===== -->
     <section class="cabecalho">
       <p class="etiqueta">SUA CONTA E PREFERÊNCIAS</p>
       <h1>Meu perfil</h1>
-      <p>Consulte suas informações e conheça as opções de personalização do aplicativo.</p>
+      <p>Gerencie sua conta e acesse rapidamente seus pacientes.</p>
     </section>
 
-    <!-- ===== DADOS PESSOAIS ===== -->
+    <!-- DADOS DA CONTA -->
     <section class="grupo">
       <h2>Dados pessoais</h2>
 
@@ -23,13 +21,41 @@
         </div>
 
         <div class="opcao-conteudo">
-          <h3>Informações da conta</h3>
-          <p>Seus dados pessoais serão exibidos aqui depois que o acesso à conta for implementado.</p>
+          <h3>Minha conta</h3>
+          <p>Suas informações de acesso ao FarmaLembra.</p>
+          <span class="estado">Conta autenticada</span>
         </div>
       </div>
     </section>
 
-    <!-- ===== PREFERÊNCIAS ===== -->
+    <!-- PACIENTES -->
+    <section class="grupo">
+      <h2>Gerenciamento</h2>
+
+      <button class="cartao cartao-clicavel" type="button" (click)="abrirPacientes()">
+        <div class="opcao-icone">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Meus pacientes</h3>
+
+          @if (carregandoPacientes) {
+          <p>Carregando pacientes...</p>
+          } @else {
+          <p>
+            {{ quantidadePacientes }} {{ quantidadePacientes === 1 ? 'paciente cadastrado' : 'pacientes cadastrados' }}
+          </p>
+          }
+
+          <span class="estado">Cadastrar, editar e gerenciar pacientes</span>
+        </div>
+
+        <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+      </button>
+    </section>
+
+    <!-- PREFERÊNCIAS -->
     <section class="grupo">
       <h2>Preferências</h2>
 
@@ -58,21 +84,9 @@
       </div>
     </section>
 
-    <!-- ===== FAMÍLIA E SEGURANÇA ===== -->
+    <!-- SEGURANÇA -->
     <section class="grupo">
       <h2>Família e segurança</h2>
-
-      <div class="cartao">
-        <div class="opcao-icone">
-          <ion-icon name="people-outline"></ion-icon>
-        </div>
-
-        <div class="opcao-conteudo">
-          <h3>Cuidador ou familiar</h3>
-          <p>Compartilhamento de informações com pessoas de confiança.</p>
-          <span class="estado">Disponível em uma próxima etapa</span>
-        </div>
-      </div>
 
       <div class="cartao">
         <div class="opcao-icone">
@@ -87,7 +101,7 @@
       </div>
     </section>
 
-    <!-- ===== SOBRE O APLICATIVO ===== -->
+    <!-- SOBRE -->
     <section class="grupo">
       <h2>Sobre o aplicativo</h2>
 
@@ -99,14 +113,30 @@
         <div class="opcao-conteudo">
           <h3>FarmaLembra</h3>
           <p>Seu aplicativo de organização e lembretes de medicamentos.</p>
+          <span class="estado">Versão MVP</span>
         </div>
       </div>
     </section>
 
-    <!-- ===== AVISO SOBRE A CONTA ===== -->
+    <!-- SAIR -->
+    <section class="grupo">
+      <button class="cartao cartao-sair" type="button" (click)="sair()">
+        <div class="opcao-icone icone-sair">
+          <ion-icon name="log-out-outline"></ion-icon>
+        </div>
+
+        <div class="opcao-conteudo">
+          <h3>Sair da conta</h3>
+          <p>Encerrar sua sessão no FarmaLembra.</p>
+        </div>
+
+        <ion-icon class="seta" name="chevron-forward-outline"></ion-icon>
+      </button>
+    </section>
+
     <div class="aviso">
       <ion-icon name="information-circle-outline"></ion-icon>
-      <p>As configurações da conta serão habilitadas após a implementação do login e da integração com o sistema.</p>
+      <p>FarmaLembra: mais organização e tranquilidade no cuidado com a saúde.</p>
     </div>
   </main>
 </ion-content>

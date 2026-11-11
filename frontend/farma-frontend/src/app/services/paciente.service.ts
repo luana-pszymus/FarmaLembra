@@ -18,6 +18,11 @@ export interface PacienteCreate {
   data_nascimento: string | null;
 }
 
+export interface CodigoVinculoDiscord {
+  codigo: string;
+  expira_em: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,5 +45,10 @@ export class PacienteService {
 
   excluir(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/pacientes/${id}`);
+  }
+
+  // Gerar código para vincular o paciente ao Discord
+  gerarCodigoDiscord(pacienteId: number): Observable<CodigoVinculoDiscord> {
+    return this.http.post<CodigoVinculoDiscord>(`${this.apiUrl}/lembretes/vincular/${pacienteId}/codigo`, {});
   }
 }
