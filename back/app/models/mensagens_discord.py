@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
 
@@ -25,10 +26,18 @@ class MensagemDiscord(Base):
         nullable=False
     )
 
-    # Identificador da mensagem no Discord.
+    # ID da mensagem original no Discord.
+    # Pode aparecer em mais de um registro.
     discord_message_id = Column(
         String(30),
-        nullable=False,
+        nullable=False
+    )
+
+    # Identifica exclusivamente cada interação recebida.
+    # Nas mensagens enviadas, permanece NULL.
+    discord_interaction_id = Column(
+        String(30),
+        nullable=True,
         unique=True
     )
 

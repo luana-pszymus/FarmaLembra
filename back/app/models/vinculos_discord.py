@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 
@@ -9,7 +10,7 @@ class VinculoDiscord(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    # Cada paciente poderá ter um vínculo com o Discord.
+    # Cada paciente poderá ter apenas um vínculo.
     paciente_id = Column(
         Integer,
         ForeignKey("pacientes.id"),
@@ -17,20 +18,18 @@ class VinculoDiscord(Base):
         unique=True
     )
 
-    # Identificador da conta do Discord.
+    # Uma conta Discord poderá estar vinculada a vários pacientes.
     discord_user_id = Column(
         String(30),
         nullable=False,
-        unique=True
+        index=True
     )
 
-    # Identificador do canal privado com o bot.
     discord_channel_id = Column(
         String(30),
         nullable=True
     )
 
-    # Código temporário utilizado na vinculação.
     codigo_hash = Column(
         String(255),
         nullable=True
