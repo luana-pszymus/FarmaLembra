@@ -314,3 +314,122 @@ button:disabled {
     padding: 32px 18px;
   }
 }
+
+.dados-principais {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.acoes-card {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid #edf1ee;
+}
+
+.area-discord {
+  width: 100%;
+  padding: 16px;
+  background: #f5faf7;
+  border: 1px solid #dcebe2;
+  border-radius: 12px;
+
+  > p {
+    color: #718078;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 14px;
+  }
+}
+
+.titulo-discord {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #203b32;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.discord-indicador {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #5865f2;
+}
+
+.botao-discord,
+.botao-copiar {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 9px;
+  background: #5865f2;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.codigo-discord {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: white;
+  border: 1px dashed #39856b;
+  border-radius: 10px;
+}
+
+.codigo-label {
+  color: #718078;
+  font-size: 12px;
+}
+
+.codigo-valor {
+  color: #203b32;
+  font-size: 27px;
+  letter-spacing: 5px;
+}
+
+.codigo-validade {
+  color: #b7791f;
+  font-size: 12px;
+}
+
+.codigo-discord p {
+  color: #718078;
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+}
+
+.erro-discord {
+  color: #b42318 !important;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.botao-discord:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card-paciente {
+  flex-wrap: wrap;
+}
+
+.erro-discord {
+  color: #b42318;
+  background: #fdeaea;
+  border: 1px solid #f5c6c6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}

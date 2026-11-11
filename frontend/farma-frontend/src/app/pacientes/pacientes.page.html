@@ -1,19 +1,20 @@
 <ion-content [fullscreen]="true" class="pagina-pacientes">
   <main class="conteudo">
+    <!-- Cabeçalho -->
     <header class="cabecalho">
       <p class="etiqueta">CUIDADO E ACOMPANHAMENTO</p>
       <h1>Meus pacientes</h1>
       <p>Gerencie as pessoas cujos tratamentos você acompanha.</p>
     </header>
 
-    <!-- Botão para adicionar paciente -->
+    <!-- Adicionar paciente -->
     <div class="acoes-pacientes">
       @if (!mostrarFormulario) {
       <button class="botao-adicionar" (click)="abrirFormulario()">+ Adicionar paciente</button>
       }
     </div>
 
-    <!-- Formulário de cadastro -->
+    <!-- Formulário -->
     @if (mostrarFormulario) {
     <section class="formulario-paciente">
       <h2>{{ editandoId !== null ? 'Editar paciente' : 'Novo paciente' }}</h2>
@@ -68,7 +69,7 @@
     </div>
     }
 
-    <!-- Erro -->
+    <!-- Erro geral -->
     @if (!carregando && mensagemErro) {
     <div class="estado erro">
       <p>{{ mensagemErro }}</p>
@@ -76,9 +77,10 @@
     </div>
     }
 
-    <!-- Lista de pacientes -->
+    <!-- Conteúdo dos pacientes -->
     @if (!carregando && !mensagemErro) {
     <section>
+      <!-- Primeiro acesso -->
       @if (pacientes.length === 0) {
       <div class="estado-vazio">
         <div class="icone-vazio">+</div>
@@ -96,7 +98,10 @@
 
         <p class="texto-apoio">Você poderá cadastrar outros pacientes quando quiser.</p>
       </div>
-      } @if (pacientes.length > 0) {
+      }
+
+      <!-- Lista -->
+      @if (pacientes.length > 0) {
       <div class="titulo-lista">
         <h2>Pacientes cadastrados</h2>
         <span>{{ pacientes.length }}</span>
@@ -105,21 +110,75 @@
       <div class="lista-pacientes">
         @for (paciente of pacientes; track paciente.id) {
         <article class="card-paciente">
-          <div class="avatar">{{ paciente.nome.charAt(0).toUpperCase() }}</div>
+          <!-- Informações do paciente -->
+          <div class="dados-principais">
+            <div class="avatar">{{ paciente.nome.charAt(0).toUpperCase() }}</div>
 
-          <div class="dados-paciente">
-            <h3>{{ paciente.nome }}</h3>
+            <div class="dados-paciente">
+              <h3>{{ paciente.nome }}</h3>
 
-            @if (paciente.telefone) {
-            <p>{{ paciente.telefone }}</p>
-            } @if (paciente.data_nascimento) {
-            <p>Nascimento: {{ paciente.data_nascimento | date: 'dd/MM/yyyy' }}</p>
-            }
+              @if (paciente.telefone) {
+              <p>{{ paciente.telefone }}</p>
+              } @if (paciente.data_nascimento) {
+              <p>Nascimento: {{ paciente.data_nascimento | date: 'dd/MM/yyyy' }}</p>
+              }
+            </div>
           </div>
 
-          <button type="button" class="botao-editar" (click)="editarPaciente(paciente)">Editar</button>
+          <!-- Ações -->
+          <div class="acoes-card">
+            <button type="button" class="botao-editar" (click)="editarPaciente(paciente)">Editar</button>
 
-          <button type="button" class="botao-excluir" (click)="excluirPaciente(paciente)">Excluir</button>
+            <button type="button" class="botao-excluir" (click)="excluirPaciente(paciente)">Excluir</button>
+          </div>
+
+          <!-- Integração Discord -->
+          <div class="area-discord">
+            <div class="titulo-discord">
+              <span class="discord-indicador"></span>
+              <strong>Lembretes pelo Discord</strong>
+            </div>
+
+            <p>Receba lembretes dos medicamentos deste paciente diretamente pelo bot do FarmaLembra.</p>
+
+            <!-- Botão para gerar código -->
+            @if (!codigosDiscord[paciente.id]) {
+            <button
+              type="button"
+              class="botao-discord"
+              (click)="gerarCodigoDiscord(paciente)"
+              [disabled]="gerandoCodigoId === paciente.id"
+            >
+              {{ gerandoCodigoId === paciente.id ? 'Gerando código...' : 'Vincular Discord' }}
+            </button>
+            }
+
+            <!-- Código gerado -->
+            @if (codigosDiscord[paciente.id]; as vinculo) {
+            <div class="codigo-discord">
+              <span class="codigo-label"> Seu código de vinculação </span>
+
+              <strong class="codigo-valor"> {{ vinculo.codigo }} </strong>
+
+              <span class="codigo-validade"> Válido até {{ formatarExpiracao(vinculo.expira_em) }} </span>
+
+              <button type="button" class="botao-copiar" (click)="copiarCodigo(vinculo.codigo)">Copiar código</button>
+
+              <p>
+                Depois, utilize o comando
+                <strong>/vincular</strong>
+                no servidor do Discord.
+              </p>
+            </div>
+            }
+
+            <!-- Mensagens de erro do Discord -->
+            @if (mensagemDiscord[paciente.id]) {
+            <div class="erro-discord">
+              <p>{{ mensagemDiscord[paciente.id] }}</p>
+            </div>
+            }
+          </div>
         </article>
         }
       </div>

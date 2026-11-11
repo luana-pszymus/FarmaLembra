@@ -262,6 +262,8 @@ export class PacientesPage implements OnInit {
       next: () => {
         this.pacientes = this.pacientes.filter((item) => item.id !== paciente.id);
         delete this.codigosDiscord[paciente.id];
+        delete this.mensagemDiscord[paciente.id];
+
         this.cdr.detectChanges();
       },
       error: (erro: any) => {
@@ -281,7 +283,7 @@ export class PacientesPage implements OnInit {
     delete this.codigosDiscord[paciente.id];
 
     this.pacienteService.gerarCodigoDiscord(paciente.id).subscribe({
-      next: (resposta) => {
+      next: (resposta: CodigoVinculoDiscord) => {
         this.codigosDiscord[paciente.id] = resposta;
         this.gerandoCodigoId = null;
         this.cdr.detectChanges();
@@ -289,7 +291,14 @@ export class PacientesPage implements OnInit {
       error: (erro: any) => {
         console.error('Erro ao gerar código Discord:', erro);
 
-        this.mensagemDiscord[paciente.id] = erro.error?.detail || 'Não foi possível gerar o código de vinculação.';
+        if (erro.status === 409) {
+          this.mensagemDiscord[paciente.id] =
+            'Este paciente já está vinculado ao Discord. Não é necessário gerar outro código.';
+        } else if (erro.status === 404) {
+          this.mensagemDiscord[paciente.id] = 'Paciente não encontrado ou sem acesso a este cadastro.';
+        } else {
+          this.mensagemDiscord[paciente.id] = erro.error?.detail || 'Não foi possível gerar o código. Tente novamente.';
+        }
 
         this.gerandoCodigoId = null;
         this.cdr.detectChanges();

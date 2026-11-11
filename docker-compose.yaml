@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configure POSTGRES_PASSWORD no .env}
       POSTGRES_DB: ${POSTGRES_DB:?Configure POSTGRES_DB no .env}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -23,7 +23,7 @@ services:
     container_name: farmalembra-api
     restart: always
     environment:
-      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@172.18.0.1:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Configure JWT_SECRET_KEY no .env}
       JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
       JWT_ACCESS_TOKEN_EXPIRE_MINUTES: ${JWT_ACCESS_TOKEN_EXPIRE_MINUTES:-30}
@@ -39,8 +39,6 @@ services:
       context: ./back
     container_name: farmalembra-discord
     restart: unless-stopped
-    dns:
-      - 168.63.129.16
     command: python -m app.discord_bot
     environment:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:-}
