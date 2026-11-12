@@ -309,7 +309,27 @@ export class PacientesPage implements OnInit {
   // Copiar código
   async copiarCodigo(codigo: string): Promise<void> {
     try {
-      await navigator.clipboard.writeText(codigo);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(codigo);
+      } else {
+        const textarea = document.createElement('textarea');
+
+        textarea.value = codigo;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const copiado = document.execCommand('copy');
+
+        document.body.removeChild(textarea);
+
+        if (!copiado) {
+          throw new Error('Falha ao copiar código.');
+        }
+      }
+
       alert('Código copiado! Agora use o comando /vincular no Discord.');
     } catch (erro) {
       console.error('Erro ao copiar código:', erro);
